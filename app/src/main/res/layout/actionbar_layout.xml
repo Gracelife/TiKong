@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:toolbar="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+
+        toolbar:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        toolbar:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        toolbar:titleTextAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+
+        <ImageView
+            android:id="@+id/actionbar_left_btn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical|left"
+            android:layout_marginLeft="10dp"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:scaleType="center"
+            android:src="@drawable/back" />
+        <TextView
+            android:id="@+id/actionbar_left_tv"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical|left"
+            android:clickable="true"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:text="返回"
+            android:visibility="gone" />
+        <TextView
+            android:id="@+id/actionbar_mid_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:text="@string/app_name"
+            android:textSize="18sp"
+            android:textColor="@android:color/white" />
+
+        <ImageView
+            android:id="@+id/actionbar_right_btn"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical|right"
+            android:clickable="true"
+            android:scaleType="center"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/actionbar_right_tv"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical|right"
+            android:clickable="true"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:text="保存"
+            android:visibility="gone" />
+    </android.support.v7.widget.Toolbar>
+</FrameLayout>
