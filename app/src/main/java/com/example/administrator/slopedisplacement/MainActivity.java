@@ -4,9 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.example.administrator.slopedisplacement.base.BaseActivity;
+import com.example.administrator.slopedisplacement.base.BaseMvpActivity;
 import com.example.administrator.slopedisplacement.mvp.BasePresenter;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseMvpActivity {
 
     @Override
     protected BasePresenter loadPresenter() {

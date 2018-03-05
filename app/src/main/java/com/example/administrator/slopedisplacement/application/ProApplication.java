@@ -10,6 +10,8 @@ import android.os.Message;
 import android.os.Vibrator;
 import android.util.Log;
 
+import com.example.administrator.slopedisplacement.utils.GeTuiUtil;
+import com.example.administrator.slopedisplacement.utils.PermissionsUtils;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 

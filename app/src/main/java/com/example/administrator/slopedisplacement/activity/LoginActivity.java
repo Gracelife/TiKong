@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.example.administrator.slopedisplacement.R;
 import com.example.administrator.slopedisplacement.base.BaseActivity;
+import com.example.administrator.slopedisplacement.base.BaseMvpActivity;
 import com.example.administrator.slopedisplacement.bean.LoginBean;
 import com.example.administrator.slopedisplacement.bean.UpdateBean;
 import com.example.administrator.slopedisplacement.mvp.contact.LoginContact;
@@ -16,7 +17,7 @@ import com.orhanobut.logger.Logger;
 import butterknife.OnClick;
 
 
-public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContact.View {
+public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements LoginContact.View {
 
     @Override
     protected LoginPresenter loadPresenter() {
