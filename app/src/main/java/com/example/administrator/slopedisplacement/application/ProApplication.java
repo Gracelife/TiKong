@@ -5,7 +5,10 @@ import android.app.Application;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Vibrator;
+import android.util.Log;
 
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
@@ -21,7 +24,11 @@ public class ProApplication extends Application {
    // public LocationService locationService;
     public Vibrator mVibrator;
     private  final String TAG = this.getClass().getSimpleName();
-
+    private static GeTuiHandler handler;
+    /**
+     * 应用未启动, 个推 service已经被唤醒,保存在该时间段内离线消息(此时 GetuiSdkDemoActivity.tLogView == null)
+     */
+    public static StringBuilder payloadData = new StringBuilder();
     @Override
     public void onCreate() {
         super.onCreate();
@@ -31,6 +38,9 @@ public class ProApplication extends Application {
         mContext = this;
         mInstance = this;
         Logger.addLogAdapter(new AndroidLogAdapter());
+        if (handler == null) {
+            handler = new GeTuiHandler();
+        }
     }
 
     @Override
@@ -68,5 +78,25 @@ public class ProApplication extends Application {
 
         context.startActivity(intent);
         this.intent = null;
+    }
+    public static void sendMessage(Message msg) {
+        handler.sendMessage(msg);
+    }
+
+    public static class GeTuiHandler extends Handler {
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                        payloadData.append((String) msg.obj);
+                        payloadData.append("\n");
+                    break;
+
+                case 1:
+
+                    break;
+            }
+        }
     }
 }

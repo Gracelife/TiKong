@@ -3,11 +3,25 @@ package com.example.administrator.slopedisplacement;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class MainActivity extends Activity {
+import com.example.administrator.slopedisplacement.base.BaseActivity;
+import com.example.administrator.slopedisplacement.mvp.BasePresenter;
+
+public class MainActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected BasePresenter loadPresenter() {
+        return null;
     }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+
 }
