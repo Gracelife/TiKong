@@ -6,6 +6,7 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.example.administrator.slopedisplacement.R;
@@ -13,9 +14,11 @@ import com.example.administrator.slopedisplacement.application.ProApplication;
 import com.example.administrator.slopedisplacement.base.BaseMvpActivity;
 import com.example.administrator.slopedisplacement.bean.LoginBean;
 import com.example.administrator.slopedisplacement.bean.UpdateBean;
+import com.example.administrator.slopedisplacement.db.UserInfoPref;
 import com.example.administrator.slopedisplacement.http.HttpResponse;
 import com.example.administrator.slopedisplacement.mvp.contact.LoginContact;
 import com.example.administrator.slopedisplacement.mvp.presenter.LoginPresenter;
+import com.example.administrator.slopedisplacement.type.LoginStateEnum;
 import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
@@ -29,6 +32,9 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     EditText etPassWord;
     @BindView(R.id.btnLogin)
     Button btnLogin;
+    @BindView(R.id.cbSavePassWord)
+    CheckBox cbSavePassWord;
+    LoginBean loginBean;
     @Override
     protected LoginPresenter loadPresenter() {
         return new LoginPresenter();
@@ -46,13 +52,18 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        if(UserInfoPref.getSavePassWord()){
+            etUserName.setText(UserInfoPref.getUserAccount());
+            etPassWord.setText(UserInfoPref.getUserPassword());
+            cbSavePassWord.setChecked(true);
+        }
     }
 
 
     @Override
     public void onLoginSuccess(LoginBean loginBean) {
         Logger.e("登录成功"+loginBean.toString());
-        Logger.e("clentid:"+ProApplication.clentid);
+        this.loginBean = loginBean;
         mPresenter.updateLoginMessage(etUserName.getText().toString(), ProApplication.clentid);
     }
 
@@ -64,6 +75,8 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     @Override
     public void onUpdateLoginMessageSuccess(HttpResponse httpResponse) {
         Logger.e(httpResponse.getMsg());
+        UserInfoPref.setSavePassWord(cbSavePassWord.isChecked());
+        UserInfoPref.saveLoginInfo(etUserName.getText().toString(),loginBean.getUserName(),etPassWord.getText().toString(),loginBean.getUid());
     }
 
     @Override

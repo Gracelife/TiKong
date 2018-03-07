@@ -11,11 +11,11 @@ public interface ErrorType {
     /**
      * 请求成功
      */
-    int SUCCESS = 1;
+    int SUCCESS = 0;
     /**
      * 请求失败
      */
-    int FAIL = 0;
+    int FAIL = 1;
     /**
      * 未知错误
      */

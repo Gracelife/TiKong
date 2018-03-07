@@ -6,26 +6,23 @@ package com.example.administrator.slopedisplacement.type;
 
 public enum LoginStateEnum {
     /**
-     * 未登录
+     * 记住密码
      */
-    UN_LOGGED("0"),
+    UN_LOGGED(true),
     /**
-     * 已登录
+     * 未记住密码
      */
-    LOGGED("1"),
+    LOGGED(false);
 
-    /**
-     * 免登录(记住了密码)
-     */
-    FREE_LOGGED("2");
 
-    private String mState;
 
-    private LoginStateEnum(String state) {
+    private boolean mState;
+
+    private LoginStateEnum(boolean state) {
         mState = state;
     }
 
-    public String getState() {
+    public boolean getState() {
         return mState;
     }
 }

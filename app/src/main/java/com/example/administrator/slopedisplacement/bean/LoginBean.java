@@ -15,14 +15,14 @@ public class LoginBean {
      * UserName : 管理员
      */
 
-    private int Uid;
+    private String Uid;
     private String UserName;
 
-    public int getUid() {
+    public String getUid() {
         return Uid;
     }
 
-    public void setUid(int Uid) {
+    public void setUid(String Uid) {
         this.Uid = Uid;
     }
 
