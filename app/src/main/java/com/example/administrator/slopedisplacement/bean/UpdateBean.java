@@ -1,5 +1,7 @@
 package com.example.administrator.slopedisplacement.bean;
 
+import com.example.administrator.slopedisplacement.http.HttpResponse;
+
 /**
  * Created by Administrator on 2018-01-11.
  */

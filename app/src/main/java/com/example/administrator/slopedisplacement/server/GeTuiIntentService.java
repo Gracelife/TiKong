@@ -4,13 +4,16 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.Message;
 import android.util.Log;
 
+import com.example.administrator.slopedisplacement.application.ProApplication;
 import com.igexin.sdk.GTIntentService;
 import com.igexin.sdk.GTServiceManager;
 import com.igexin.sdk.message.GTCmdMessage;
 import com.igexin.sdk.message.GTNotificationMessage;
 import com.igexin.sdk.message.GTTransmitMessage;
+import com.orhanobut.logger.Logger;
 
 public class GeTuiIntentService extends GTIntentService {
     public GeTuiIntentService() {
@@ -27,7 +30,8 @@ public class GeTuiIntentService extends GTIntentService {
 
     @Override
     public void onReceiveClientId(Context context, String clientid) {
-        Log.e(TAG, "onReceiveClientId -> " + "clientid = " + clientid);
+        Logger.e(TAG, "onReceiveClientId -> " + "clientid = " + clientid);
+        sendMessage(clientid, 1);
     }
 
     @Override
@@ -44,5 +48,11 @@ public class GeTuiIntentService extends GTIntentService {
 
     @Override
     public void onNotificationMessageClicked(Context context, GTNotificationMessage msg) {
+    }
+    private void sendMessage(String data, int what) {
+        Message msg = Message.obtain();
+        msg.what = what;
+        msg.obj = data;
+        ProApplication.sendMessage(msg);
     }
 }

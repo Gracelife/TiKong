@@ -1,15 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/actionbar_layout"/>
-    <Button
-        android:id="@+id/login"
+
+    <EditText
+        android:id="@+id/etUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="登录"/>
-</LinearLayout>
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:layout_marginRight="61dp"
+        android:layout_marginEnd="61dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:id="@+id/etPassWord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:layout_below="@+id/textView"
+        android:layout_alignLeft="@+id/etUserName"
+        android:layout_alignStart="@+id/etUserName"
+        android:layout_marginTop="40dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/etUserName"
+        android:layout_alignBottom="@+id/etUserName"
+        android:layout_marginEnd="18dp"
+        android:layout_marginRight="18dp"
+        android:text="用户名："
+        android:layout_toLeftOf="@+id/etUserName"
+        android:layout_toStartOf="@+id/etUserName" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="密码："
+        android:layout_alignBaseline="@+id/etPassWord"
+        android:layout_alignBottom="@+id/etPassWord"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="登录"
+        android:layout_below="@+id/etPassWord"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp" />
+</RelativeLayout>

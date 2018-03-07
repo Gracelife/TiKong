@@ -2,9 +2,7 @@ package com.example.administrator.slopedisplacement.activity;
 
 
 import android.content.Intent;
-import android.os.Bundle;
 
-import com.example.administrator.slopedisplacement.MainActivity;
 import com.example.administrator.slopedisplacement.R;
 import com.example.administrator.slopedisplacement.base.BaseActivity;
 import com.example.administrator.slopedisplacement.utils.GeTuiUtil;

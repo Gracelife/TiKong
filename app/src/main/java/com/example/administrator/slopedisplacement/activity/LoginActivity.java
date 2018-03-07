@@ -2,23 +2,33 @@ package com.example.administrator.slopedisplacement.activity;
 
 
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.administrator.slopedisplacement.R;
-import com.example.administrator.slopedisplacement.base.BaseActivity;
+import com.example.administrator.slopedisplacement.application.ProApplication;
 import com.example.administrator.slopedisplacement.base.BaseMvpActivity;
 import com.example.administrator.slopedisplacement.bean.LoginBean;
 import com.example.administrator.slopedisplacement.bean.UpdateBean;
+import com.example.administrator.slopedisplacement.http.HttpResponse;
 import com.example.administrator.slopedisplacement.mvp.contact.LoginContact;
 import com.example.administrator.slopedisplacement.mvp.presenter.LoginPresenter;
 import com.orhanobut.logger.Logger;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 
 public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements LoginContact.View {
-
+    @BindView(R.id.etUserName)
+    EditText etUserName;
+    @BindView(R.id.etPassWord)
+    EditText etPassWord;
+    @BindView(R.id.btnLogin)
+    Button btnLogin;
     @Override
     protected LoginPresenter loadPresenter() {
         return new LoginPresenter();
@@ -36,39 +46,45 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-//        mPresenter.login("123456","17301370712","123");
     }
 
 
     @Override
     public void onLoginSuccess(LoginBean loginBean) {
         Logger.e("登录成功"+loginBean.toString());
+        Logger.e("clentid:"+ProApplication.clentid);
+        mPresenter.updateLoginMessage(etUserName.getText().toString(), ProApplication.clentid);
     }
 
     @Override
-    public void onLoginFail() {
-        Logger.e("登录失败");
+    public void onLoginFail(String msg) {
+        showToast(msg);
     }
 
     @Override
-    public void onGetVersionSuccess(UpdateBean updateBean) {
-        Logger.e("获取版本信息成功"+updateBean.toString());
+    public void onUpdateLoginMessageSuccess(HttpResponse httpResponse) {
+        Logger.e(httpResponse.getMsg());
     }
 
     @Override
-    public void onGetVersionFail() {
-        Logger.e("获取版本信息失败");
+    public void onUpdateLoginMessageFail(String msg){showToast(msg);
     }
 
-    @OnClick({R.id.login})
+
+    @OnClick({R.id.btnLogin})
     void OnClick(View view){
         switch (view.getId()){
-            case R.id.login:
-//                mPresenter.login("123456","17301370712","123");
-                Log.e("Log","点击");
-                Logger.e("点击1");
-//                mPresenter.getVersion("com.hc.android.mobileattendance","1");
-                mPresenter.test();
+            case R.id.btnLogin:
+                if(etUserName.getText().toString().isEmpty()){
+                    showToast("用户名不能为空");
+                    return;
+                }
+                if (etPassWord.getText().toString().isEmpty()){
+                    showToast("密码不能为空");
+                    return;
+                }
+
+                mPresenter.login(etPassWord.getText().toString(),etUserName.getText().toString());
                 break;
         }
     }

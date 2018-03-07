@@ -27,6 +27,7 @@ public class ProApplication extends Application {
     public Vibrator mVibrator;
     private  final String TAG = this.getClass().getSimpleName();
     private static GeTuiHandler handler;
+    public static  String clentid;
     /**
      * 应用未启动, 个推 service已经被唤醒,保存在该时间段内离线消息(此时 GetuiSdkDemoActivity.tLogView == null)
      */
@@ -91,11 +92,24 @@ public class ProApplication extends Application {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
-                        payloadData.append((String) msg.obj);
+
+                       /* payloadData.append((String) msg.obj);
                         payloadData.append("\n");
+                        if (GetuiSdkDemoActivity.tLogView != null) {
+                            GetuiSdkDemoActivity.tLogView.append(msg.obj + "\n");
+                        }*/
+
                     break;
 
                 case 1:
+                    Logger.e("msg.obj:"+(String) msg.obj);
+                    clentid = (String) msg.obj;
+
+                      /*  if (GetuiSdkDemoActivity.tLogView != null) {
+
+                            GetuiSdkDemoActivity.tView.setText((String) msg.obj);
+                            Log.e("111", GetuiSdkDemoActivity.tView.getText()+"");
+                        }*/
 
                     break;
             }

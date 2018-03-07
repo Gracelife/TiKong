@@ -29,6 +29,6 @@ public class GeTuiUtil {
         // com.getui.demo.DemoPushService 为第三方自定义推送服务
 
         // com.getui.demo.DemoIntentService 为第三方自定义的推送服务事件接收类
-//        PushManager.getInstance().registerPushIntentService(context, GeTuiIntentService.class);
+        PushManager.getInstance().registerPushIntentService(activity, GeTuiIntentService.class);
     }
 }

@@ -13,16 +13,17 @@ import io.reactivex.Observable;
  */
 
 public class LoginModel implements IModel {
-    public Observable login(String passWord, String userName,String imei) {
+    public Observable login(String passWord, String userName) {
         return RetrofitUtils.Instance
                 .getApiService()
-                .login(passWord, userName, imei)
+                .login(passWord, userName)
                 .compose(NetTransformer.compose());
     }
-    public Observable getVersion(String packageName, String updateVersionCode) {
+    public Observable updateLoginMessage(String userName, String clentid) {
         return RetrofitUtils.Instance
                 .getApiService()
-                .getVersion(packageName, updateVersionCode)
+                .updateLoginMessage(userName, clentid)
                 .compose(NetTransformer.compose());
     }
+
 }

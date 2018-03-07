@@ -5,7 +5,6 @@ package com.example.administrator.slopedisplacement.http;
 
 import com.example.administrator.slopedisplacement.bean.LoginBean;
 import com.example.administrator.slopedisplacement.bean.UpdateBean;
-import com.example.administrator.slopedisplacement.bean.json.TestJson;
 import com.example.administrator.slopedisplacement.url.UrlHelper;
 
 import io.reactivex.Observable;
@@ -24,15 +23,10 @@ public interface ApiService {
     //String url = "";
 
     @FormUrlEncoded
-    @POST(UrlHelper.API+"DataService.ashx?action=login")
-    Observable<HttpResponse<LoginBean>> login(@Field("password") String passWord, @Field("account") String userName, @Field("imei") String imei);
+    @POST(UrlHelper.API+"Login")
+    Observable<HttpResponse<LoginBean>> login(@Field("userPassWord") String passWord, @Field("userName") String userName);
 
     @FormUrlEncoded
-    @POST("Services/DataService.ashx?action=getAppUpdate")
-    Observable<HttpResponse<UpdateBean>> getVersion(@Field("packageName") String packageName, @Field("updateVersionCode") String updateVersionCode);
-
-    @FormUrlEncoded
-    @POST(UrlHelper.API_BASE+"Login")
-    Observable<TestJson> test(@Field("userName") String userName, @Field("userPassWord") String userPassWord);
-
+    @POST(UrlHelper.API+"UpdateLoginMessage")
+    Observable<HttpResponse> updateLoginMessage(@Field("userName") String userName, @Field("clentid") String clentid);
 }

@@ -7,7 +7,7 @@ package com.example.administrator.slopedisplacement.url;
 
 public class UrlHelper {
     public static String BASE_URL = "http://192.168.1.86:5066/";
-    public static final String API = "Services/";
 
-    public static final String API_BASE = "OpenInterface/PanoramaHandler.ashx?action=";
+    public static final String API = "OpenInterface/PanoramaHandler.ashx?action=";
+
 }
