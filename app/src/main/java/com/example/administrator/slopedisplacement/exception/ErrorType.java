@@ -13,27 +13,29 @@ public interface ErrorType {
      */
     int SUCCESS = 1;
     /**
+     * 请求失败
+     */
+    int FAIL = 0;
+    /**
      * 未知错误
      */
-    int UNKONW = 1000;
+    int UN_KNOWN_ERROR = 1000;
 
-    /**
-     * 解析错误
-     */
-    int PARSE_ERROR = 1001;
     /**
      * 网络错误
      */
     int NETWORK_ERROR = 1002;
+    /**
+     * 网络超时
+     */
+    int TIME_OUT_ERROR = 1003;
+    /**
+     * 解析错误
+     */
+    int JSON_ERROR = 1004;
 
     /**
-     * 解析对象为空
+     * 数据为空
      */
-    int EMPTY_BEAN = 1004;
-
-
-    /**
-     *
-     */
-    int HTTP_ERROR = 1003;
+    int DATE_NULL = 1005;
 }

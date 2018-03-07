@@ -19,19 +19,15 @@ import retrofit2.HttpException;
  */
 
 public class ExceptionEngine {
-    //对应HTTP的状态码
-    public static final int UN_KNOWN_ERROR = 1000;//未知错误
-    public static final int ANALYTIC_SERVER_DATA_ERROR = 1001;//解析(服务器)数据错误
-    public static final int ANALYTIC_CLIENT_DATA_ERROR = 1002;//解析(客户端)数据错误
-    public static final int CONNECT_ERROR = 1003;//网络连接错误
-    public static final int TIME_OUT_ERROR = 1004;//网络连接超时
 
     public static ApiException handleException(Throwable e) {
         ApiException ex;
-        if (e instanceof HttpException) {             //HTTP错误
+        if (e instanceof ApiException) {
+            return (ApiException) e;
+        } else if (e instanceof HttpException) {             //HTTP错误
             HttpException httpExc = (HttpException) e;
             ex = new ApiException(e, httpExc.code());
-            ex.setMessage("网络错误");  //均视为网络错误
+            ex.setMessage("网络错误,错误码 " + httpExc.code());  //均视为网络错误
             return ex;
         } else if (e instanceof ServerException) {    //服务器返回的错误
             ServerException serverExc = (ServerException) e;
@@ -41,19 +37,19 @@ public class ExceptionEngine {
         } else if (e instanceof JsonParseException
                 || e instanceof JSONException
                 || e instanceof ParseException || e instanceof MalformedJsonException) {  //解析数据错误
-            ex = new ApiException(e, ANALYTIC_SERVER_DATA_ERROR);
+            ex = new ApiException(e, ErrorType.JSON_ERROR);
             ex.setMessage("解析错误");
             return ex;
         } else if (e instanceof ConnectException) {//连接网络错误
-            ex = new ApiException(e, CONNECT_ERROR);
+            ex = new ApiException(e, ErrorType.NETWORK_ERROR);
             ex.setMessage("连接失败");
             return ex;
         } else if (e instanceof SocketTimeoutException) {//网络超时
-            ex = new ApiException(e, TIME_OUT_ERROR);
+            ex = new ApiException(e, ErrorType.TIME_OUT_ERROR);
             ex.setMessage("网络超时");
             return ex;
         } else {  //未知错误
-            ex = new ApiException(e, UN_KNOWN_ERROR);
+            ex = new ApiException(e, ErrorType.UN_KNOWN_ERROR);
             ex.setMessage("未知错误");
             return ex;
         }
@@ -61,11 +57,12 @@ public class ExceptionEngine {
 
     /**
      * 检测Api异常
+     *
      * @param response
      */
-    public static void checkApiException(NetResponse response){
+    public static void checkApiException(NetResponse response) {
         if (response == null) {
-            throw new ServerException(ErrorType.EMPTY_BEAN, "服务器返回的数据为空");
+            throw new ServerException(ErrorType.DATE_NULL, "服务器返回的数据为空");
         } else if (!response.isSuccess()) {
             throw new ServerException(response.getCode(), response.getMsg());
         }

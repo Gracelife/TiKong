@@ -1,6 +1,8 @@
 package com.example.administrator.slopedisplacement.http;
 
 import com.example.administrator.slopedisplacement.exception.ApiException;
+import com.example.administrator.slopedisplacement.exception.ErrorType;
+import com.example.administrator.slopedisplacement.utils.L;
 import com.example.administrator.slopedisplacement.utils.NetworkUtil;
 import com.orhanobut.logger.Logger;
 
@@ -26,7 +28,16 @@ public abstract class BaseObserver<T> implements Observer<T>, HttpRequest<T> {
     }
     @Override
     public void onNext(@NonNull T response) {
-        onSuccess(response);
+        //防止闪退问题
+        try {
+            onSuccess(response);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            L.e("网络异常！错误码:"+ ErrorType.DATE_NULL);
+        }catch (Exception e){
+            e.printStackTrace();
+            L.e("网络异常！错误码:"+ ErrorType.UN_KNOWN_ERROR);
+        }
     }
 
     @Override

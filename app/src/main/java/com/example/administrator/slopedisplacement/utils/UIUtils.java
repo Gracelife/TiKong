@@ -107,7 +107,7 @@ public class UIUtils {
 
 
     public static int dp2px(float dp) {
-        LogUtils.d("dp2px结果    "+dp,(int) (getResources().getDisplayMetrics().density * dp + 0.5f)+"");
+        L.d("dp2px结果    "+dp,(int) (getResources().getDisplayMetrics().density * dp + 0.5f)+"");
         return (int) (getResources().getDisplayMetrics().density * dp + 0.5f);
     }
 
