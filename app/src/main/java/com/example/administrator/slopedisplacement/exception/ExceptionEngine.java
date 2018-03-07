@@ -2,7 +2,6 @@ package com.example.administrator.slopedisplacement.exception;
 
 import android.net.ParseException;
 
-import com.example.administrator.slopedisplacement.http.NetResponse;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.MalformedJsonException;
 
@@ -52,19 +51,6 @@ public class ExceptionEngine {
             ex = new ApiException(e, ErrorType.UN_KNOWN_ERROR);
             ex.setMessage("未知错误");
             return ex;
-        }
-    }
-
-    /**
-     * 检测Api异常
-     *
-     * @param response
-     */
-    public static void checkApiException(NetResponse response) {
-        if (response == null) {
-            throw new ServerException(ErrorType.DATE_NULL, "服务器返回的数据为空");
-        } else if (!response.isSuccess()) {
-            throw new ServerException(response.getCode(), response.getMsg());
         }
     }
 }

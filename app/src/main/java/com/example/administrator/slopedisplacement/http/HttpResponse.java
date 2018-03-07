@@ -7,10 +7,9 @@ import com.google.gson.annotations.SerializedName;
 /**
  * http响应参数实体类
  * 通过Gson解析属性名称需要与服务器返回字段对应,或者使用注解@SerializedName
- * 备注:这里与服务器约定返回格式
  */
 
-public class NetResponse<T> {
+public class HttpResponse<T> {
     /**
      * 描述信息
      */

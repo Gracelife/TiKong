@@ -2,6 +2,7 @@ package com.example.administrator.slopedisplacement.http;
 
 import com.example.administrator.slopedisplacement.exception.ApiException;
 import com.example.administrator.slopedisplacement.exception.ErrorType;
+import com.example.administrator.slopedisplacement.exception.ExceptionEngine;
 import com.example.administrator.slopedisplacement.utils.L;
 import com.example.administrator.slopedisplacement.utils.NetworkUtil;
 import com.orhanobut.logger.Logger;
@@ -11,11 +12,11 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 
 /**
- * Created by Administrator on 2018-01-09.
+ *
  */
 
 public abstract class BaseObserver<T> implements Observer<T>, HttpRequest<T> {
-    private Disposable disposable;
+    private Disposable disposable;//断流
     //当订阅后，会首先调用这个方法，其实就相当于onStart()，
     //传入的Disposable d参数可以用于取消订阅
     @Override
@@ -42,9 +43,7 @@ public abstract class BaseObserver<T> implements Observer<T>, HttpRequest<T> {
 
     @Override
     public void onError(@NonNull Throwable e) {
-        ApiException apiException = (ApiException) e;
-        Logger.e(apiException.getMessage());
-        onFail(apiException);
+        onFail(ExceptionEngine.handleException(e));
 //        disposable.dispose();
     }
 

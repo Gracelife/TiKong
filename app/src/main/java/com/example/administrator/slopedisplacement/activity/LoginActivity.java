@@ -67,7 +67,8 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 //                mPresenter.login("123456","17301370712","123");
                 Log.e("Log","点击");
                 Logger.e("点击1");
-                mPresenter.getVersion("com.hc.android.mobileattendance","1");
+//                mPresenter.getVersion("com.hc.android.mobileattendance","1");
+                mPresenter.test();
                 break;
         }
     }
