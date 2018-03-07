@@ -15,7 +15,7 @@ public interface IView {
     /**
      * 显示加载
      */
-    void showLoading();
+    void showLoading(String msg);
 
     /**
      * 隐藏加载

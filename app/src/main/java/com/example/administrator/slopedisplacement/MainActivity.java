@@ -21,7 +21,7 @@ public class MainActivity extends BaseMvpActivity {
 
     @Override
     protected void initView() {
-
+        showLoading("测试");
     }
 
 

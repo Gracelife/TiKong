@@ -1,36 +1,11 @@
 package com.example.administrator.slopedisplacement.base;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.util.Log;
-import android.view.View;
-import android.view.Window;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.example.administrator.slopedisplacement.R;
-import com.example.administrator.slopedisplacement.application.ProApplication;
 import com.example.administrator.slopedisplacement.mvp.BasePresenter;
 import com.example.administrator.slopedisplacement.mvp.IView;
-import com.example.administrator.slopedisplacement.server.GeTuiIntentService;
-import com.example.administrator.slopedisplacement.server.GeTuiPushService;
-import com.example.administrator.slopedisplacement.utils.ActivityUtils;
-import com.igexin.sdk.PushManager;
 import com.trello.rxlifecycle2.LifecycleTransformer;
-import com.trello.rxlifecycle2.components.RxActivity;
-
-import java.io.File;
-
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
-import static android.content.ContentValues.TAG;
 
 /**
  *
@@ -69,8 +44,15 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActiv
      * 显示加载框
      */
     @Override
-    public void showLoading() {
-
+    public void showLoading(String msg) {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(getActivity());
+            mProgressDialog.setCanceledOnTouchOutside(false);
+        }
+        if (!mProgressDialog.isShowing()) {
+            mProgressDialog.setMessage(msg);
+            mProgressDialog.show();
+        }
     }
 
     /**
@@ -78,34 +60,26 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActiv
      */
     @Override
     public void hideLoading() {
-
-    }
-
-    /**
-     * 显示加载对话框
-     *
-     * @param title 标题
-     * @param msg   内容
-     */
-    protected void showProgressDialog(String title, String msg) {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(getActivity());
-            mProgressDialog.setCanceledOnTouchOutside(false);
-        } else if (!mProgressDialog.isShowing()) {
-            mProgressDialog.setTitle(title);
-            mProgressDialog.setMessage(msg);
-            mProgressDialog.show();
-        }
-    }
-
-    /**
-     * 隐藏加载对话框
-     */
-    protected void hideProgressDialog() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.hide();
         }
     }
+
+//    /**
+//     * 显示加载对话框
+//     *
+//     * @param title 标题
+//     * @param msg   内容
+//     */
+//    protected void showProgressDialog(String title, String msg) {
+
+//    }
+//
+//    /**
+//     * 隐藏加载对话框
+//     */
+//    protected void hideProgressDialog() {
+//    }
 
     /**
      * 用于绑定bindLifecycle
