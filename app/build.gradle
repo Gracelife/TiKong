@@ -21,9 +21,9 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //个推
         manifestPlaceholders = [
-                GETUI_APP_ID : "2WYI0Oe8nr89kHVwXTB6z2",
-                GETUI_APP_KEY : "HfXyh5jFlQ8OebHEgZPz38",
-                GETUI_APP_SECRET : "RoPMKwrByg5zrKJM8GQXX"
+                GETUI_APP_ID    : "2WYI0Oe8nr89kHVwXTB6z2",
+                GETUI_APP_KEY   : "HfXyh5jFlQ8OebHEgZPz38",
+                GETUI_APP_SECRET: "RoPMKwrByg5zrKJM8GQXX"
         ]
     }
     buildTypes {
@@ -53,7 +53,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile "com.android.support:appcompat-v7:${supportLibraryVersion}"
-    testCompile 'junit:junit:4.12'
     compile "com.android.support:design:${supportLibraryVersion}"
     //  RxJava & RxAndroid & RetrofitUtils & OkHttp
     compile "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
@@ -63,30 +62,32 @@ dependencies {
     compile "com.squareup.okhttp3:okhttp:${okhttpVersion}"
     compile "com.squareup.okhttp3:okhttp-urlconnection:${okhttpVersion}"
     compile "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}"
-    compile 'com.google.code.gson:gson:2.7'
-
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-
-    compile 'com.gyf.barlibrary:barlibrary:2.3.0'
 
     /*view依赖注入*/
-    compile 'com.jakewharton:butterknife:8.6.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     /*RxAndroid*/
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     /*RxJava*/
-    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
     /*Rx生命周期管理*/
-    compile 'com.trello.rxlifecycle2:rxlifecycle:2.1.0'
-    compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.1.0'
     /* rx动态申请权限*/
-    compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
     /* Rxbinding2 绑定API Android UI部件从平台和支持库 */
-    compile 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
     /* log日志工具*/
-    compile 'com.orhanobut:logger:2.1.1'
     /* 一个适用于ListView/GridView/RecyclerView的Adapter库,简化大量重复代码,支持多种布局,可自定义图片加载的实现*/
-    compile 'com.classic.adapter:commonadapter:2.0'
     //个推
     compile files('libs/GetuiSDK2.12.1.0.jar')
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.gyf.barlibrary:barlibrary:2.3.0'
+    compile 'com.jakewharton:butterknife:8.6.0'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
+    compile 'com.trello.rxlifecycle2:rxlifecycle:2.1.0'
+    compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.1.0'
+    compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
+    compile 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
+    compile 'com.orhanobut:logger:2.1.1'
+    compile 'com.classic.adapter:commonadapter:2.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+    //RecyclerView
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
 }

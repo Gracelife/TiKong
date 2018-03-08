@@ -1,6 +1,7 @@
 package com.example.administrator.slopedisplacement.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -74,9 +75,11 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
     @Override
     public void onUpdateLoginMessageSuccess(HttpResponse httpResponse) {
-        Logger.e(httpResponse.getMsg());
+
         UserInfoPref.setSavePassWord(cbSavePassWord.isChecked());
         UserInfoPref.saveLoginInfo(etUserName.getText().toString(),loginBean.getUserName(),etPassWord.getText().toString(),loginBean.getUid());
+        Intent intent = new Intent(LoginActivity.this,SelectProjectActivity.class);
+        startActivity(intent);
     }
 
     @Override

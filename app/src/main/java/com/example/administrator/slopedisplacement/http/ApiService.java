@@ -4,6 +4,7 @@ package com.example.administrator.slopedisplacement.http;
 
 
 import com.example.administrator.slopedisplacement.bean.LoginBean;
+import com.example.administrator.slopedisplacement.bean.ProjectBean;
 import com.example.administrator.slopedisplacement.bean.UpdateBean;
 import com.example.administrator.slopedisplacement.url.UrlHelper;
 
@@ -29,4 +30,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST(UrlHelper.API+"UpdateLoginMessage")
     Observable<HttpResponse> updateLoginMessage(@Field("userName") String userName, @Field("clentid") String clentid);
+    @FormUrlEncoded
+    @POST(UrlHelper.API+"GetVideoMonitorList")
+    Observable<HttpResponse<ProjectBean>> getVideoMonitorList(@Field("keyword")String keyword, @Field("sysId") String sysId, @Field("status") String status, @Field("pageindex") String pageindex, @Field("pagesize") String pagesize, @Field("ismode") String ismode, @Field("areaName") String areaName, @Field("uid") String uid);
 }
