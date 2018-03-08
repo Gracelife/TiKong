@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="38dp">
+
+        <TextView
+            android:id="@+id/tvProjectId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
+            android:text="序号" />
+
+        <TextView
+            android:id="@+id/tvProjectName"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_toEndOf="@+id/tvProjectId"
+            android:layout_toRightOf="@+id/tvProjectId"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tvProjectStatic"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tvProjectName"
+            android:layout_centerHorizontal="true"
+            android:text="状态" />
+
+        <TextView
+            android:id="@+id/tvProjectAddress"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tvProjectStatic"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/tvProjectStatic"
+            android:layout_toRightOf="@+id/tvProjectStatic"
+            android:text="TextView" />
+    </RelativeLayout>
+</LinearLayout>
