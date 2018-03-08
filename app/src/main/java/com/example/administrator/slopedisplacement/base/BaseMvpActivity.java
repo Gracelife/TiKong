@@ -61,7 +61,7 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActiv
     @Override
     public void hideLoading() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.hide();
+            mProgressDialog.dismiss();
         }
     }
 
