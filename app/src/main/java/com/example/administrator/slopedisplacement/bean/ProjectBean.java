@@ -1,5 +1,6 @@
 package com.example.administrator.slopedisplacement.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class ProjectBean {
         this.List = List;
     }
 
-    public static class ListBean {
+    public static class ListBean implements Serializable{
         /**
          * row_number : 1
          * ProjName : 汇川物联网

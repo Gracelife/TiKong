@@ -1,5 +1,7 @@
 package com.example.administrator.slopedisplacement.adapter;
 
+import android.util.Log;
+
 import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.slopedisplacement.R;
@@ -17,10 +19,11 @@ public class SelectProjectAdapter extends BaseItemDraggableAdapter<ProjectBean.L
     }
     @Override
     protected void convert(BaseViewHolder helper, ProjectBean.ListBean item) {
-        helper.setText(R.id.tvProjectId,item.getRow_number());
-        helper.setText(R.id.tvProjectName,item.getProjName());
-        helper.setText(R.id.tvProjectStatic,item.getProjStatusCurrent());
-        helper.setText(R.id.tvProjectAddress,item.getProjAddress());
-        //helper.addOnClickListener(R.id.text_samll);
+           helper.setText(R.id.tvProjectId,item.getRow_number()+"")
+                   .setText(R.id.tvProjectName,item.getProjName())
+                   .setText(R.id.tvProjectStatic,item.getProjStatusCurrent())
+                   .setText(R.id.tvProjectAddress,item.getProjAddress());
+           //helper.addOnClickListener(R.id.text_samll);
+
     }
 }

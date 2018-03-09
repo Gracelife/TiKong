@@ -84,4 +84,6 @@
     <string name="push_notification_msg_content">您收到一条测试消息，点击访问www.igetui.com</string>
     <string name="push_transmission_data">收到一条透传测试消息</string>
     <string name="network_invalid">对不起，当前网络不可用!</string>
+    <string name="title_activity_select_driver">SelectDriverActivity</string>
+    <string name="title_activity_select_scheme">SelectSchemeActivity</string>
 </resources>

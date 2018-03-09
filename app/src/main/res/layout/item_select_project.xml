@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="38dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,29 +22,33 @@
             android:id="@+id/tvProjectName"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="40dp"
-            android:layout_marginStart="40dp"
-            android:layout_toEndOf="@+id/tvProjectId"
+            android:text="TextView"
+            android:layout_alignBaseline="@+id/tvProjectId"
+            android:layout_alignBottom="@+id/tvProjectId"
             android:layout_toRightOf="@+id/tvProjectId"
-            android:text="TextView" />
+            android:layout_toEndOf="@+id/tvProjectId"
+            android:layout_marginLeft="17dp"
+            android:layout_marginStart="17dp" />
 
         <TextView
             android:id="@+id/tvProjectStatic"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tvProjectName"
-            android:layout_centerHorizontal="true"
+            android:layout_alignBaseline="@+id/tvProjectName"
+            android:layout_alignBottom="@+id/tvProjectName"
+            android:layout_marginLeft="21dp"
+            android:layout_marginStart="21dp"
+            android:layout_toRightOf="@+id/tvProjectName"
             android:text="状态" />
 
         <TextView
             android:id="@+id/tvProjectAddress"
-            android:layout_width="200dp"
+            android:layout_width="260dp"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tvProjectStatic"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_toEndOf="@+id/tvProjectStatic"
+            android:layout_alignBaseline="@+id/tvProjectStatic"
+            android:layout_alignBottom="@+id/tvProjectStatic"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
             android:layout_toRightOf="@+id/tvProjectStatic"
             android:text="TextView" />
     </RelativeLayout>

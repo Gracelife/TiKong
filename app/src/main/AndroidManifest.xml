@@ -109,10 +109,23 @@
             android:label="PushService"
             android:process=":pushservice" />
 
-        <activity android:name=".activity.SelectProjectActivity"
-            android:screenOrientation="landscape"
+        <activity
+            android:name=".activity.SelectProjectActivity"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
-            ></activity>
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.SelectDriverActivity"
+            android:label="@string/title_activity_select_driver"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".activity.SelectSchemeActivity"
+            android:label="@string/title_activity_select_scheme"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.PlanLayoutOfPanoramaActivity"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>

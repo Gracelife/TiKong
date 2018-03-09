@@ -21,7 +21,9 @@ public class SelectProjectPresenter extends BasePresenter<SelectProjectContact.V
     public void getVideoMonitorList(String keyword, String pageindex,String pagesize,String uid) {
         getIView().showLoading("正在搜索中...");
         new SelectProjectModel()
-                .getVideoMonitorList(keyword, "28","116",pageindex,pagesize,"0","",uid)
+                .getVideoMonitorList(keyword, "28","0",pageindex,pagesize,"0","",uid)
+               //116是边坡设备
+                // .getVideoMonitorList(keyword, "28","116",pageindex,pagesize,"0","",uid)
                 .compose(getIView().bindLifecycle())
                 .subscribe(new HttpObserver<HttpResponse<ProjectBean>>() {
                     @Override

@@ -73,6 +73,7 @@ dependencies {
     /* 一个适用于ListView/GridView/RecyclerView的Adapter库,简化大量重复代码,支持多种布局,可自定义图片加载的实现*/
     //个推
     compile files('libs/GetuiSDK2.12.1.0.jar')
+    //RecyclerView
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.gyf.barlibrary:barlibrary:2.3.0'
@@ -86,8 +87,7 @@ dependencies {
     compile 'com.orhanobut:logger:2.1.1'
     compile 'com.classic.adapter:commonadapter:2.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
-    //RecyclerView
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
 }

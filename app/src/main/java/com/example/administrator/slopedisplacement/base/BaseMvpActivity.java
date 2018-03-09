@@ -22,10 +22,12 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActiv
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         mPresenter = loadPresenter();
         if (mPresenter != null)
             mPresenter.attachView(this);
+        super.onCreate(savedInstanceState);
+
+
         //初始化个推sdk
 //        parseManifests();
 //
