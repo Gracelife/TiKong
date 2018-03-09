@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="45dp">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#ffffff">
+
+        <TextView
+            android:id="@+id/tvSchemeAlaramListNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="序号" />
+
+        <TextView
+            android:id="@+id/tvSchemeAlaramListTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/tvSchemeAlaramListNum"
+            android:text="生成时间" />
+
+        <TextView
+            android:id="@+id/tvSchemeAlaramListTarget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/tvSchemeAlaramListTime"
+            android:text="目标" />
+
+        <LinearLayout
+            android:id="@+id/LinearLayout"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/tvSchemeAlaramListTarget"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvSchemeAlaramListMove1"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:visibility="gone"
+                android:text="本次位移" />
+
+            <TextView
+                android:id="@+id/tvSchemeAlaramListMove2"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:visibility="gone"
+                android:text="本次位移" />
+
+            <TextView
+                android:id="@+id/tvSchemeAlaramListMove3"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:visibility="gone"
+                android:text="本次位移" />
+
+            <TextView
+                android:id="@+id/tvSchemeAlaramListMove4"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:visibility="gone"
+                android:text="本次位移" />
+            <TextView
+                android:id="@+id/tvSchemeAlaramListMove5"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="本次位移" />
+        </LinearLayout>
+
+
+
+
+        <TextView
+            android:id="@+id/tvSchemeAlaramListMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/LinearLayout"
+            android:text="短信发出" />
+
+        <TextView
+            android:id="@+id/tvSchemeAlaramListNumConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/tvSchemeAlaramListMessage"
+            android:text="告警确认" />
+
+        <Button
+            android:id="@+id/btnSchemeAlaramListNumConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/tvSchemeAlaramListMessage"
+            android:visibility="gone"
+            android:text="确认" />
+
+    </RelativeLayout>
+
+</LinearLayout>

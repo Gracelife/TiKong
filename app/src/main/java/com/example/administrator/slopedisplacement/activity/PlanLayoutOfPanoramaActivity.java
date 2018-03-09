@@ -89,6 +89,7 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
     }
     private void showPopupWindow() {
         SchemeBean.ListBean schemeBean = ((SchemeBean.ListBean) intent.getSerializableExtra("SchemeBean"));
+        schemeAlarmList.clear();
         mPresenter.getSchemeAlarmList(schemeBean.getSchemeID() + "",  "", "", "", schemeAlarmListPageIndex + "", "10", UserInfoPref.getUserId() + "");
         View contentView;
         contentView = LayoutInflater.from(PlanLayoutOfPanoramaActivity.this).inflate(R.layout.view_popupwindow_listview, null);
@@ -102,6 +103,11 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
         LinearLayout pop_LinearLayout = (LinearLayout) contentView.findViewById(R.id.pop_LinearLayout);
         RecyclerView rvAlarmInformation = (RecyclerView) contentView.findViewById(R.id.rvAlarmInformation);
         rvAlarmInformation.setLayoutManager(new LinearLayoutManager(this));
+        for (SchemeAlarmListBean.ListBean list:schemeAlarmList) {
+            if(list.getStates() == 3){
+                schemeAlarmList.remove(list);
+            }
+        }
         getSchemeAlarmListAdapter = new GetSchemeAlarmListAdapter(R.layout.item_scheme_alarm_list,schemeAlarmList);
         rvAlarmInformation.setAdapter(getSchemeAlarmListAdapter);
         getSchemeAlarmListAdapter.setLoadMoreView(new CustomLoadMoreView());
@@ -124,6 +130,28 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
             }
         }, rvAlarmInformation);
         getSchemeAlarmListAdapter.disableLoadMoreIfNotFullPage();
+        getSchemeAlarmListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()){
+                    case R.id.tvSchemeAlaramListMove1:
+                        break;
+                    case R.id.tvSchemeAlaramListMove2:
+                        break;
+                    case R.id.tvSchemeAlaramListMove3:
+                        break;
+                    case R.id.tvSchemeAlaramListMove4:
+                        break;
+                    case R.id.tvSchemeAlaramListMove5:
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+        });
+
 
         pop_LinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -3,6 +3,7 @@ package com.example.administrator.slopedisplacement.mvp.presenter;
 
 import com.example.administrator.slopedisplacement.bean.DriverBean;
 import com.example.administrator.slopedisplacement.bean.PanoramaImgBean;
+import com.example.administrator.slopedisplacement.bean.SchemeAlarmListBean;
 import com.example.administrator.slopedisplacement.exception.ApiException;
 import com.example.administrator.slopedisplacement.http.HttpObserver;
 import com.example.administrator.slopedisplacement.http.HttpResponse;
@@ -43,17 +44,17 @@ public class PlanLayoutOfPanoramaPresenter extends BasePresenter<PlanLayoutOfPan
         new PlanLayoutOfPanoramaModel()
                 .getSchemeAlarmList(schemeID,states,startTime,endTime,pageindex,pagesize,uid)
                 .compose(getIView().bindLifecycle())
-                .subscribe(new HttpObserver<HttpResponse<PanoramaImgBean>>() {
+                .subscribe(new HttpObserver<HttpResponse<SchemeAlarmListBean>>() {
                     @Override
-                    public void onSuccess(HttpResponse<PanoramaImgBean> panoramaImgBean) {
+                    public void onSuccess(HttpResponse<SchemeAlarmListBean> schemeAlarmListBean) {
                         getIView().hideLoading();
-                        getIView().onGetPanoramaImgSuccess(panoramaImgBean.getData());
+                        getIView().onGetSchemeAlarmListSuccess(schemeAlarmListBean.getData());
                     }
 
                     @Override
                     public void onFail(ApiException msg) {
                         getIView().hideLoading();
-                        getIView().onGetPanoramaImgFail(msg.getMessage().toString());
+                        getIView().onGetSchemeAlarmListFail(msg.getMessage().toString());
                     }
                 });
     }
