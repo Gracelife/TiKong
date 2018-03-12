@@ -59,6 +59,26 @@ public class PlanLayoutOfPanoramaPresenter extends BasePresenter<PlanLayoutOfPan
                 });
     }
     @Override
+    public void updateSchemeAlarmByAlarmID(String alarmID, String states,String uid) {
+        getIView().showLoading("正在加载中...");
+        new PlanLayoutOfPanoramaModel()
+                .updateSchemeAlarmByAlarmID(alarmID,states,uid)
+                .compose(getIView().bindLifecycle())
+                .subscribe(new HttpObserver<HttpResponse>() {
+                    @Override
+                    public void onSuccess(HttpResponse httpResponse) {
+                        getIView().hideLoading();
+                        getIView().onUpdateSchemeAlarmByAlarmIDSuccess(httpResponse.getMsg());
+                    }
+
+                    @Override
+                    public void onFail(ApiException msg) {
+                        getIView().hideLoading();
+                        getIView().onUpdateSchemeAlarmByAlarmIDFail(msg.getMessage().toString());
+                    }
+                });
+    }
+    @Override
     public void getSchemeAlarm(String schemeID, String states,String uid) {
         getIView().showLoading("正在加载中...");
         new PlanLayoutOfPanoramaModel()

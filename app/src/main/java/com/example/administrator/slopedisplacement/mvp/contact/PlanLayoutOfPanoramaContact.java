@@ -3,6 +3,7 @@ package com.example.administrator.slopedisplacement.mvp.contact;
 
 import com.example.administrator.slopedisplacement.bean.PanoramaImgBean;
 import com.example.administrator.slopedisplacement.bean.SchemeAlarmListBean;
+import com.example.administrator.slopedisplacement.http.HttpResponse;
 import com.example.administrator.slopedisplacement.mvp.IView;
 
 /**
@@ -17,11 +18,14 @@ public class PlanLayoutOfPanoramaContact {
         void onGetSchemeAlarmListFail(String msg);
         void onGetSchemeAlarmSuccess(PanoramaImgBean panoramaImgBean);
         void onGetSchemeAlarmFail(String msg);
+        void onUpdateSchemeAlarmByAlarmIDSuccess(String msg);
+        void onUpdateSchemeAlarmByAlarmIDFail(String msg);
     }
 
     public interface Presenter {
         void getPanoramaImg(String camId, String pageindex,String pagesize,String uid);
         void getSchemeAlarmList(String schemeID, String states,String startTime,String endTime,String pageindex,String pagesize,String uid) ;
         void getSchemeAlarm(String schemeID, String states,String uid);
+        void updateSchemeAlarmByAlarmID(String alarmID, String states,String uid);
     }
 }

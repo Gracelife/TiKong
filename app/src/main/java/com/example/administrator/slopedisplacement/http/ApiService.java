@@ -59,4 +59,7 @@ public interface ApiService {
     @POST(UrlHelper.API+"GetSchemeAlarm")
     Observable<HttpResponse<PanoramaImgBean>> getSchemeAlarm(@Field("schemeID") String schemeID, @Field("states") String states,  @Field("uid") String uid);
 
+    @FormUrlEncoded
+    @POST(UrlHelper.API+"UpdateSchemeAlarmByAlarmID")
+    Observable<HttpResponse<HttpResponse>> updateSchemeAlarmByAlarmID(@Field("alarmID") String schemeID, @Field("states") String states,  @Field("uid") String uid);
 }

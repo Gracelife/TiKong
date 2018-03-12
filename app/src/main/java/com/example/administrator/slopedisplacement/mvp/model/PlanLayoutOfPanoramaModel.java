@@ -31,5 +31,10 @@ public class PlanLayoutOfPanoramaModel implements IModel {
                 .getSchemeAlarm(schemeID,states,uid)
                 .compose(NetTransformer.compose());
     }
-
+    public Observable updateSchemeAlarmByAlarmID(String alarmID, String states,String uid) {
+        return RetrofitUtils.Instance
+                .getApiService()
+                .updateSchemeAlarmByAlarmID(alarmID,states,uid)
+                .compose(NetTransformer.compose());
+    }
 }

@@ -143,12 +143,13 @@ public class CommonPopupWindow {
             return this;
         }
 
-        public Builder setFouse(boolean fouse) {
+        public Builder setFocusable(boolean fouse) {
             this.fouse = fouse;
             return this;
+
         }
 
-        public Builder setOutSideCancel(boolean outsidecancel) {
+        public Builder setOutsideTouchable(boolean outsidecancel) {
             this.outsidecancel = outsidecancel;
             return this;
         }

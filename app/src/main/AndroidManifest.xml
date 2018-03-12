@@ -42,7 +42,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.TestActivity">
+        <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -127,7 +127,9 @@
             android:name=".activity.PlanLayoutOfPanoramaActivity"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity.AlarmChartViewActivity"></activity>
+        <activity android:name=".activity.AlarmChartViewActivity"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>

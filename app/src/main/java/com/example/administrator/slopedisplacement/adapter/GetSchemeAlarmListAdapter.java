@@ -8,6 +8,7 @@ import com.example.administrator.slopedisplacement.R;
 import com.example.administrator.slopedisplacement.bean.DriverBean;
 import com.example.administrator.slopedisplacement.bean.SchemeAlarmListBean;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -20,6 +21,7 @@ public class GetSchemeAlarmListAdapter extends BaseItemDraggableAdapter<SchemeAl
     }
     @Override
     protected void convert(BaseViewHolder helper, SchemeAlarmListBean.ListBean item) {
+        DecimalFormat df   = new DecimalFormat("######0");
         helper.setText(R.id.tvSchemeAlaramListNum,item.getRowNumber()+"")
            .setText(R.id.tvSchemeAlaramListTime,item.getCreateTime()+"")
            .setText(R.id.tvSchemeAlaramListTarget,item.getAreaNmae())
@@ -30,22 +32,25 @@ public class GetSchemeAlarmListAdapter extends BaseItemDraggableAdapter<SchemeAl
             helper.getView(R.id.tvSchemeAlaramListMove3).setVisibility(View.VISIBLE);
             helper.getView(R.id.tvSchemeAlaramListMove4).setVisibility(View.VISIBLE);
             helper.getView(R.id.tvSchemeAlaramListMove5).setVisibility(View.GONE);
-            helper.setText(R.id.tvSchemeAlaramListMove1,item.getShift1()*1000+"("+item.getMonitorID1()+")")
-                    .setText(R.id.tvSchemeAlaramListMove2,item.getShift2()*1000+"("+item.getMonitorID2()+")")
-                    .setText(R.id.tvSchemeAlaramListMove3,item.getShift3()*1000+"("+item.getMonitorID3()+")")
-                    .setText(R.id.tvSchemeAlaramListMove4,item.getShift4()*1000+"("+item.getMonitorID4()+")")
+            helper.setText(R.id.tvSchemeAlaramListMove1,df.format(item.getShift1()*1000)+"("+item.getMonitorID1()+")")
+                    .setText(R.id.tvSchemeAlaramListMove2,df.format(item.getShift2()*1000)+"("+item.getMonitorID2()+")")
+                    .setText(R.id.tvSchemeAlaramListMove3,df.format(item.getShift3()*1000)+"("+item.getMonitorID3()+")")
+                    .setText(R.id.tvSchemeAlaramListMove4,df.format(item.getShift4()*1000)+"("+item.getMonitorID4()+")")
                     .addOnClickListener(R.id.tvSchemeAlaramListMove1)
                     .addOnClickListener(R.id.tvSchemeAlaramListMove2)
                     .addOnClickListener(R.id.tvSchemeAlaramListMove3)
                     .addOnClickListener(R.id.tvSchemeAlaramListMove4);
         }else{
-            helper.setText(R.id.tvSchemeAlaramListMove5,item.getShift1()*1000+"("+item.getMonitorID1()+")")
+            helper.setText(R.id.tvSchemeAlaramListMove5,df.format(item.getShift1()*1000)+"("+item.getMonitorID1()+")")
                     .addOnClickListener(R.id.tvSchemeAlaramListMove5);
         }
         if(item.getStates() == 0 || item.getStates() == 1){
             helper.getView(R.id.btnSchemeAlaramListNumConfirm).setVisibility(View.VISIBLE);
             helper.getView(R.id.tvSchemeAlaramListNumConfirm).setVisibility(View.GONE);
+            helper.addOnClickListener(R.id.btnSchemeAlaramListNumConfirm);
         }else{
+            helper.getView(R.id.tvSchemeAlaramListNumConfirm).setVisibility(View.VISIBLE);
+            helper.getView(R.id.btnSchemeAlaramListNumConfirm).setVisibility(View.GONE);
             helper.setText(R.id.tvSchemeAlaramListNumConfirm,"已确认");
         }
     }
