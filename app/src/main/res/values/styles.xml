@@ -62,4 +62,18 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- 通用对话框风格 -->
+    <style name="CommonDialogStyle" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@color/transparent_color</item>
+    </style>
+    <!-- 通用对话框按钮风格 -->
+    <style name="CommonDialogBtnStyle">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@color/white_color</item>
+    </style>
 </resources>

@@ -304,4 +304,7 @@
     <color name="btnColor">#58befc</color>
 
     <color name="text_color">#595959</color>
+    <color name="btn_blue_color">#3b93fb</color>
+    <color name="btn_orange_color">#fe9606</color>
+    <color name="white_color">#ffffff</color>
 </resources>
