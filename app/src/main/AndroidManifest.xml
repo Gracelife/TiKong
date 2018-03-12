@@ -115,17 +115,19 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.SelectDriverActivity"
-            android:label="@string/title_activity_select_driver"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
-            android:screenOrientation="landscape"/>
+            android:label="@string/title_activity_select_driver"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".activity.SelectSchemeActivity"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
             android:label="@string/title_activity_select_scheme"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.PlanLayoutOfPanoramaActivity"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
-            android:screenOrientation="landscape"/>
-        <activity android:name=".activity.PlanLayoutOfPanoramaActivity"
-            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
+        <activity android:name=".activity.AlarmChartViewActivity"></activity>
     </application>
 
 </manifest>

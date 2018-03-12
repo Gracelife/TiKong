@@ -134,21 +134,68 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
 
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                SchemeAlarmListBean.ListBean schemeAlarmListBean =  schemeAlarmList.get(position);
+                intent.setClass(PlanLayoutOfPanoramaActivity.this,AlarmChartViewActivity.class);
                 switch (view.getId()){
                     case R.id.tvSchemeAlaramListMove1:
+                        //MonitorID1 Aha1 Ava1 Shift1 Path1a nextPath1a oldPath1a
+                        intent.putExtra("MonitorID",schemeAlarmListBean.getMonitorID1());
+                        intent.putExtra("Aha",schemeAlarmListBean.getAha1());
+                        intent.putExtra("Ava",schemeAlarmListBean.getAva1());
+                        intent.putExtra("Shift",schemeAlarmListBean.getShift1());
+                        intent.putExtra("Patha",schemeAlarmListBean.getPath1a()+"");
+                        intent.putExtra("nextPatha",schemeAlarmListBean.getNextPath1a()+"");
+                        intent.putExtra("oldPatha",schemeAlarmListBean.getOldPath1a());
                         break;
                     case R.id.tvSchemeAlaramListMove2:
+                        //MonitorID2 Aha2 Ava2 Shift2 Path2a nextPath2a oldPath2a
+                        intent.putExtra("MonitorID",schemeAlarmListBean.getMonitorID2());
+                        intent.putExtra("Aha",schemeAlarmListBean.getAha2());
+                        intent.putExtra("Ava",schemeAlarmListBean.getAva2());
+                        intent.putExtra("Shift",schemeAlarmListBean.getShift2());
+                        intent.putExtra("Patha",schemeAlarmListBean.getPath2a()+"");
+                        intent.putExtra("nextPatha",schemeAlarmListBean.getNextPath2a()+"");
+                        intent.putExtra("oldPatha",schemeAlarmListBean.getOldPath2a());
                         break;
                     case R.id.tvSchemeAlaramListMove3:
+                        //MonitorID3 Aha3 Ava3 Shift3 Path3a nextPath3a oldPath3a
+                        intent.putExtra("MonitorID",schemeAlarmListBean.getMonitorID3());
+                        intent.putExtra("Aha",schemeAlarmListBean.getAha3());
+                        intent.putExtra("Ava",schemeAlarmListBean.getAva3());
+                        intent.putExtra("Shift",schemeAlarmListBean.getShift3());
+                        intent.putExtra("Patha",schemeAlarmListBean.getPath3a()+"");
+                        intent.putExtra("nextPatha",schemeAlarmListBean.getNextPath3a()+"");
+                        intent.putExtra("oldPatha",schemeAlarmListBean.getOldPath3a());
                         break;
                     case R.id.tvSchemeAlaramListMove4:
+                        //MonitorID4 Aha4 Ava4 Shift4 Path4a nextPath4a oldPath4a
+                        intent.putExtra("MonitorID",schemeAlarmListBean.getMonitorID4());
+                        intent.putExtra("Aha",schemeAlarmListBean.getAha4());
+                        intent.putExtra("Ava",schemeAlarmListBean.getAva4());
+                        intent.putExtra("Shift",schemeAlarmListBean.getShift4());
+                        intent.putExtra("Patha",schemeAlarmListBean.getPath4a()+"");
+                        intent.putExtra("nextPatha",schemeAlarmListBean.getNextPath4a()+"");
+                        intent.putExtra("oldPatha",schemeAlarmListBean.getOldPath4a());
                         break;
                     case R.id.tvSchemeAlaramListMove5:
+                        if(schemeAlarmList.get(position).getTypes() == 1){
+                            showToast("此点为定点");
+                        }else{
+                            intent.putExtra("MonitorID",schemeAlarmListBean.getMonitorID1());
+                            intent.putExtra("Aha",schemeAlarmListBean.getAha1());
+                            intent.putExtra("Ava",schemeAlarmListBean.getAva1());
+                            intent.putExtra("Shift",schemeAlarmListBean.getShift1());
+                            intent.putExtra("Patha",schemeAlarmListBean.getPath1a()+"");
+                            intent.putExtra("nextPatha",schemeAlarmListBean.getNextPath1a()+"");
+                            intent.putExtra("oldPatha",schemeAlarmListBean.getOldPath1a());
+
+                            //MonitorID1 Aha1 Ava1 Shift1 Path1a nextPath1a oldPath1a
+                        }
                         break;
                     default:
                         break;
                 }
-
+                startActivity(intent);
             }
         });
 

@@ -24,7 +24,7 @@ public class GetSchemeAlarmListAdapter extends BaseItemDraggableAdapter<SchemeAl
            .setText(R.id.tvSchemeAlaramListTime,item.getCreateTime()+"")
            .setText(R.id.tvSchemeAlaramListTarget,item.getAreaNmae())
            .setText(R.id.tvSchemeAlaramListMessage,item.getSendNun());
-        if(item.getTypes() == 1){
+        if(item.getTypes() == 0){
             helper.getView(R.id.tvSchemeAlaramListMove1).setVisibility(View.VISIBLE);
             helper.getView(R.id.tvSchemeAlaramListMove2).setVisibility(View.VISIBLE);
             helper.getView(R.id.tvSchemeAlaramListMove3).setVisibility(View.VISIBLE);

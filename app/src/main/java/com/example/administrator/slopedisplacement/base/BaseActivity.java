@@ -83,7 +83,7 @@ public abstract class BaseActivity extends RxActivity {
     /**
      * 设置标题栏
      */
-    private void setToolBar(String title) {
+    protected void setToolBar(String title) {
         mTitle = (TextView) findViewById(R.id.actionbar_mid_tv);
         mTitle.setText(title);
         mLeftBtn = (ImageView) findViewById(R.id.actionbar_left_btn);
