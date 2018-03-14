@@ -76,4 +76,21 @@
         <item name="android:textSize">18dp</item>
         <item name="android:textColor">@color/white_color</item>
     </style>
+    <!-- 垂直分割线 -->
+    <style name="LineVerticalStyle">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/line_color</item>
+    </style>
+    <!-- 水平分割线 -->
+    <style name="LineHorizontalStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/line_color</item>
+    </style>
+
+    <style name="TvDataStyle">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_data</item>
+    </style>
 </resources>

@@ -16,6 +16,8 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.classic.adapter.BaseAdapterHelper;
+
 /**
  *
  */
@@ -27,6 +29,11 @@ public class BindViewHelper {
     BindViewHelper(View convertView, Context context) {
         this.mContext = context;
         mConvertView = convertView;
+    }
+
+    public BindViewHelper setOnClickListener(@IdRes int viewId, @NonNull View.OnClickListener listener) {
+        retrieveView(viewId).setOnClickListener(listener);
+        return this;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

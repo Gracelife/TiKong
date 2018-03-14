@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/black"
     tools:context="com.example.administrator.slopedisplacement.activity.PlanLayoutOfPanoramaActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8.5"
-       >
+        android:layout_weight="8.5">
 
         <ImageView
             android:id="@+id/ivPlanLayoutOfPanorama"
@@ -30,6 +30,14 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="12dp"
             app:srcCompat="@drawable/back" />
+        <ImageView
+            android:id="@+id/ivMore"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginRight="@dimen/margin"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/iv_more"/>
     </RelativeLayout>
 
     <LinearLayout

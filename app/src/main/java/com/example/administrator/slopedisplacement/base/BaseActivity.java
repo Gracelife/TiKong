@@ -6,6 +6,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.example.administrator.slopedisplacement.utils.ActivityUtils;
 import com.igexin.sdk.PushManager;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.components.RxActivity;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.io.File;
 
@@ -36,7 +38,7 @@ import static android.content.ContentValues.TAG;
  *
  */
 
-public abstract class BaseActivity extends RxActivity {
+public abstract class BaseActivity extends RxAppCompatActivity {
 
     protected TextView mTitle;
     protected ImageView mLeftBtn;
@@ -48,6 +50,7 @@ public abstract class BaseActivity extends RxActivity {
     /**
      * 获取布局id
      */
+    @LayoutRes
     protected abstract int getLayoutId();
 
     /**

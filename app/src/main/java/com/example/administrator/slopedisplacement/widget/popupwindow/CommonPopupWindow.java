@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -115,7 +116,7 @@ public class CommonPopupWindow {
     /**
      * builder 类
      */
-    public abstract static class Builder implements IPopupwindowBindView {
+    public abstract static class Builder implements IPopupWindowBindView {
         private int mConvertViewId;
         private int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         private int height = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -127,7 +128,7 @@ public class CommonPopupWindow {
             mContext = context;
         }
 
-        public Builder setContentView( int convertViewId) {
+        public Builder setContentView(@LayoutRes int convertViewId) {
             this.mConvertViewId = convertViewId;
             return this;
         }
