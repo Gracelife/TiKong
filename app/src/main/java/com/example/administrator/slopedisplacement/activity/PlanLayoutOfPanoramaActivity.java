@@ -68,6 +68,7 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
     protected void initData(Bundle savedInstanceState) {
         intent = getIntent();
         String camId = ((DriverBean.ListBean) intent.getSerializableExtra("DriverBean")).getCamId() + "";
+        schemeBean = ((SchemeBean.ListBean) intent.getSerializableExtra("SchemeBean"));
         mPresenter.getPanoramaImg(camId, pageIndex + "", "10", UserInfoPref.getUserId());
 
 
@@ -121,7 +122,7 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
         mPopWindow = new CommonPopupWindow.Builder(this) {
             @Override
             public void popBindView(BindViewHelper popupWindowBindView) {
-                schemeBean = ((SchemeBean.ListBean) intent.getSerializableExtra("SchemeBean"));
+
                 schemeAlarmList.clear();
                 mPresenter.getSchemeAlarmList(schemeBean.getSchemeID() + "", "", "", "", schemeAlarmListPageIndex + "", "10", UserInfoPref.getUserId() + "");
                 LinearLayout pop_LinearLayout = (LinearLayout) popupWindowBindView.getView(R.id.pop_LinearLayout);
