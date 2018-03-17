@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开始日期:" />
+
+        <TextView
+            android:id="@+id/btFixedFlowDataStart"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@drawable/shape_blue_round"
+            android:text="" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_small"
+            android:text="结束日期：" />
+
+        <TextView
+            android:id="@+id/btFixedFlowDataEnd"
+            android:layout_width="85dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_blue_round"
+            android:text=" " />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_small"
+            android:text="定点:" />
+
+        <Spinner
+            android:id="@+id/spnFixedFlowDataDot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/btFixedFlowDataSearch"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/iv_search" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/TvDataStyle"
+            android:layout_weight="2"
+            android:text="序号" />
+
+        <View
+            style="@style/LineVerticalStyle"
+            android:layout_width="1dp" />
+
+        <TextView
+            style="@style/TvDataStyle"
+            android:layout_weight="4"
+            android:text="生成时间" />
+
+        <View
+            style="@style/LineVerticalStyle"
+            android:layout_width="1dp" />
+
+        <TextView
+            style="@style/TvDataStyle"
+            android:layout_weight="2"
+            android:text="定点" />
+
+        <View
+            style="@style/LineVerticalStyle"
+            android:layout_width="1dp" />
+
+        <TextView
+            style="@style/TvDataStyle"
+            android:layout_weight="3"
+            android:text="本次位移(mm)" />
+
+        <View
+            style="@style/LineVerticalStyle"
+            android:layout_width="1dp" />
+
+        <TextView
+            style="@style/TvDataStyle"
+            android:layout_weight="3"
+            android:text="阶段位移(mm)" />
+
+        <View
+            style="@style/LineVerticalStyle"
+            android:layout_width="1dp" />
+
+        <TextView
+            style="@style/TvDataStyle"
+            android:layout_weight="3"
+            android:text="累计位移(mm)" />
+
+        <View
+            style="@style/LineVerticalStyle"
+            android:layout_width="1dp" />
+
+        <TextView
+            style="@style/TvDataStyle"
+            android:layout_weight="3"
+            android:text="距离(m)" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvFixedFlowData"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+</LinearLayout>

@@ -25,6 +25,7 @@ public class LoginPresenter extends BasePresenter<LoginContact.View> implements 
                 .subscribe(new HttpObserver<HttpResponse<LoginBean>>() {
                     @Override
                     public void onSuccess(HttpResponse<LoginBean> loginBean) {
+                        getIView().hideLoading();
                         getIView().onLoginSuccess(loginBean.getData());
                     }
 
@@ -37,12 +38,14 @@ public class LoginPresenter extends BasePresenter<LoginContact.View> implements 
     }
     @Override
     public void updateLoginMessage(String userName, String clentid) {
+        getIView().showLoading("正在登录中...");
         new LoginModel()
                 .updateLoginMessage(userName, clentid)
                 .compose(getIView().bindLifecycle())
                 .subscribe(new HttpObserver<HttpResponse>() {
                     @Override
                     public void onSuccess(HttpResponse httpResponse) {
+                        getIView().hideLoading();
                         getIView().onUpdateLoginMessageSuccess(httpResponse);
                     }
 

@@ -48,7 +48,7 @@ public class SelectProjectActivity extends BaseMvpActivity<SelectProjectPresente
 
     @Override
     protected void initView() {
-
+        setToolBar("项目选择");
         rvProject.setLayoutManager(new LinearLayoutManager(this));
         selectProjectAdapter = new SelectProjectAdapter(R.layout.item_select_project,dataList);
         rvProject.setAdapter(selectProjectAdapter);

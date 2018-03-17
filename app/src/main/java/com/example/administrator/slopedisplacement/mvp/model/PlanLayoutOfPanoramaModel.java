@@ -1,7 +1,6 @@
 package com.example.administrator.slopedisplacement.mvp.model;
 
 
-
 import com.example.administrator.slopedisplacement.http.NetTransformer;
 import com.example.administrator.slopedisplacement.http.RetrofitUtils;
 import com.example.administrator.slopedisplacement.mvp.IModel;
@@ -13,28 +12,45 @@ import io.reactivex.Observable;
  */
 
 public class PlanLayoutOfPanoramaModel implements IModel {
-    public Observable getPanoramaImg(String camId,String startime,String endTime, String pageindex,String pagesize,String uid) {
+    public Observable getPanoramaImg(String camId, String startime, String endTime, String pageindex, String pagesize, String uid) {
         return RetrofitUtils.Instance
                 .getApiService()
-                .getPanoramaImg(camId,startime,endTime,pageindex,pagesize,uid)
+                .getPanoramaImg(camId, startime, endTime, pageindex, pagesize, uid)
                 .compose(NetTransformer.compose());
     }
-    public Observable getSchemeAlarmList(String schemeID, String states,String startTime,String endTime,String pageindex,String pagesize,String uid) {
+
+    public Observable getSchemeAlarmList(String schemeID, String states, String startTime, String endTime, String pageindex, String pagesize, String uid) {
         return RetrofitUtils.Instance
                 .getApiService()
-                .getSchemeAlarmList(schemeID,states,startTime,endTime,pageindex,pagesize,uid)
+                .getSchemeAlarmList(schemeID, states, startTime, endTime, pageindex, pagesize, uid)
                 .compose(NetTransformer.compose());
     }
-    public Observable getSchemeAlarm(String schemeID, String states,String uid) {
+
+    public Observable getSchemeAlarm(String schemeID, String states, String uid) {
         return RetrofitUtils.Instance
                 .getApiService()
-                .getSchemeAlarm(schemeID,states,uid)
+                .getSchemeAlarm(schemeID, states, uid)
                 .compose(NetTransformer.compose());
     }
-    public Observable updateSchemeAlarmByAlarmID(String alarmID, String states,String uid) {
+
+    public Observable updateSchemeAlarmByAlarmID(String alarmID, String states, String uid) {
         return RetrofitUtils.Instance
                 .getApiService()
-                .updateSchemeAlarmByAlarmID(alarmID,states,uid)
+                .updateSchemeAlarmByAlarmID(alarmID, states, uid)
+                .compose(NetTransformer.compose());
+    }
+
+    public Observable getDatSchemeAreaList(String schemeID, String uid) {
+        return RetrofitUtils.Instance
+                .getApiService()
+                .getDatSchemeAreaList(schemeID, uid)
+                .compose(NetTransformer.compose());
+    }
+
+    public Observable getDatSchemeFixedList(String schemeID, String uid) {
+        return RetrofitUtils.Instance
+                .getApiService()
+                .getDatSchemeFixedList(schemeID, uid)
                 .compose(NetTransformer.compose());
     }
 }

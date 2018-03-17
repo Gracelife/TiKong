@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
@@ -15,7 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- *
+ * 懒加载的Fragment
  */
 
 public abstract class BaseLazyFragment extends RxFragment {
@@ -26,6 +27,7 @@ public abstract class BaseLazyFragment extends RxFragment {
     protected boolean mIsPrepared;
     //标志位 fragment是否可见
     protected boolean mIsVisible;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
         mParentView = inflater.inflate(getLayoutResId(), container, false);
@@ -37,21 +39,19 @@ public abstract class BaseLazyFragment extends RxFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mUnbinder = ButterKnife.bind(this, view);
-        initView(savedInstanceState);
+        mIsPrepared = true;
+        lazyLoad();
     }
 
     /**
      * 设置布局
+     *
      * @return
      */
     @LayoutRes
     public abstract int getLayoutResId();
 
-    /**
-     * 初始化views(完成视图创建后，初始控件)
-     * @param state
-     */
-    public abstract void initView(Bundle state);
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -122,14 +122,31 @@ public abstract class BaseLazyFragment extends RxFragment {
         if (!mIsPrepared || !mIsVisible) {
             return;
         }
+        initView();
         lazyLoadDate();
         mIsPrepared = false;
     }
-    protected void lazyLoadDate(){}
+
+    /**
+     * 初始化views(完成视图创建后，初始控件)
+     */
+    public abstract void initView();
+
+    protected void lazyLoadDate() {
+    }
+
     /**
      * fragment隐藏
      */
     protected void onInvisible() {
     }
 
+    /**
+     * 显示吐司()
+     *
+     * @param msg 内容
+     */
+    public void showToast(String msg) {
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+    }
 }

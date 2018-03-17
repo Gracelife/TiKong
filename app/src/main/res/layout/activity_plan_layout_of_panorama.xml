@@ -30,14 +30,6 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="12dp"
             app:srcCompat="@drawable/back" />
-        <ImageView
-            android:id="@+id/ivMore"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="@dimen/margin"
-            android:layout_marginRight="@dimen/margin"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/iv_more"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -67,12 +59,12 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btnPanoramaDataReport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="Button" />
+                android:text="数据查看" />
         </RelativeLayout>
 
         <RelativeLayout

@@ -94,7 +94,7 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActiv
 //    private String appkey = "";
 //    private String appsecret = "";
 //    private String appid = "";
-//    private Class userPushService = GeTuiPushService.class;
+//    private Class userPushService = PushGeTuiPushService.class;
 //    private static final int REQUEST_PERMISSION = 0;
 
 
@@ -130,7 +130,7 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActiv
 //        // 注册 intentService 后 PushDemoReceiver 无效, sdk 会使用 DemoIntentService 传递数据,
 //        // AndroidManifest 对应保留一个即可(如果注册 DemoIntentService, 可以去掉 PushDemoReceiver, 如果注册了
 //        // IntentService, 必须在 AndroidManifest 中声明)
-//        PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), GeTuiIntentService.class);
+//        PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), PushGeTuiIntentService.class);
 //
 //        // 应用未启动, 个推 service已经被唤醒,显示该时间段内离线消息
 //        if (ProApplication.payloadData != null) {

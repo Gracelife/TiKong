@@ -44,6 +44,7 @@ public class SelectSchemeActivity extends BaseMvpActivity<SelectSchemePresenter>
     }
     @Override
     protected void initData(Bundle savedInstanceState) {
+        setToolBar("方案选择");
         intent = getIntent();
         schemeBean = (SchemeBean) intent.getSerializableExtra("SchemeList");
         rvScheme.setLayoutManager(new LinearLayoutManager(this));

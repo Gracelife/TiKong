@@ -5,12 +5,15 @@ import android.graphics.Color;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.example.administrator.slopedisplacement.R;
 import com.example.administrator.slopedisplacement.base.BaseActivity;
+import com.example.administrator.slopedisplacement.utils.FormatUtils;
 import com.example.administrator.slopedisplacement.utils.L;
+import com.example.administrator.slopedisplacement.utils.TimePickerUtils;
 import com.example.administrator.slopedisplacement.widget.CommonDialog;
 import com.example.administrator.slopedisplacement.widget.popupwindow.BindViewHelper;
 import com.example.administrator.slopedisplacement.widget.popupwindow.CommonPopupWindow;
@@ -40,6 +43,8 @@ import butterknife.OnClick;
 public class TestActivity extends BaseActivity {
     @BindView(R.id.line_chart_test)
     LineChart mChart;
+    @BindView(R.id.tv_text)
+    TextView textView;
 
     @Override
     protected int getLayoutId() {
@@ -132,20 +137,7 @@ public class TestActivity extends BaseActivity {
     }
 
     private void showPickerView() {
-        //时间选择器
-        TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                SimpleDateFormat time = new SimpleDateFormat("yyyy MM dd HH mm ss");
-                L.e(time.format(date));
-//                tvTime.setText(getTime(date));
-            }
-        })
-                .setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
-                .isCyclic(true)//是否循环滚动
-                .build();
-        pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
-        pvTime.show();
+//        TimePickerUtils.showPickerView(getActivity(), "开始时间",textView, "1234-11-11", "");
     }
 
     private void setData(int count, float range) {
@@ -269,7 +261,8 @@ public class TestActivity extends BaseActivity {
                 break;
             case R.id.btn_test2:
                 Toast.makeText(getActivity(), "点击了2", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getActivity(), DataReportActivity.class));
+                showPickerView();
+//                startActivity(new Intent(getActivity(), DataReportActivity.class));
 
 //                showPop();
 //                showPickerView();

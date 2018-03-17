@@ -17,7 +17,7 @@ public class UserInfoPref {
 
     private static final String mSavePassWord = "mSavePassWord";//是否记住密码 true  false
 
-
+    private static final String mGeTuiClientId = "mGeTuiClientId";//个推的ClientId
     private static PrefHelper mPrefHelper = PrefHelper.Instance;
 
     public static String getUserName() {
@@ -72,6 +72,13 @@ public class UserInfoPref {
         mPrefHelper.setPref(mSavePassWord, loginState);
     }
 
+    public static String getGeTuiClientId() {
+        return mPrefHelper.getPref(mGeTuiClientId, "");
+    }
+
+    public static void setGeTuiClientId(@NonNull String geTuiClientId) {
+        mPrefHelper.setPref(mGeTuiClientId, geTuiClientId);
+    }
 
     /**
      * 保存用户登录信息

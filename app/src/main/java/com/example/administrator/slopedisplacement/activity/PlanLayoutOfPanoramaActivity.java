@@ -22,7 +22,10 @@ import com.example.administrator.slopedisplacement.bean.DriverBean;
 import com.example.administrator.slopedisplacement.bean.PanoramaImgBean;
 import com.example.administrator.slopedisplacement.bean.SchemeAlarmListBean;
 import com.example.administrator.slopedisplacement.bean.SchemeBean;
+import com.example.administrator.slopedisplacement.bean.json.GetDatSchemeAreaListJson;
+import com.example.administrator.slopedisplacement.bean.json.GetDatSchemeFixedListJson;
 import com.example.administrator.slopedisplacement.db.UserInfoPref;
+import com.example.administrator.slopedisplacement.exception.ErrorType;
 import com.example.administrator.slopedisplacement.mvp.contact.PlanLayoutOfPanoramaContact;
 import com.example.administrator.slopedisplacement.mvp.presenter.PlanLayoutOfPanoramaPresenter;
 import com.example.administrator.slopedisplacement.utils.JumpToUtils;
@@ -54,6 +57,9 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
     int SchemeAlarmListPosition;
     SchemeBean.ListBean schemeBean;
 
+    private GetDatSchemeAreaListJson mArealListJson;//区域列表数据
+    private GetDatSchemeFixedListJson mFixedListJson;//定点列表数据
+
     @Override
     protected PlanLayoutOfPanoramaPresenter loadPresenter() {
         return new PlanLayoutOfPanoramaPresenter();
@@ -70,8 +76,8 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
         String camId = ((DriverBean.ListBean) intent.getSerializableExtra("DriverBean")).getCamId() + "";
         schemeBean = ((SchemeBean.ListBean) intent.getSerializableExtra("SchemeBean"));
         mPresenter.getPanoramaImg(camId, pageIndex + "", "10", UserInfoPref.getUserId());
-
-
+        mPresenter.getDatSchemeAreaList(schemeBean.getSchemeID() + "", UserInfoPref.getUserId());
+        mPresenter.getDatSchemeFixedList(schemeBean.getSchemeID() + "", UserInfoPref.getUserId());
     }
 
     @Override
@@ -79,44 +85,6 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
 
     }
 
-    @OnClick({R.id.btnAlarmInformation, R.id.btnPanorama, R.id.ivMore})
-    void OnClick(View view) {
-        switch (view.getId()) {
-            case R.id.btnAlarmInformation:
-                showPopupWindow();
-                break;
-            case R.id.btnPanorama:
-                showPanoramaPopupWindow();
-                break;
-            case R.id.ivMore:
-                showMorePop(view);
-                break;
-        }
-    }
-
-    private CommonPopupWindow mMorePop;
-
-    /**
-     * 显示更多选择
-     */
-    private void showMorePop(View view) {
-        if (mMorePop == null) {
-            mMorePop = new CommonPopupWindow.Builder(getActivity()) {
-                @Override
-                public void popBindView(BindViewHelper helper) {
-                    //跳转到数据报表页面
-                    helper.setOnClickListener(R.id.tvItemMoreDataReport,
-                            v -> JumpToUtils.toDataReportActivity(getActivity(), schemeBean.getSchemeID()));
-                    //跳转到视频查看页面
-                    helper.setOnClickListener(R.id.tvItemMoreVideoView, v -> JumpToUtils.toDataReportActivity(getActivity(), schemeBean.getSchemeID()));
-                    //跳转到全景图页面
-                    helper.setOnClickListener(R.id.tvItemMorePanorama, v -> JumpToUtils.toDataReportActivity(getActivity(), schemeBean.getSchemeID()));
-                }
-            }.setContentView(R.layout.item_more)
-                    .builder();
-        }
-        mMorePop.showAsLaction(view, Gravity.BOTTOM, 0, 0);
-    }
 
     private void showPopupWindow() {
         mPopWindow = new CommonPopupWindow.Builder(this) {
@@ -377,5 +345,44 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
     @Override
     public void onUpdateSchemeAlarmByAlarmIDFail(String msg) {
 
+    }
+
+
+    @Override
+    public void onGetDatSchemeAreaListSuccess(GetDatSchemeAreaListJson arealListJson) {
+        mArealListJson = arealListJson;
+    }
+
+    @Override
+    public void onGetDatSchemeFixedListSuccess(GetDatSchemeFixedListJson fixedListJson) {
+        mFixedListJson = fixedListJson;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mPopWindow != null) {
+            mPopWindow.dismiss();
+        }
+    }
+
+    @OnClick({R.id.btnAlarmInformation, R.id.btnPanorama, R.id.btnPanoramaDataReport})
+    void OnClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnAlarmInformation:
+                showPopupWindow();
+                break;
+            case R.id.btnPanorama:
+                showPanoramaPopupWindow();
+                break;
+            case R.id.btnPanoramaDataReport://跳转到查看数据页面
+
+                if (mArealListJson == null || mFixedListJson == null) {
+                    showToast("错误码：" + ErrorType.DATE_NULL);
+                } else {
+                    JumpToUtils.toDataReportActivity(getActivity(), mArealListJson, mFixedListJson,schemeBean.getSchemeID()+"");
+                }
+                break;
+        }
     }
 }

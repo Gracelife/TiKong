@@ -34,7 +34,7 @@ public class CommonPopupWindow {
      * popup 消失
      */
     public void dismiss() {
-        if (mPopupWindow != null) {
+        if (mPopupWindow != null && mPopupWindow.isShowing()) {
             mPopupWindow.dismiss();
         }
     }

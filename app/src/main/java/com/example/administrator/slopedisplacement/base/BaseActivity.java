@@ -1,14 +1,7 @@
 package com.example.administrator.slopedisplacement.base;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
-import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -16,23 +9,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.slopedisplacement.R;
-import com.example.administrator.slopedisplacement.application.ProApplication;
-import com.example.administrator.slopedisplacement.mvp.BasePresenter;
-import com.example.administrator.slopedisplacement.mvp.IView;
-import com.example.administrator.slopedisplacement.server.GeTuiIntentService;
-import com.example.administrator.slopedisplacement.server.GeTuiPushService;
 import com.example.administrator.slopedisplacement.utils.ActivityUtils;
-import com.igexin.sdk.PushManager;
-import com.trello.rxlifecycle2.LifecycleTransformer;
-import com.trello.rxlifecycle2.components.RxActivity;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
-
-import java.io.File;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-
-import static android.content.ContentValues.TAG;
 
 /**
  *
@@ -130,7 +111,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * @param msg 内容
      */
     public void showToast(String msg){
-        Toast.makeText(getActivity(),msg,Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(),msg,Toast.LENGTH_SHORT).show();
     }
 }
 

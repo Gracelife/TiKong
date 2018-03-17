@@ -8,11 +8,12 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
-import android.util.Log;
 
-import com.example.administrator.slopedisplacement.utils.GeTuiUtil;
-import com.example.administrator.slopedisplacement.utils.PermissionsUtils;
+import com.example.administrator.slopedisplacement.pushmi.PushMiUtils;
+import com.example.administrator.slopedisplacement.utils.L;
+import com.example.administrator.slopedisplacement.utils.PhoneSystemUtils;
 import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.BuildConfig;
 import com.orhanobut.logger.Logger;
 
 
@@ -23,26 +24,25 @@ import com.orhanobut.logger.Logger;
 
 public class ProApplication extends Application {
     private static Context mContext;
-   // public LocationService locationService;
+    // public LocationService locationService;
     public Vibrator mVibrator;
-    private  final String TAG = this.getClass().getSimpleName();
-    private static GeTuiHandler handler;
-    public static  String clentid;
-    /**
-     * 应用未启动, 个推 service已经被唤醒,保存在该时间段内离线消息(此时 GetuiSdkDemoActivity.tLogView == null)
-     */
-    public static StringBuilder payloadData = new StringBuilder();
+
+    private static ProApplication mInstance;
+    public static ProApplication getInstance() {
+        return mInstance;
+    }
     @Override
     public void onCreate() {
         super.onCreate();
         //locationService = new LocationService(getApplicationContext());
-        mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
-       // SDKInitializer.initialize(getApplicationContext());
+        mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
+        // SDKInitializer.initialize(getApplicationContext());
         mContext = this;
         mInstance = this;
+        L.isDebug = true;//true显示log日志，false不显示
         Logger.addLogAdapter(new AndroidLogAdapter());
-        if (handler == null) {
-            handler = new GeTuiHandler();
+        if (PhoneSystemUtils.isMIUI()) {
+            PushMiUtils.init();
         }
     }
 
@@ -52,67 +52,4 @@ public class ProApplication extends Application {
 
     }
 
-    private static ProApplication mInstance;
-
-
-    public static ProApplication getInstance() {
-        return mInstance;
-    }
-
-    /**
-     * @return
-     * 全局的上下文
-     */
-    public static Context getmContext() {
-        return mContext;
-    }
-
-    private Intent intent;
-
-    public void putIntent(Intent intent) {
-        this.intent = intent;
-    }
-
-    public Intent getIntent() {
-        return this.intent;
-    }
-
-    public void jumpToTargetActivity(Context context) {
-
-        context.startActivity(intent);
-        this.intent = null;
-    }
-    public static void sendMessage(Message msg) {
-        handler.sendMessage(msg);
-    }
-
-    public static class GeTuiHandler extends Handler {
-
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 0:
-
-                       /* payloadData.append((String) msg.obj);
-                        payloadData.append("\n");
-                        if (GetuiSdkDemoActivity.tLogView != null) {
-                            GetuiSdkDemoActivity.tLogView.append(msg.obj + "\n");
-                        }*/
-
-                    break;
-
-                case 1:
-                    Logger.e("msg.obj:"+(String) msg.obj);
-                    clentid = (String) msg.obj;
-
-                      /*  if (GetuiSdkDemoActivity.tLogView != null) {
-
-                            GetuiSdkDemoActivity.tView.setText((String) msg.obj);
-                            Log.e("111", GetuiSdkDemoActivity.tView.getText()+"");
-                        }*/
-
-                    break;
-            }
-        }
-    }
 }

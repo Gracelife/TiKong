@@ -5,8 +5,9 @@ import android.content.Intent;
 
 import com.example.administrator.slopedisplacement.R;
 import com.example.administrator.slopedisplacement.base.BaseActivity;
-import com.example.administrator.slopedisplacement.utils.GeTuiUtil;
+import com.example.administrator.slopedisplacement.pushgetui.PushGeTuiUtil;
 import com.example.administrator.slopedisplacement.utils.PermissionsUtils;
+import com.example.administrator.slopedisplacement.utils.PhoneSystemUtils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -24,21 +25,27 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        PermissionsUtils.requestPermissions(this, PermissionsUtils.PERMISSION_GETUI, new PermissionsUtils.PermissionCall() {
-            @Override
-            public void onSuccess() {
-                GeTuiUtil.init(getActivity());
-                //延迟两秒后跳转
-                Observable.timer(3, TimeUnit.SECONDS)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(l -> toMainActivity());
-            }
+        if (!PhoneSystemUtils.isMIUI()) {
+            PermissionsUtils.requestPermissions(this, PermissionsUtils.PERMISSION_GETUI, new PermissionsUtils.PermissionCall() {
+                @Override
+                public void onSuccess() {
+                    PushGeTuiUtil.init(getActivity());
+                    //延迟两秒后跳转
+                    Observable.timer(3, TimeUnit.SECONDS)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(l -> toMainActivity());
+                }
 
-            @Override
-            public void onFail() {
-                showToast("权限被拒绝，无法启动推送！");
-            }
-        });
+                @Override
+                public void onFail() {
+                    showToast("权限被拒绝，无法启动推送！");
+                }
+            });
+        } else {
+            Observable.timer(3, TimeUnit.SECONDS)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(l -> toMainActivity());
+        }
     }
 
     private void toMainActivity() {

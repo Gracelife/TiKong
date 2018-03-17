@@ -66,7 +66,7 @@ public class LogInterceptor implements Interceptor {
         }
 
         Logger.e("请求方式:"+request.method()+"\n网络请求:"+request.url()+"&"+ body+"\n返回数据:"+ rBody);
-        Logger.json(rBody);
+//        Logger.json(rBody);
         return response;
     }
 }

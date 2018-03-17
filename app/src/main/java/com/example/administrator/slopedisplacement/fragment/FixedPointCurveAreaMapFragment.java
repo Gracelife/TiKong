@@ -1,8 +1,10 @@
 package com.example.administrator.slopedisplacement.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -11,8 +13,19 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.slopedisplacement.R;
 import com.example.administrator.slopedisplacement.adapter.CruiseDataAdapter;
 import com.example.administrator.slopedisplacement.base.BaseLazyFragment;
+import com.example.administrator.slopedisplacement.utils.FormatUtils;
 import com.example.administrator.slopedisplacement.utils.TimePickerUtils;
 import com.example.administrator.slopedisplacement.widget.CustomLoadMoreView;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,113 +39,207 @@ import butterknife.OnClick;
  */
 
 public class FixedPointCurveAreaMapFragment extends BaseLazyFragment {
-    @BindView(R.id.rvCruiseData)
-    RecyclerView mRecyclerView;
-    @BindView(R.id.btCruiseDataStart)
-    Button mBtCruiseDataStart;
-    @BindView(R.id.btCruiseDataEnd)
-    Button mBtCruiseDataEnd;
-    private CruiseDataAdapter adapter;
-    private String mSchemeID;
+    @BindView(R.id.line_chart_test)
+    LineChart mChart;
 
-    public static FixedPointCurveAreaMapFragment newInstance(String schemeID) {
-        FixedPointCurveAreaMapFragment cruiseDataFragment = new FixedPointCurveAreaMapFragment();
-        cruiseDataFragment.mSchemeID = schemeID;
-        return cruiseDataFragment;
+    public static FixedPointCurveAreaMapFragment newInstance() {
+        FixedPointCurveAreaMapFragment fixedPointCurveAreaMapFragment = new FixedPointCurveAreaMapFragment();
+//        cruiseDataFragment.mSchemeID = schemeID;
+        return fixedPointCurveAreaMapFragment;
+    }
+    // 设置显示的样式
+    void setupChart() {
+        mChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry entry, Highlight highlight) {
+                Log.i("Entry selected", entry.toString());
+
+                mChart.centerViewToAnimated(entry.getX(), entry.getY(), mChart.getData().getDataSetByIndex(highlight.getDataSetIndex())
+                        .getAxisDependency(), 500);
+            }
+
+            @Override
+            public void onNothingSelected() {
+                Log.i("Nothing selected", "Nothing selected.");
+            }
+        });
+
+        // 图标右下角没有描述文本相关信息
+        mChart.getDescription().setEnabled(false);
+
+        // 手势能否触摸图表
+        mChart.setTouchEnabled(true);
+        //减速摩擦系数[0,1]之间，0立刻停止，1，自动转换为0.999f
+        mChart.setDragDecelerationFrictionCoef(0.9f);
+
+        // 将其设置为true以启用图表的拖动（用手指移动图表）（这不会影响缩放）。
+        mChart.setDragEnabled(true);
+        //将其设置为true以在X轴和Y轴上为图表启用缩放（通过手势放大和缩小）（这不影响拖动）
+        mChart.setScaleEnabled(true);
+        //将此设置为true以绘制网格背景，否则为false
+        mChart.setDrawGridBackground(true);
+        //将其设置为true以允许在完全缩小时拖动图表曲面时突出显示。 默认值：true
+        mChart.setHighlightPerDragEnabled(true);
+
+        // 如果设置为true，则可以用2个手指同时缩放x和y轴，如果为false，则可以分别缩放x和y轴。 默认值：false
+        mChart.setPinchZoom(true);
+
+        // 设置替代背景颜色
+        mChart.setBackgroundColor(Color.LTGRAY);
+
+        // add data
+        setData(20, 30);
+        //使用指定的动画时间在x轴上动画显示图表。
+        mChart.animateX(2500);
+
+        // 获取Legend(图例)  （仅在设置数据后才可以）
+        Legend l = mChart.getLegend();
+
+        // 设置图例形式的形状 (线)
+        l.setForm(Legend.LegendForm.LINE);
+        //字体大小
+        l.setTextSize(11f);
+        //字体颜色
+        l.setTextColor(Color.WHITE);
+        //设置图例的垂直对齐
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        //设置图例的水平对齐
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        //设置图例的方向
+        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        //设置图例是否绘制在图表内部或外部
+        l.setDrawInside(false);
+//        l.setYOffset(11f);
+
+        XAxis xAxis = mChart.getXAxis();
+//        xAxis.setTypeface(mTfLight);
+        xAxis.setTextSize(11f);
+        xAxis.setTextColor(Color.WHITE);
+        xAxis.setDrawGridLines(false);
+        xAxis.setDrawAxisLine(false);
+
+        YAxis leftAxis = mChart.getAxisLeft();
+//        leftAxis.setTypeface(mTfLight);
+        leftAxis.setTextColor(ColorTemplate.getHoloBlue());
+        leftAxis.setAxisMaximum(200f);
+        leftAxis.setAxisMinimum(0f);
+        leftAxis.setDrawGridLines(true);
+        leftAxis.setGranularityEnabled(true);
+
+        YAxis rightAxis = mChart.getAxisRight();
+//        rightAxis.setTypeface(mTfLight);
+        rightAxis.setTextColor(Color.RED);
+        rightAxis.setAxisMaximum(900);
+        rightAxis.setAxisMinimum(-200);
+        rightAxis.setDrawGridLines(false);
+        rightAxis.setDrawZeroLine(false);
+        rightAxis.setGranularityEnabled(false);
     }
 
+    private void setData(int count, float range) {
+
+        ArrayList<Entry> yVals1 = new ArrayList<Entry>();
+
+        for (int i = 0; i < count; i++) {
+            float mult = range / 2f;
+            float val = (float) (Math.random() * mult) + 50;
+            yVals1.add(new Entry(i, val));
+        }
+
+        ArrayList<Entry> yVals2 = new ArrayList<Entry>();
+
+        for (int i = 0; i < count - 1; i++) {
+            float mult = range;
+            float val = (float) (Math.random() * mult) + 450;
+            yVals2.add(new Entry(i, val));
+//            if(i == 10) {
+//                yVals2.add(new Entry(i, val + 50));
+//            }
+        }
+
+        ArrayList<Entry> yVals3 = new ArrayList<Entry>();
+
+        for (int i = 0; i < count; i++) {
+            float mult = range;
+            float val = (float) (Math.random() * mult) + 500;
+            yVals3.add(new Entry(i, val));
+        }
+
+        LineDataSet set1, set2, set3;
+
+        if (mChart.getData() != null &&
+                mChart.getData().getDataSetCount() > 0) {
+            set1 = (LineDataSet) mChart.getData().getDataSetByIndex(0);
+            set2 = (LineDataSet) mChart.getData().getDataSetByIndex(1);
+            set3 = (LineDataSet) mChart.getData().getDataSetByIndex(2);
+            set1.setValues(yVals1);
+            set2.setValues(yVals2);
+            set3.setValues(yVals3);
+            mChart.getData().notifyDataChanged();
+            mChart.notifyDataSetChanged();
+        } else {
+            // create a dataset and give it a type
+            set1 = new LineDataSet(yVals1, "DataSet 1");
+
+            set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+            set1.setColor(ColorTemplate.getHoloBlue());
+            set1.setCircleColor(Color.WHITE);
+            set1.setLineWidth(2f);
+            set1.setCircleRadius(3f);
+            set1.setFillAlpha(65);
+            set1.setFillColor(ColorTemplate.getHoloBlue());
+            set1.setHighLightColor(Color.rgb(244, 117, 117));
+            set1.setDrawCircleHole(false);
+            //set1.setFillFormatter(new MyFillFormatter(0f));
+            //set1.setDrawHorizontalHighlightIndicator(false);
+            //set1.setVisible(false);
+            //set1.setCircleHoleColor(Color.WHITE);
+
+            // create a dataset and give it a type
+            set2 = new LineDataSet(yVals2, "DataSet 2");
+            set2.setAxisDependency(YAxis.AxisDependency.RIGHT);
+            set2.setColor(Color.RED);
+            set2.setCircleColor(Color.WHITE);
+            set2.setLineWidth(2f);
+            set2.setCircleRadius(3f);
+            set2.setFillAlpha(65);
+            set2.setFillColor(Color.RED);
+            set2.setDrawCircleHole(false);
+            set2.setHighLightColor(Color.rgb(244, 117, 117));
+            //set2.setFillFormatter(new MyFillFormatter(900f));
+
+            set3 = new LineDataSet(yVals3, "DataSet 3");
+            set3.setAxisDependency(YAxis.AxisDependency.RIGHT);
+            set3.setColor(Color.YELLOW);
+            set3.setCircleColor(Color.WHITE);
+            set3.setLineWidth(2f);
+            set3.setCircleRadius(3f);
+            set3.setFillAlpha(65);
+            set3.setFillColor(ColorTemplate.colorWithAlpha(Color.YELLOW, 200));
+            set3.setDrawCircleHole(false);
+            set3.setHighLightColor(Color.rgb(244, 117, 117));
+
+            // create a data object with the datasets
+            LineData data = new LineData(set1, set2, set3);
+            data.setValueTextColor(Color.WHITE);
+            data.setValueTextSize(9f);
+
+            // set data
+            mChart.setData(data);
+        }
+    }
     @Override
     public int getLayoutResId() {
-        return R.layout.fragment_cruise_data;
+        return R.layout.fragment_fixed_point_curve_area_map;
     }
 
     @Override
-    public void initView(Bundle state) {
-        mIsPrepared = true;
-        lazyLoad();
+    public void initView() {
+        setupChart();
     }
 
     @Override
     protected void lazyLoadDate() {
-        List<String> data = new ArrayList<>();
-        data.add("111");
-        data.add("112");
-        data.add("113");
-        data.add("114");
-        adapter = new CruiseDataAdapter(R.layout.item_cruise_data, data);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(adapter);
-        adapter.setLoadMoreView(new CustomLoadMoreView());
-        //加载更多
-        adapter.setOnLoadMoreListener(() -> {
-//                mRecyclerView.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        if(pageIndex > sumPage){
-//                            showToast("已经是最后一页了");
-//                            selectProjectAdapter.loadMoreEnd();
-//                        }else {
-//                            mPresenter.getVideoMonitorList(etProjectName.getText().toString(), pageIndex + "", "10", UserInfoPref.getUserId());
-//                        }
-
-//                    }
-//
-//                }, 1000);
-        }, mRecyclerView);
-        adapter.disableLoadMoreIfNotFullPage();
-        adapter.setOnItemClickListener((BaseQuickAdapter adapter, View view, int position) -> {
-            //Toast.makeText(MainActivity.this, "onItemClick" + position, Toast.LENGTH_SHORT).show();
-//                try {
-//                    intent = getIntent();
-//                    intent.setClass(SelectProjectActivity.this, SelectDriverActivity.class);
-//                    intent.putExtra("Project", dataList.get(position));
-//                    startActivity(intent);
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                }
-
-        });
-    }
-
-    private TimePickerView mTimePickerStart;
-    private Date mDateStart;
-    private TimePickerView mTimePickerEnd;
-    private Date mDateEnd;
-
-    private void showTimePickerStart() {
-        if (mTimePickerStart == null) {
-            mTimePickerStart = TimePickerUtils.createPickerView(getActivity(), (Date date, View view) -> {
-                mDateStart = date;
-                mBtCruiseDataStart.setText(TimePickerUtils.dateToString(date));
-            });
-        } else {
-            mTimePickerStart.setDate(TimePickerUtils.dataToCalendar(mDateStart));
-        }
-        mTimePickerStart.show();
-    }
-
-    private void showTimePickerEnd() {
-        if (mTimePickerEnd == null) {
-            mTimePickerEnd = TimePickerUtils.createPickerView(getActivity(), (Date date, View view) -> {
-                mDateEnd = date;
-                mBtCruiseDataEnd.setText(TimePickerUtils.dateToString(date));
-            });
-        } else {
-            mTimePickerEnd.setDate(TimePickerUtils.dataToCalendar(mDateEnd));
-        }
-        mTimePickerEnd.show();
-    }
-
-    @OnClick({R.id.btCruiseDataStart, R.id.btCruiseDataEnd})
-    void OnClick(View view) {
-        switch (view.getId()) {
-            case R.id.btCruiseDataStart:
-                showTimePickerStart();
-                break;
-            case R.id.btCruiseDataEnd:
-                showTimePickerEnd();
-                break;
-        }
     }
 }

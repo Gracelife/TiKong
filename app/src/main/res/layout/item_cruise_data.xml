@@ -15,6 +15,7 @@
         android:layout_width="1dp" />
 
     <TextView
+        android:id="@+id/tvItemCruiseDataCreateTime"
         style="@style/TvDataStyle"
         android:layout_weight="4"
         android:text="2018-3-13 15:49:04" />
@@ -24,6 +25,7 @@
         android:layout_width="1dp" />
 
     <TextView
+        android:id="@+id/tvItemCruiseDataAreaName"
         style="@style/TvDataStyle"
         android:layout_weight="1"
         android:text="面" />
@@ -34,6 +36,7 @@
 
     <TextView
         style="@style/TvDataStyle"
+        android:id="@+id/tvItemCruiseDataMonitorID"
         android:layout_weight="2"
         android:text="90" />
 
@@ -42,6 +45,18 @@
         android:layout_width="1dp" />
 
     <TextView
+        android:id="@+id/tvItemCruiseDataNowShift"
+        style="@style/TvDataStyle"
+        android:layout_weight="3"
+        android:textColor="@color/dodgerblue"
+        android:text="2.00" />
+
+    <View
+        style="@style/LineVerticalStyle"
+        android:layout_width="1dp" />
+
+    <TextView
+        android:id="@+id/tvItemCruiseDataShift"
         style="@style/TvDataStyle"
         android:layout_weight="3"
         android:text="2.00" />
@@ -51,6 +66,7 @@
         android:layout_width="1dp" />
 
     <TextView
+        android:id="@+id/tvItemCruiseDataAddShift"
         style="@style/TvDataStyle"
         android:layout_weight="3"
         android:text="2.00" />
@@ -60,15 +76,7 @@
         android:layout_width="1dp" />
 
     <TextView
-        style="@style/TvDataStyle"
-        android:layout_weight="3"
-        android:text="2.00" />
-
-    <View
-        style="@style/LineVerticalStyle"
-        android:layout_width="1dp" />
-
-    <TextView
+        android:id="@+id/tvItemCruiseDataObd"
         style="@style/TvDataStyle"
         android:layout_weight="3"
         android:text="3.74600" />

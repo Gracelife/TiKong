@@ -20,7 +20,9 @@ import com.example.administrator.slopedisplacement.http.HttpResponse;
 import com.example.administrator.slopedisplacement.mvp.contact.LoginContact;
 import com.example.administrator.slopedisplacement.mvp.presenter.LoginPresenter;
 import com.example.administrator.slopedisplacement.type.LoginStateEnum;
+import com.example.administrator.slopedisplacement.utils.PhoneSystemUtils;
 import com.orhanobut.logger.Logger;
+import com.xiaomi.mipush.sdk.MiPushClient;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -65,7 +67,14 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     public void onLoginSuccess(LoginBean loginBean) {
         Logger.e("登录成功"+loginBean.toString());
         this.loginBean = loginBean;
-        mPresenter.updateLoginMessage(etUserName.getText().toString(), ProApplication.clentid);
+        if(PhoneSystemUtils.isMIUI()){
+            //小米推送注册别名和用户账号
+            MiPushClient.setAlias(ProApplication.getInstance(), UserInfoPref.getUserId(),"");
+            MiPushClient.setUserAccount(ProApplication.getInstance(), UserInfoPref.getUserId(),"");
+            mPresenter.updateLoginMessage(etUserName.getText().toString(), "");
+        } else {
+            mPresenter.updateLoginMessage(etUserName.getText().toString(), UserInfoPref.getGeTuiClientId());
+        }
     }
 
     @Override

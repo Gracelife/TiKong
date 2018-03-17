@@ -1,31 +1,17 @@
 package com.example.administrator.slopedisplacement.fragment;
 
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
-import com.chad.library.adapter.base.BaseItemDraggableAdapter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
-import com.classic.adapter.BaseAdapterHelper;
-import com.classic.adapter.CommonAdapter;
-import com.classic.adapter.CommonRecyclerAdapter;
 import com.example.administrator.slopedisplacement.R;
-import com.example.administrator.slopedisplacement.activity.SelectDriverActivity;
-import com.example.administrator.slopedisplacement.activity.SelectProjectActivity;
 import com.example.administrator.slopedisplacement.adapter.CruiseDataAdapter;
-import com.example.administrator.slopedisplacement.adapter.SelectProjectAdapter;
 import com.example.administrator.slopedisplacement.base.BaseLazyFragment;
-import com.example.administrator.slopedisplacement.db.UserInfoPref;
+import com.example.administrator.slopedisplacement.utils.FormatUtils;
 import com.example.administrator.slopedisplacement.utils.TimePickerUtils;
-import com.example.administrator.slopedisplacement.widget.CustomLoadMoreView;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -38,15 +24,15 @@ public class CruiseCurveAreaMapFragment extends BaseLazyFragment {
     @BindView(R.id.rvCruiseData)
     RecyclerView mRecyclerView;
     @BindView(R.id.btCruiseDataStart)
-    Button mBtCruiseDataStart;
+    TextView mTvCruiseDataStart;
     @BindView(R.id.btCruiseDataEnd)
-    Button mBtCruiseDataEnd;
+    TextView mTvCruiseDataEnd;
     private CruiseDataAdapter adapter;
-    private String mSchemeID;
+//    private String mSchemeID;
 
-    public static CruiseCurveAreaMapFragment newInstance(String schemeID) {
+    public static CruiseCurveAreaMapFragment newInstance() {
         CruiseCurveAreaMapFragment cruiseDataFragment = new CruiseCurveAreaMapFragment();
-        cruiseDataFragment.mSchemeID = schemeID;
+//        cruiseDataFragment.mSchemeID = schemeID;
         return cruiseDataFragment;
     }
 
@@ -56,81 +42,21 @@ public class CruiseCurveAreaMapFragment extends BaseLazyFragment {
     }
 
     @Override
-    public void initView(Bundle state) {
-        mIsPrepared = true;
-        lazyLoad();
+    public void initView() {
+
     }
 
     @Override
     protected void lazyLoadDate() {
-        List<String> data = new ArrayList<>();
-        data.add("111");
-        data.add("112");
-        data.add("113");
-        data.add("114");
-        adapter = new CruiseDataAdapter(R.layout.item_cruise_data, data);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(adapter);
-        adapter.setLoadMoreView(new CustomLoadMoreView());
-        //加载更多
-        adapter.setOnLoadMoreListener(() -> {
-//                mRecyclerView.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        if(pageIndex > sumPage){
-//                            showToast("已经是最后一页了");
-//                            selectProjectAdapter.loadMoreEnd();
-//                        }else {
-//                            mPresenter.getVideoMonitorList(etProjectName.getText().toString(), pageIndex + "", "10", UserInfoPref.getUserId());
-//                        }
-
-//                    }
-//
-//                }, 1000);
-        }, mRecyclerView);
-        adapter.disableLoadMoreIfNotFullPage();
-        adapter.setOnItemClickListener((BaseQuickAdapter adapter, View view, int position) -> {
-            //Toast.makeText(MainActivity.this, "onItemClick" + position, Toast.LENGTH_SHORT).show();
-//                try {
-//                    intent = getIntent();
-//                    intent.setClass(SelectProjectActivity.this, SelectDriverActivity.class);
-//                    intent.putExtra("Project", dataList.get(position));
-//                    startActivity(intent);
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                }
-
-        });
     }
 
-    private TimePickerView mTimePickerStart;
-    private Date mDateStart;
-    private TimePickerView mTimePickerEnd;
-    private Date mDateEnd;
-
     private void showTimePickerStart() {
-        if (mTimePickerStart == null) {
-            mTimePickerStart = TimePickerUtils.createPickerView(getActivity(), (Date date, View view) -> {
-                mDateStart = date;
-                mBtCruiseDataStart.setText(TimePickerUtils.dateToString(date));
-            });
-        } else {
-            mTimePickerStart.setDate(TimePickerUtils.dataToCalendar(mDateStart));
-        }
-        mTimePickerStart.show();
+//        TimePickerUtils.showPickerView(getActivity(),"开始时间",mTvCruiseDataStart,"1234-10-11",mTvCruiseDataEnd.getText().toString());
     }
 
     private void showTimePickerEnd() {
-        if (mTimePickerEnd == null) {
-            mTimePickerEnd = TimePickerUtils.createPickerView(getActivity(), (Date date, View view) -> {
-                mDateEnd = date;
-                mBtCruiseDataEnd.setText(TimePickerUtils.dateToString(date));
-            });
-        } else {
-            mTimePickerEnd.setDate(TimePickerUtils.dataToCalendar(mDateEnd));
-        }
-        mTimePickerEnd.show();
+//        TimePickerUtils.showPickerView(getActivity(),"结束时间",mTvCruiseDataEnd,mTvCruiseDataStart.getText().toString(),mTvCruiseDataEnd.getText().toString());
     }
 
     @OnClick({R.id.btCruiseDataStart, R.id.btCruiseDataEnd})

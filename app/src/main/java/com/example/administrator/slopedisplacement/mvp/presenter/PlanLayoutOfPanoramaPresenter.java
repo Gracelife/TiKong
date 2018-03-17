@@ -1,17 +1,16 @@
 package com.example.administrator.slopedisplacement.mvp.presenter;
 
 
-import com.example.administrator.slopedisplacement.bean.DriverBean;
 import com.example.administrator.slopedisplacement.bean.PanoramaImgBean;
 import com.example.administrator.slopedisplacement.bean.SchemeAlarmListBean;
+import com.example.administrator.slopedisplacement.bean.json.GetDatSchemeAreaListJson;
+import com.example.administrator.slopedisplacement.bean.json.GetDatSchemeFixedListJson;
 import com.example.administrator.slopedisplacement.exception.ApiException;
 import com.example.administrator.slopedisplacement.http.HttpObserver;
 import com.example.administrator.slopedisplacement.http.HttpResponse;
 import com.example.administrator.slopedisplacement.mvp.BasePresenter;
 import com.example.administrator.slopedisplacement.mvp.contact.PlanLayoutOfPanoramaContact;
-import com.example.administrator.slopedisplacement.mvp.contact.SelectSchemeContact;
 import com.example.administrator.slopedisplacement.mvp.model.PlanLayoutOfPanoramaModel;
-import com.example.administrator.slopedisplacement.mvp.model.SelectDriverModel;
 
 /**
  * 登录Presenter
@@ -19,10 +18,10 @@ import com.example.administrator.slopedisplacement.mvp.model.SelectDriverModel;
 
 public class PlanLayoutOfPanoramaPresenter extends BasePresenter<PlanLayoutOfPanoramaContact.View> implements PlanLayoutOfPanoramaContact.Presenter {
     @Override
-    public void getPanoramaImg(String camId, String pageindex,String pagesize,String uid) {
+    public void getPanoramaImg(String camId, String pageindex, String pagesize, String uid) {
         getIView().showLoading("正在加载中...");
         new PlanLayoutOfPanoramaModel()
-                .getPanoramaImg(camId,"","",pageindex,pagesize,uid)
+                .getPanoramaImg(camId, "", "", pageindex, pagesize, uid)
                 .compose(getIView().bindLifecycle())
                 .subscribe(new HttpObserver<HttpResponse<PanoramaImgBean>>() {
                     @Override
@@ -38,11 +37,12 @@ public class PlanLayoutOfPanoramaPresenter extends BasePresenter<PlanLayoutOfPan
                     }
                 });
     }
+
     @Override
-    public void getSchemeAlarmList(String schemeID, String states,String startTime,String endTime,String pageindex,String pagesize,String uid) {
+    public void getSchemeAlarmList(String schemeID, String states, String startTime, String endTime, String pageindex, String pagesize, String uid) {
         getIView().showLoading("正在加载中...");
         new PlanLayoutOfPanoramaModel()
-                .getSchemeAlarmList(schemeID,states,startTime,endTime,pageindex,pagesize,uid)
+                .getSchemeAlarmList(schemeID, states, startTime, endTime, pageindex, pagesize, uid)
                 .compose(getIView().bindLifecycle())
                 .subscribe(new HttpObserver<HttpResponse<SchemeAlarmListBean>>() {
                     @Override
@@ -58,11 +58,12 @@ public class PlanLayoutOfPanoramaPresenter extends BasePresenter<PlanLayoutOfPan
                     }
                 });
     }
+
     @Override
-    public void updateSchemeAlarmByAlarmID(String alarmID, String states,String uid) {
+    public void updateSchemeAlarmByAlarmID(String alarmID, String states, String uid) {
         getIView().showLoading("正在加载中...");
         new PlanLayoutOfPanoramaModel()
-                .updateSchemeAlarmByAlarmID(alarmID,states,uid)
+                .updateSchemeAlarmByAlarmID(alarmID, states, uid)
                 .compose(getIView().bindLifecycle())
                 .subscribe(new HttpObserver<HttpResponse>() {
                     @Override
@@ -78,11 +79,13 @@ public class PlanLayoutOfPanoramaPresenter extends BasePresenter<PlanLayoutOfPan
                     }
                 });
     }
+
+
     @Override
-    public void getSchemeAlarm(String schemeID, String states,String uid) {
+    public void getSchemeAlarm(String schemeID, String states, String uid) {
         getIView().showLoading("正在加载中...");
         new PlanLayoutOfPanoramaModel()
-                .getSchemeAlarm(schemeID,states,uid)
+                .getSchemeAlarm(schemeID, states, uid)
                 .compose(getIView().bindLifecycle())
                 .subscribe(new HttpObserver<HttpResponse<PanoramaImgBean>>() {
                     @Override
@@ -99,4 +102,56 @@ public class PlanLayoutOfPanoramaPresenter extends BasePresenter<PlanLayoutOfPan
                 });
     }
 
+    /**
+     *  获取区域(巡航)列表
+     * @param schemeID
+     * @param uid
+     */
+    @Override
+    public void getDatSchemeAreaList(String schemeID, String uid) {
+        getIView().showLoading("正在加载中...");
+        new PlanLayoutOfPanoramaModel()
+                .getDatSchemeAreaList(schemeID, uid)
+                .compose(getIView().bindLifecycle())
+                .subscribe(new HttpObserver<HttpResponse<GetDatSchemeAreaListJson>>() {
+                    @Override
+                    public void onSuccess(HttpResponse<GetDatSchemeAreaListJson> json) {
+                        getIView().hideLoading();
+                        getIView().onGetDatSchemeAreaListSuccess(json.getData());
+                    }
+
+                    @Override
+                    public void onFail(ApiException msg) {
+                        getIView().hideLoading();
+                        getIView().onUpdateSchemeAlarmByAlarmIDFail(msg.getMessage());
+                    }
+                });
+
+    }
+    /**
+     *  获取定点列表
+     * @param schemeID
+     * @param uid
+     */
+    @Override
+    public void getDatSchemeFixedList(String schemeID, String uid) {
+        getIView().showLoading("正在加载中...");
+        new PlanLayoutOfPanoramaModel()
+                .getDatSchemeFixedList(schemeID, uid)
+                .compose(getIView().bindLifecycle())
+                .subscribe(new HttpObserver<HttpResponse<GetDatSchemeFixedListJson>>() {
+                    @Override
+                    public void onSuccess(HttpResponse<GetDatSchemeFixedListJson> httpResponse) {
+                        getIView().hideLoading();
+                        getIView().onGetDatSchemeFixedListSuccess(httpResponse.getData());
+                    }
+
+                    @Override
+                    public void onFail(ApiException msg) {
+                        getIView().hideLoading();
+                        getIView().onUpdateSchemeAlarmByAlarmIDFail(msg.getMessage().toString());
+                    }
+                });
+
+    }
 }

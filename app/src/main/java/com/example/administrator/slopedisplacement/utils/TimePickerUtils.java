@@ -2,6 +2,7 @@ package com.example.administrator.slopedisplacement.utils;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
 
@@ -24,32 +25,28 @@ public class TimePickerUtils {
         return pvTime;
     }
 
-    public static TimePickerView createPickerView(Context context, TimePickerView.OnTimeSelectListener onTimeSelectListener, Calendar calendar) {
+
+    public static void showPickerView(Context context, String title, TextView textView, String  defaultCalendar, String rangStartTime, String rangEndTime) {
         //时间选择器
-        TimePickerView pvTime = new TimePickerView.Builder(context, onTimeSelectListener)
+        TimePickerView timePickerView = new TimePickerView
+                .Builder(context, (Date date, View view) -> textView.setText(FormatUtils.dateToString(date)))
+                .setTitleText(title)
                 .setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
-                .isCyclic(true)//是否循环滚动
+                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .setRangDate(FormatUtils.stringToCalendar(rangStartTime), FormatUtils.stringToCalendar(rangEndTime))//起始终止年月日设定
+                .isCyclic(false)//是否循环滚动
                 .build();
-        pvTime.setDate(calendar);//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
-        return pvTime;
+        timePickerView.setDate(FormatUtils.stringToCalendar(defaultCalendar));
+        timePickerView.show();
     }
 
     /**
-     * 将Date类型格式化成String yyyy-MM-dd
-     * @param date  时间
-     * @return
+     * 退出Activity或者Fragment时调用，防止内存泄露
+     *
+     * @param timePickerView
      */
-    public static String dateToString(Date date) {
-        return new SimpleDateFormat("yyyy-MM-dd").format(date);
-    }
-    /**
-     * 将Date类型格式化成Calendar
-     * @param date  时间
-     * @return
-     */
-    public static Calendar dataToCalendar(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        return calendar;
+    public static void destroy(TimePickerView timePickerView) {
+        if (timePickerView != null && timePickerView.isShowing())
+            timePickerView.dismiss();
     }
 }

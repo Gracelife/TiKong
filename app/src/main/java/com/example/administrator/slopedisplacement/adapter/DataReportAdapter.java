@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.administrator.slopedisplacement.R;
+import com.example.administrator.slopedisplacement.bean.json.GetDatSchemeAreaListJson;
+import com.example.administrator.slopedisplacement.bean.json.GetDatSchemeFixedListJson;
 import com.example.administrator.slopedisplacement.fragment.CruiseCurveAreaMapFragment;
 import com.example.administrator.slopedisplacement.fragment.CruiseDataFragment;
 import com.example.administrator.slopedisplacement.fragment.FixedFlowDataFragment;
@@ -23,12 +25,16 @@ public class DataReportAdapter extends FragmentPagerAdapter {
             "定点曲线区域图"
     };
     private Fragment[] fragments;
-    private String mSchemeID;
+    private GetDatSchemeAreaListJson mArealListJson;//区域列表数据
+    private GetDatSchemeFixedListJson mFixedListJson;//定点列表数据
+    private String mSchemeID = "";
 
-    public DataReportAdapter(FragmentManager fm, String schemeID) {
+    public DataReportAdapter(FragmentManager fm, GetDatSchemeAreaListJson arealListJson, GetDatSchemeFixedListJson fixedListJson, String schemeID) {
         super(fm);
         fragments = new Fragment[TITLES.length];
-        mSchemeID = schemeID;
+        this.mArealListJson = arealListJson;
+        this.mFixedListJson = fixedListJson;
+        this.mSchemeID = schemeID;
     }
 
 
@@ -37,16 +43,16 @@ public class DataReportAdapter extends FragmentPagerAdapter {
         if (fragments[position] == null) {
             switch (position) {
                 case 0:
-                    fragments[position] = CruiseDataFragment.newInstance(mSchemeID);
+                    fragments[position] = CruiseDataFragment.newInstance(mArealListJson, mSchemeID);
                     break;
                 case 1:
-                    fragments[position] = FixedFlowDataFragment.newInstance(mSchemeID);
+                    fragments[position] = FixedFlowDataFragment.newInstance(mFixedListJson, mSchemeID);
                     break;
                 case 2:
-                    fragments[position] = CruiseCurveAreaMapFragment.newInstance(mSchemeID);
+                    fragments[position] = CruiseCurveAreaMapFragment.newInstance();
                     break;
                 case 3:
-                    fragments[position] = FixedPointCurveAreaMapFragment.newInstance(mSchemeID);
+                    fragments[position] = FixedPointCurveAreaMapFragment.newInstance();
                     break;
                 default:
                     break;

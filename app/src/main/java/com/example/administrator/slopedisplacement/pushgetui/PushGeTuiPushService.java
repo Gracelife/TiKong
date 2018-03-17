@@ -1,4 +1,4 @@
-package com.example.administrator.slopedisplacement.server;
+package com.example.administrator.slopedisplacement.pushgetui;
 
 import android.app.Service;
 import android.content.Intent;
@@ -6,7 +6,7 @@ import android.os.IBinder;
 
 import com.igexin.sdk.GTServiceManager;
 
-public class GeTuiPushService extends Service {
+public class PushGeTuiPushService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();

@@ -21,7 +21,7 @@ import com.example.administrator.slopedisplacement.application.ProApplication;
 public class UIUtils {
 
     private static Context getContext() {
-        return ProApplication.getmContext();
+        return ProApplication.getInstance();
     }
 
     private static Resources getResources() {
