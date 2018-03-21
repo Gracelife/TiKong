@@ -2,12 +2,15 @@ package com.example.administrator.slopedisplacement.pushmi;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.administrator.slopedisplacement.MainActivity;
 import com.example.administrator.slopedisplacement.R;
+import com.example.administrator.slopedisplacement.activity.PlanLayoutOfPanoramaActivity;
+import com.example.administrator.slopedisplacement.utils.JumpToUtils;
 import com.example.administrator.slopedisplacement.utils.L;
 import com.google.gson.Gson;
 import com.xiaomi.mipush.sdk.ErrorCode;
@@ -47,6 +50,7 @@ public class PushMiReceiver extends PushMessageReceiver {
         Log.e("mipush", "点击通知后收到的推送信息: " + data);
         try {
             PushMiJson json = new Gson().fromJson(data, PushMiJson.class);
+            JumpToUtils.toPlanLayoutOfPanoramaActivity(context,json.getData().getCamId(),json.getData().getSchemeID());
         }catch (Exception e){
             Log.e("mipush", "收到的推选信息解析异常:");
             e.printStackTrace();

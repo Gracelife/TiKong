@@ -23,6 +23,7 @@ import com.example.administrator.slopedisplacement.bean.SchemeBean;
 import com.example.administrator.slopedisplacement.db.UserInfoPref;
 import com.example.administrator.slopedisplacement.mvp.contact.SelectDriverContact;
 import com.example.administrator.slopedisplacement.mvp.presenter.SelectDriverPresenter;
+import com.example.administrator.slopedisplacement.utils.JumpToUtils;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -49,6 +50,7 @@ public class SelectDriverActivity extends BaseMvpActivity<SelectDriverPresenter>
 
     @Override
     protected void initView() {
+        setToolBar("设备列表");
         rvDriver.setLayoutManager(new LinearLayoutManager(this));
         selectDriverAdapter = new SelectDriverAdapter(R.layout.item_select_drivier,dataList);
         rvDriver.setAdapter(selectDriverAdapter);
@@ -98,17 +100,17 @@ public class SelectDriverActivity extends BaseMvpActivity<SelectDriverPresenter>
         try {
         if(listBean != null){
             //全景图页面
-            intent.setClass(SelectDriverActivity.this,PlanLayoutOfPanoramaActivity.class);
-            intent.putExtra("SchemeBean",listBean);
-            intent.putExtra("DriverBean",driverBean);
-            startActivity(intent);
+//            intent.setClass(SelectDriverActivity.this,PlanLayoutOfPanoramaActivity.class);
+//            intent.putExtra("SchemeBean",listBean);
+//            intent.putExtra("DriverBean",driverBean);
+//            startActivity(intent);
+            JumpToUtils.toPlanLayoutOfPanoramaActivity(getActivity(),driverBean.getCamId()+"",listBean.getSchemeID()+"");
         }else{
-            intent.setClass(SelectDriverActivity.this,SelectSchemeActivity.class);
-            intent.putExtra("DriverBean",driverBean);
-            intent.putExtra("SchemeList",schemeBean);
-            startActivity(intent);
-
-
+//            intent.setClass(SelectDriverActivity.this,SelectSchemeActivity.class);
+//            intent.putExtra("DriverBean",driverBean);
+//            intent.putExtra("SchemeList",schemeBean);
+//            startActivity(intent);
+            JumpToUtils.toSelectSchemeActivity(getActivity(),driverBean.getCamId()+"",schemeBean);
         }
         }catch (Exception e){
             e.printStackTrace();

@@ -38,6 +38,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     @BindView(R.id.cbSavePassWord)
     CheckBox cbSavePassWord;
     LoginBean loginBean;
+
     @Override
     protected LoginPresenter loadPresenter() {
         return new LoginPresenter();
@@ -55,7 +56,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        if(UserInfoPref.getSavePassWord()){
+        if (UserInfoPref.getSavePassWord()) {
             etUserName.setText(UserInfoPref.getUserAccount());
             etPassWord.setText(UserInfoPref.getUserPassword());
             cbSavePassWord.setChecked(true);
@@ -65,13 +66,17 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
     @Override
     public void onLoginSuccess(LoginBean loginBean) {
-        Logger.e("登录成功"+loginBean.toString());
+        Logger.e("登录成功" + loginBean.toString());
         this.loginBean = loginBean;
-        if(PhoneSystemUtils.isMIUI()){
+        UserInfoPref.setSavePassWord(cbSavePassWord.isChecked());
+        UserInfoPref.saveLoginInfo(etUserName.getText().toString(), loginBean.getUserName(), etPassWord.getText().toString(), loginBean.getUid());
+        if (PhoneSystemUtils.isMIUI()) {
             //小米推送注册别名和用户账号
-            MiPushClient.setAlias(ProApplication.getInstance(), UserInfoPref.getUserId(),"");
-            MiPushClient.setUserAccount(ProApplication.getInstance(), UserInfoPref.getUserId(),"");
-            mPresenter.updateLoginMessage(etUserName.getText().toString(), "");
+            MiPushClient.setAlias(ProApplication.getInstance(), UserInfoPref.getUserId(), "");
+            MiPushClient.setUserAccount(ProApplication.getInstance(), UserInfoPref.getUserId(), "");
+            Intent intent = new Intent(LoginActivity.this, SelectProjectActivity.class);
+            startActivity(intent);
+//            mPresenter.updateLoginMessage(etUserName.getText().toString(), "");
         } else {
             mPresenter.updateLoginMessage(etUserName.getText().toString(), UserInfoPref.getGeTuiClientId());
         }
@@ -84,32 +89,30 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
     @Override
     public void onUpdateLoginMessageSuccess(HttpResponse httpResponse) {
-
-        UserInfoPref.setSavePassWord(cbSavePassWord.isChecked());
-        UserInfoPref.saveLoginInfo(etUserName.getText().toString(),loginBean.getUserName(),etPassWord.getText().toString(),loginBean.getUid());
-        Intent intent = new Intent(LoginActivity.this,SelectProjectActivity.class);
+        Intent intent = new Intent(LoginActivity.this, SelectProjectActivity.class);
         startActivity(intent);
     }
 
     @Override
-    public void onUpdateLoginMessageFail(String msg){showToast(msg);
+    public void onUpdateLoginMessageFail(String msg) {
+        showToast(msg);
     }
 
 
     @OnClick({R.id.btnLogin})
-    void OnClick(View view){
-        switch (view.getId()){
+    void OnClick(View view) {
+        switch (view.getId()) {
             case R.id.btnLogin:
-                if(etUserName.getText().toString().isEmpty()){
+                if (etUserName.getText().toString().isEmpty()) {
                     showToast("用户名不能为空");
                     return;
                 }
-                if (etPassWord.getText().toString().isEmpty()){
+                if (etPassWord.getText().toString().isEmpty()) {
                     showToast("密码不能为空");
                     return;
                 }
 
-                mPresenter.login(etPassWord.getText().toString(),etUserName.getText().toString());
+                mPresenter.login(etPassWord.getText().toString(), etUserName.getText().toString());
                 break;
         }
     }

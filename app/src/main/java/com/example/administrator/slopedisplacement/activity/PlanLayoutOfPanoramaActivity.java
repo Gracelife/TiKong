@@ -1,5 +1,6 @@
 package com.example.administrator.slopedisplacement.activity;
 
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,6 +29,7 @@ import com.example.administrator.slopedisplacement.db.UserInfoPref;
 import com.example.administrator.slopedisplacement.exception.ErrorType;
 import com.example.administrator.slopedisplacement.mvp.contact.PlanLayoutOfPanoramaContact;
 import com.example.administrator.slopedisplacement.mvp.presenter.PlanLayoutOfPanoramaPresenter;
+import com.example.administrator.slopedisplacement.utils.ActivityUtils;
 import com.example.administrator.slopedisplacement.utils.JumpToUtils;
 import com.example.administrator.slopedisplacement.widget.CustomLoadMoreView;
 import com.example.administrator.slopedisplacement.widget.popupwindow.BindViewHelper;
@@ -55,8 +57,8 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
     GetSchemeAlarmListAdapter getSchemeAlarmListAdapter;
     PanoramaAdapter panoramaAdapter;
     int SchemeAlarmListPosition;
-    SchemeBean.ListBean schemeBean;
-
+    String mSchemeID;
+    private boolean isFromPush = false;//是否从推送跳转过来的
     private GetDatSchemeAreaListJson mArealListJson;//区域列表数据
     private GetDatSchemeFixedListJson mFixedListJson;//定点列表数据
 
@@ -72,12 +74,15 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        intent = getIntent();
-        String camId = ((DriverBean.ListBean) intent.getSerializableExtra("DriverBean")).getCamId() + "";
-        schemeBean = ((SchemeBean.ListBean) intent.getSerializableExtra("SchemeBean"));
+//        intent = getIntent();
+//        String camId = ((DriverBean.ListBean) intent.getSerializableExtra("DriverBean")).getCamId() + "";
+//        schemeBean = ((SchemeBean.ListBean) intent.getSerializableExtra("SchemeBean"));
+        mSchemeID = getIntent().getStringExtra(JumpToUtils.KEY_SCHEMEID);
+        String camId = getIntent().getStringExtra(JumpToUtils.KEY_CAMID);
+        isFromPush = getIntent().getBooleanExtra(JumpToUtils.KEY_FROM_PUSH, false);
         mPresenter.getPanoramaImg(camId, pageIndex + "", "10", UserInfoPref.getUserId());
-        mPresenter.getDatSchemeAreaList(schemeBean.getSchemeID() + "", UserInfoPref.getUserId());
-        mPresenter.getDatSchemeFixedList(schemeBean.getSchemeID() + "", UserInfoPref.getUserId());
+        mPresenter.getDatSchemeAreaList(mSchemeID + "", UserInfoPref.getUserId());
+        mPresenter.getDatSchemeFixedList(mSchemeID + "", UserInfoPref.getUserId());
     }
 
     @Override
@@ -92,7 +97,7 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
             public void popBindView(BindViewHelper popupWindowBindView) {
 
                 schemeAlarmList.clear();
-                mPresenter.getSchemeAlarmList(schemeBean.getSchemeID() + "", "", "", "", schemeAlarmListPageIndex + "", "10", UserInfoPref.getUserId() + "");
+                mPresenter.getSchemeAlarmList(mSchemeID + "", "", "", "", schemeAlarmListPageIndex + "", "10", UserInfoPref.getUserId() + "");
                 LinearLayout pop_LinearLayout = (LinearLayout) popupWindowBindView.getView(R.id.pop_LinearLayout);
                 RecyclerView rvAlarmInformation = (RecyclerView) popupWindowBindView.getView(R.id.rvAlarmInformation);
                 rvAlarmInformation.setLayoutManager(new LinearLayoutManager(PlanLayoutOfPanoramaActivity.this));
@@ -116,7 +121,7 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
                                     showToast("已经是最后一页了");
                                     getSchemeAlarmListAdapter.loadMoreEnd();
                                 } else {
-                                    mPresenter.getSchemeAlarmList(schemeBean.getSchemeID() + "", "", "", "", schemeAlarmListPageIndex + "", "10", UserInfoPref.getUserId() + "");
+                                    mPresenter.getSchemeAlarmList(mSchemeID + "", "", "", "", schemeAlarmListPageIndex + "", "10", UserInfoPref.getUserId() + "");
                                 }
 
                             }
@@ -254,7 +259,7 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
                                     showToast("已经是最后一页了");
                                     panoramaAdapter.loadMoreEnd();
                                 } else {
-                                    mPresenter.getSchemeAlarmList(schemeBean.getSchemeID() + "", "", "", "", schemeAlarmListPageIndex + "", "10", UserInfoPref.getUserId() + "");
+                                    mPresenter.getSchemeAlarmList(mSchemeID + "", "", "", "", schemeAlarmListPageIndex + "", "10", UserInfoPref.getUserId() + "");
                                 }
 
                             }
@@ -364,6 +369,10 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
         if (mPopWindow != null) {
             mPopWindow.dismiss();
         }
+        if (isFromPush) {//关闭所有页面，并跳转到选择项目页面
+            Intent intent = new Intent(getActivity(), SelectProjectActivity.class);
+            startActivity(intent);
+        }
     }
 
     @OnClick({R.id.btnAlarmInformation, R.id.btnPanorama, R.id.btnPanoramaDataReport})
@@ -380,7 +389,7 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
                 if (mArealListJson == null || mFixedListJson == null) {
                     showToast("错误码：" + ErrorType.DATE_NULL);
                 } else {
-                    JumpToUtils.toDataReportActivity(getActivity(), mArealListJson, mFixedListJson,schemeBean.getSchemeID()+"");
+                    JumpToUtils.toDataReportActivity(getActivity(), mArealListJson, mFixedListJson, mSchemeID + "");
                 }
                 break;
         }

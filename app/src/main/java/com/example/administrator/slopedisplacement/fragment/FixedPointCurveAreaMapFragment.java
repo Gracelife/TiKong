@@ -14,6 +14,7 @@ import com.example.administrator.slopedisplacement.R;
 import com.example.administrator.slopedisplacement.adapter.CruiseDataAdapter;
 import com.example.administrator.slopedisplacement.base.BaseLazyFragment;
 import com.example.administrator.slopedisplacement.utils.FormatUtils;
+import com.example.administrator.slopedisplacement.utils.LineChartUtils;
 import com.example.administrator.slopedisplacement.utils.TimePickerUtils;
 import com.example.administrator.slopedisplacement.widget.CustomLoadMoreView;
 import com.github.mikephil.charting.charts.LineChart;
@@ -47,8 +48,10 @@ public class FixedPointCurveAreaMapFragment extends BaseLazyFragment {
 //        cruiseDataFragment.mSchemeID = schemeID;
         return fixedPointCurveAreaMapFragment;
     }
+
     // 设置显示的样式
     void setupChart() {
+        //为图表设置一个选择监听器
         mChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry entry, Highlight highlight) {
@@ -64,76 +67,28 @@ public class FixedPointCurveAreaMapFragment extends BaseLazyFragment {
             }
         });
 
-        // 图标右下角没有描述文本相关信息
-        mChart.getDescription().setEnabled(false);
-
-        // 手势能否触摸图表
-        mChart.setTouchEnabled(true);
-        //减速摩擦系数[0,1]之间，0立刻停止，1，自动转换为0.999f
-        mChart.setDragDecelerationFrictionCoef(0.9f);
-
-        // 将其设置为true以启用图表的拖动（用手指移动图表）（这不会影响缩放）。
-        mChart.setDragEnabled(true);
-        //将其设置为true以在X轴和Y轴上为图表启用缩放（通过手势放大和缩小）（这不影响拖动）
-        mChart.setScaleEnabled(true);
-        //将此设置为true以绘制网格背景，否则为false
-        mChart.setDrawGridBackground(true);
-        //将其设置为true以允许在完全缩小时拖动图表曲面时突出显示。 默认值：true
-        mChart.setHighlightPerDragEnabled(true);
-
-        // 如果设置为true，则可以用2个手指同时缩放x和y轴，如果为false，则可以分别缩放x和y轴。 默认值：false
-        mChart.setPinchZoom(true);
-
-        // 设置替代背景颜色
-        mChart.setBackgroundColor(Color.LTGRAY);
+        LineChartUtils.setLineInit(mChart);
 
         // add data
         setData(20, 30);
         //使用指定的动画时间在x轴上动画显示图表。
         mChart.animateX(2500);
-
         // 获取Legend(图例)  （仅在设置数据后才可以）
-        Legend l = mChart.getLegend();
-
-        // 设置图例形式的形状 (线)
-        l.setForm(Legend.LegendForm.LINE);
-        //字体大小
-        l.setTextSize(11f);
-        //字体颜色
-        l.setTextColor(Color.WHITE);
-        //设置图例的垂直对齐
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        //设置图例的水平对齐
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
-        //设置图例的方向
-        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        //设置图例是否绘制在图表内部或外部
-        l.setDrawInside(false);
-//        l.setYOffset(11f);
-
-        XAxis xAxis = mChart.getXAxis();
-//        xAxis.setTypeface(mTfLight);
-        xAxis.setTextSize(11f);
-        xAxis.setTextColor(Color.WHITE);
-        xAxis.setDrawGridLines(false);
-        xAxis.setDrawAxisLine(false);
-
-        YAxis leftAxis = mChart.getAxisLeft();
-//        leftAxis.setTypeface(mTfLight);
-        leftAxis.setTextColor(ColorTemplate.getHoloBlue());
-        leftAxis.setAxisMaximum(200f);
-        leftAxis.setAxisMinimum(0f);
-        leftAxis.setDrawGridLines(true);
-        leftAxis.setGranularityEnabled(true);
-
-        YAxis rightAxis = mChart.getAxisRight();
-//        rightAxis.setTypeface(mTfLight);
-        rightAxis.setTextColor(Color.RED);
-        rightAxis.setAxisMaximum(900);
-        rightAxis.setAxisMinimum(-200);
-        rightAxis.setDrawGridLines(false);
-        rightAxis.setDrawZeroLine(false);
-        rightAxis.setGranularityEnabled(false);
+        LineChartUtils.setLegend(mChart.getLegend());
+        LineChartUtils.setXAxis(mChart.getXAxis());
+        LineChartUtils.setLeftYAxis(mChart.getAxisLeft(),200f,0f);
+        //右侧y轴设置为不使用
+        mChart.getAxisRight().setEnabled(false);
+//        rightAxis.set
+//        YAxis rightAxis = mChart.getAxisRight();
+////        rightAxis.setTypeface(mTfLight);
+//        rightAxis.setTextColor(Color.RED);
+//        rightAxis.setAxisMaximum(900);
+//        rightAxis.setAxisMinimum(-200);
+//        rightAxis.setDrawGridLines(false);
+//        //将此设置为true以绘制零线，而不管天气是否启用其他网格线。 默认值：false
+//        rightAxis.setDrawZeroLine(false);
+//        rightAxis.setGranularityEnabled(false);
     }
 
     private void setData(int count, float range) {
@@ -228,6 +183,7 @@ public class FixedPointCurveAreaMapFragment extends BaseLazyFragment {
             mChart.setData(data);
         }
     }
+
     @Override
     public int getLayoutResId() {
         return R.layout.fragment_fixed_point_curve_area_map;

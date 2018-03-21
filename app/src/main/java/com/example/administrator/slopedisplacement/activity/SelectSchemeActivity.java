@@ -23,9 +23,12 @@ import com.example.administrator.slopedisplacement.mvp.contact.SelectDriverConta
 import com.example.administrator.slopedisplacement.mvp.contact.SelectSchemeContact;
 import com.example.administrator.slopedisplacement.mvp.presenter.SelectDriverPresenter;
 import com.example.administrator.slopedisplacement.mvp.presenter.SelectSchemePresenter;
+import com.example.administrator.slopedisplacement.utils.JumpToUtils;
 import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
+
+import static com.example.administrator.slopedisplacement.utils.JumpToUtils.KEY_CAMID;
 
 public class SelectSchemeActivity extends BaseMvpActivity<SelectSchemePresenter> implements SelectSchemeContact.View{
     Intent intent;
@@ -46,7 +49,8 @@ public class SelectSchemeActivity extends BaseMvpActivity<SelectSchemePresenter>
     protected void initData(Bundle savedInstanceState) {
         setToolBar("方案选择");
         intent = getIntent();
-        schemeBean = (SchemeBean) intent.getSerializableExtra("SchemeList");
+        schemeBean = (SchemeBean) intent.getSerializableExtra(JumpToUtils.KEY_SCHEMEBEAN);
+        String camId = intent.getStringExtra(JumpToUtils.KEY_CAMID);
         rvScheme.setLayoutManager(new LinearLayoutManager(this));
         selectSchemeAdapter = new SelectSchemeAdapter(R.layout.item_select_scheme,schemeBean.getList());
         Log.e("schemeBean.getList()",schemeBean.getList().size()+"");
@@ -55,9 +59,10 @@ public class SelectSchemeActivity extends BaseMvpActivity<SelectSchemePresenter>
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 //Toast.makeText(MainActivity.this, "onItemClick" + position, Toast.LENGTH_SHORT).show();
-                intent.setClass(SelectSchemeActivity.this,PlanLayoutOfPanoramaActivity.class);
-                intent.putExtra("SchemeList",schemeBean.getList().get(position));
-                startActivity(intent);
+//                intent.setClass(SelectSchemeActivity.this,PlanLayoutOfPanoramaActivity.class);
+//                intent.putExtra("SchemeList",schemeBean.getList().get(position));
+//                startActivity(intent);
+                JumpToUtils.toPlanLayoutOfPanoramaActivity(getActivity(),schemeBean.getList().get(position).getSchemeID()+"",camId);
             }
         });
 

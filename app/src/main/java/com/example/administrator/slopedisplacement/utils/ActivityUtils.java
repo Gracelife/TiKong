@@ -11,26 +11,29 @@ import java.util.Stack;
  * Activity管理工具类(包含对Fragment的添加切换)
  */
 
-public enum  ActivityUtils {
+public enum ActivityUtils {
     INSTANCE();
+
     ActivityUtils() {
         mActivityStack = new Stack<>();
     }
+
     private Stack<Activity> mActivityStack;
 
     /**
      * 添加一个Activity到堆栈中
      */
-    public void addActivity(Activity activity) {
+    synchronized public void addActivity(Activity activity) {
         if (mActivityStack == null) {
             mActivityStack = new Stack<>();
         }
         mActivityStack.push(activity);
     }
+
     /**
      * 获取到当前显示Activity（堆栈中最后一个传入的activity）
      */
-    public Activity getLastActivity() {
+    synchronized public Activity getLastActivity() {
         if (mActivityStack != null)
             return mActivityStack.lastElement();
         else
@@ -40,7 +43,7 @@ public enum  ActivityUtils {
     /**
      * 从堆栈中移除指定的Activity
      */
-    public void finishActivity(Activity activity) {
+    synchronized public void finishActivity(Activity activity) {
         if (activity != null) {
             mActivityStack.remove(activity);
             activity.finish();
@@ -50,7 +53,7 @@ public enum  ActivityUtils {
     /**
      * 结束指定类名的Activity
      */
-    public void finishActivity(Class<?> cls) {
+    synchronized public void finishActivity(Class<?> cls) {
         for (Activity activity : mActivityStack) {
             if (activity.getClass().equals(cls)) {
                 finishActivity(activity);
@@ -62,7 +65,7 @@ public enum  ActivityUtils {
     /**
      * 结束除当前传入以外所有Activity
      */
-    public void finishOthersActivity(Class<?> cls) {
+    synchronized public void finishOthersActivity(Class<?> cls) {
         if (mActivityStack != null)
             for (Activity activity : mActivityStack) {
                 if (!activity.getClass().equals(cls)) {
@@ -74,7 +77,7 @@ public enum  ActivityUtils {
     /**
      * 结束除当前传入以外所有Activity
      */
-    public void finishOthersActivity(Activity activity) {
+    synchronized public void finishOthersActivity(Activity activity) {
         if (mActivityStack != null)
             for (Activity itemActivity : mActivityStack) {
                 if (activity != itemActivity) {
@@ -86,7 +89,7 @@ public enum  ActivityUtils {
     /**
      * 结束所有Activity
      */
-    public void finishAllActivity() {
+    synchronized public void finishAllActivity() {
         if (mActivityStack != null) {
             for (Activity activity : mActivityStack) {
                 activity.finish();
@@ -95,8 +98,16 @@ public enum  ActivityUtils {
         }
     }
 
+    public boolean isEmpty() {
+        if (mActivityStack == null || mActivityStack.isEmpty())
+            return true;
+        else
+            return false;
+    }
+
     /**
      * 退出应用程序
+     *
      * @param context
      */
     public void exitApp(Context context) {

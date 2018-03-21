@@ -118,6 +118,7 @@
         <activity
             android:name=".activity.SelectProjectActivity"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:launchMode="singleTask"
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.SelectDriverActivity"

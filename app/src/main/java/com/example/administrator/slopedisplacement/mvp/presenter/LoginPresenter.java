@@ -3,6 +3,7 @@ package com.example.administrator.slopedisplacement.mvp.presenter;
 
 import com.example.administrator.slopedisplacement.bean.LoginBean;
 import com.example.administrator.slopedisplacement.bean.UpdateBean;
+import com.example.administrator.slopedisplacement.db.UserInfoPref;
 import com.example.administrator.slopedisplacement.exception.ApiException;
 import com.example.administrator.slopedisplacement.http.BaseObserver;
 import com.example.administrator.slopedisplacement.http.HttpObserver;
@@ -36,6 +37,7 @@ public class LoginPresenter extends BasePresenter<LoginContact.View> implements 
                     }
                 });
     }
+
     @Override
     public void updateLoginMessage(String userName, String clentid) {
         getIView().showLoading("正在登录中...");

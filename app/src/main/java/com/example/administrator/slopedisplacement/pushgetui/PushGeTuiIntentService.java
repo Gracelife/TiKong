@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.administrator.slopedisplacement.db.UserInfoPref;
+import com.example.administrator.slopedisplacement.utils.JumpToUtils;
 import com.google.gson.Gson;
 import com.igexin.sdk.GTIntentService;
 import com.igexin.sdk.message.GTCmdMessage;
@@ -42,7 +43,8 @@ public class PushGeTuiIntentService extends GTIntentService {
             String data = new String(payload);
             Log.e("getui", "aaa  个推接收到的信息 = " + data);
             try {
-                PushGeTuiMsgJson msgJson = new Gson().fromJson(data, PushGeTuiMsgJson.class);
+                PushGeTuiMsgJson json = new Gson().fromJson(data, PushGeTuiMsgJson.class);
+                JumpToUtils.toPlanLayoutOfPanoramaActivity(context,json.getData().getCamId(),json.getData().getSchemeID());
             }catch (Exception e){
                 Log.e("getui", "收到的推选信息解析异常:");
                 e.printStackTrace();
