@@ -29,6 +29,10 @@ public class PlanLayoutOfPanoramaContact {
 
         void onUpdateSchemeAlarmByAlarmIDFail(String msg);
 
+        /**
+         * 获取区域(巡航)列表成功
+         * @param arealListJson
+         */
         void onGetDatSchemeAreaListSuccess(GetDatSchemeAreaListJson arealListJson);
 
         void onGetDatSchemeFixedListSuccess(GetDatSchemeFixedListJson fixedListJson);

@@ -21,6 +21,10 @@ public interface IView {
      * 隐藏加载
      */
     void hideLoading();
+    /**
+     * 显示信息
+     */
+    void showMsg(String msg);
 
     LifecycleTransformer bindLifecycle();
 }

@@ -30,13 +30,13 @@ public class PointBean {
      */
     private int mMarginTop;
     /**
-     * 点在容器里面跟左侧的间距
+     * 点在图里 跟左侧的间距
      */
-    private int mOriginalMarginLeft;
+    private int mShowMarginLeft;
     /**
-     * 点在容器里面跟上方的间距
+     * 点在图里 跟上方的间距
      */
-    private int mOriginalMarginTop;
+    private int mShowMarginTop;
     /**
      * 是否播放动画
      */
@@ -98,19 +98,19 @@ public class PointBean {
         this.mPointName = pointName;
     }
 
-    public int getOriginalMarginLeft() {
-        return mOriginalMarginLeft;
+    public int getShowMarginLeft() {
+        return mShowMarginLeft;
     }
 
-    public void setOriginalMarginLeft(int originalMarginLeft) {
-        this.mOriginalMarginLeft = originalMarginLeft;
+    public void setShowMarginLeft(int showMarginLeft) {
+        this.mShowMarginLeft = showMarginLeft;
     }
 
-    public int getOriginalMarginTop() {
-        return mOriginalMarginTop;
+    public int getShowMarginTop() {
+        return mShowMarginTop;
     }
 
-    public void setOriginalMarginTop(int originalMarginTop) {
-        this.mOriginalMarginTop = originalMarginTop;
+    public void setShowMarginTop(int showMarginTop) {
+        this.mShowMarginTop = showMarginTop;
     }
 }

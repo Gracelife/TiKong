@@ -65,8 +65,9 @@ public class SelectDriverActivity extends BaseMvpActivity<SelectDriverPresenter>
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 //Toast.makeText(MainActivity.this, "onItemClick" + position, Toast.LENGTH_SHORT).show();
                 driverBean = dataList.get(position);
-                mPresenter.getSchemeList(dataList.get(position).getCamId()+"",UserInfoPref.getUserId());
-
+//                mPresenter.getSchemeList(dataList.get(position).getCamId()+"",UserInfoPref.getUserId());
+                //TODO 测试数据暂时写死
+                mPresenter.getSchemeList("1014462",UserInfoPref.getUserId());
             }
         });
 
@@ -117,13 +118,17 @@ public class SelectDriverActivity extends BaseMvpActivity<SelectDriverPresenter>
 //            intent.putExtra("DriverBean",driverBean);
 //            startActivity(intent);
             Log.e("ivms_8700_bean",ivms_8700_bean.getCamFlowState());
-            JumpToUtils.toPlanLayoutOfPanoramaActivity(getActivity(),driverBean.getCamId()+"",listBean.getSchemeID()+"",ivms_8700_bean);
+//            JumpToUtils.toPlanLayoutOfPanoramaActivity(getActivity(),driverBean.getCamId()+"",listBean.getSchemeID()+"",ivms_8700_bean);
+            //TODO 测试数据暂时写死
+            JumpToUtils.toPlanLayoutOfPanoramaActivity(getActivity(),"1014462",listBean.getSchemeID()+"",ivms_8700_bean);
         }else{
 //            intent.setClass(SelectDriverActivity.this,SelectSchemeActivity.class);
 //            intent.putExtra("DriverBean",driverBean);
 //            intent.putExtra("SchemeList",schemeBean);
 //            startActivity(intent);
-            JumpToUtils.toSelectSchemeActivity(getActivity(),driverBean.getCamId()+"",schemeBean,ivms_8700_bean);
+//            JumpToUtils.toSelectSchemeActivity(getActivity(),driverBean.getCamId()+"",schemeBean,ivms_8700_bean);
+            //TODO 测试数据暂时写死
+            JumpToUtils.toSelectSchemeActivity(getActivity(),"1014462",schemeBean,ivms_8700_bean);
         }
             /*if(ivms_8700_bean.getCamFlowState().equals("15")) {
                 //2,5,8为互信、3中星微2.1、7中星微3.3、15海康8700

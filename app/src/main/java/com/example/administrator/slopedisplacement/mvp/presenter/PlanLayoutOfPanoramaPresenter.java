@@ -123,7 +123,7 @@ public class PlanLayoutOfPanoramaPresenter extends BasePresenter<PlanLayoutOfPan
                     @Override
                     public void onFail(ApiException msg) {
                         getIView().hideLoading();
-                        getIView().onUpdateSchemeAlarmByAlarmIDFail(msg.getMessage());
+                        getIView().showMsg(msg.getMessage());
                     }
                 });
 
@@ -149,7 +149,7 @@ public class PlanLayoutOfPanoramaPresenter extends BasePresenter<PlanLayoutOfPan
                     @Override
                     public void onFail(ApiException msg) {
                         getIView().hideLoading();
-                        getIView().onUpdateSchemeAlarmByAlarmIDFail(msg.getMessage().toString());
+                        getIView().showMsg(msg.getMessage());
                     }
                 });
 

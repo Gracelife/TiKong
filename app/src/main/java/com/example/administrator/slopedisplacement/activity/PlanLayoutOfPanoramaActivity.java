@@ -1,6 +1,5 @@
 package com.example.administrator.slopedisplacement.activity;
 
-import android.app.ActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,11 +9,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.slopedisplacement.R;
 import com.example.administrator.slopedisplacement.adapter.GetSchemeAlarmListAdapter;
@@ -24,21 +20,23 @@ import com.example.administrator.slopedisplacement.bean.DriverBean;
 import com.example.administrator.slopedisplacement.bean.IVMS_8700_Bean;
 import com.example.administrator.slopedisplacement.bean.PanoramaImgBean;
 import com.example.administrator.slopedisplacement.bean.SchemeAlarmListBean;
-import com.example.administrator.slopedisplacement.bean.SchemeBean;
 import com.example.administrator.slopedisplacement.bean.json.GetDatSchemeAreaListJson;
 import com.example.administrator.slopedisplacement.bean.json.GetDatSchemeFixedListJson;
 import com.example.administrator.slopedisplacement.db.UserInfoPref;
 import com.example.administrator.slopedisplacement.exception.ErrorType;
 import com.example.administrator.slopedisplacement.mvp.contact.PlanLayoutOfPanoramaContact;
 import com.example.administrator.slopedisplacement.mvp.presenter.PlanLayoutOfPanoramaPresenter;
-import com.example.administrator.slopedisplacement.utils.ActivityUtils;
 import com.example.administrator.slopedisplacement.utils.JumpToUtils;
 import com.example.administrator.slopedisplacement.widget.CustomLoadMoreView;
+import com.example.administrator.slopedisplacement.widget.point.LineBean;
+import com.example.administrator.slopedisplacement.widget.point.PointBean;
+import com.example.administrator.slopedisplacement.widget.point.PointDataBean;
 import com.example.administrator.slopedisplacement.widget.point.PointFrameLayout;
 import com.example.administrator.slopedisplacement.widget.popupwindow.BindViewHelper;
 import com.example.administrator.slopedisplacement.widget.popupwindow.CommonPopupWindow;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -67,6 +65,18 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
     private boolean isFromPush = false;//是否从推送跳转过来的
     private GetDatSchemeAreaListJson mArealListJson;//区域列表数据
     private GetDatSchemeFixedListJson mFixedListJson;//定点列表数据
+    /**
+     * 区域数据是否准备完成
+     */
+    private boolean mIsPrepareAreaData = false;
+    /**
+     * 定点数据是否准备完成
+     */
+    private boolean mIsPrepareFixedData = false;
+    /**
+     * 背景是否准备完成
+     */
+    private boolean mIsPrepareImg = false;
 
     @Override
     protected PlanLayoutOfPanoramaPresenter loadPresenter() {
@@ -85,6 +95,9 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
         mSchemeID = getIntent().getStringExtra(JumpToUtils.KEY_SCHEMEID);
         String camId = getIntent().getStringExtra(JumpToUtils.KEY_CAMID);
         isFromPush = getIntent().getBooleanExtra(JumpToUtils.KEY_FROM_PUSH, false);
+        mIsPrepareAreaData = false;
+        mIsPrepareFixedData = false;
+        mIsPrepareImg = false;
         mPresenter.getPanoramaImg(camId, pageIndex + "", "10", UserInfoPref.getUserId());
         mPresenter.getDatSchemeAreaList(mSchemeID + "", UserInfoPref.getUserId());
         mPresenter.getDatSchemeFixedList(mSchemeID + "", UserInfoPref.getUserId());
@@ -243,6 +256,7 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
 //                                .diskCacheStrategy(DiskCacheStrategy.NONE)//不单独缓存
 //                                .skipMemoryCache(true)
 //                                .into(ivPlanLayoutOfPanorama);
+                        mPointFrameLayout.changeBg(dataList.get(position).getPuzzleImg());
                     }
                 });
 
@@ -295,6 +309,9 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
 //                    .diskCacheStrategy(DiskCacheStrategy.NONE)//不单独缓存
 //                    .skipMemoryCache(true)
 //                    .into(ivPlanLayoutOfPanorama);
+
+            mIsPrepareImg = true;
+            loadPointImg();
             isLoad = false;
         }
 
@@ -353,11 +370,92 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
     @Override
     public void onGetDatSchemeAreaListSuccess(GetDatSchemeAreaListJson arealListJson) {
         mArealListJson = arealListJson;
+        mIsPrepareAreaData = true;
+        loadPointImg();
     }
 
     @Override
     public void onGetDatSchemeFixedListSuccess(GetDatSchemeFixedListJson fixedListJson) {
         mFixedListJson = fixedListJson;
+        mIsPrepareFixedData = true;
+        loadPointImg();
+    }
+
+    private synchronized void loadPointImg() {
+        if (!mIsPrepareFixedData || !mIsPrepareAreaData || !mIsPrepareImg) {
+            return;
+        }
+        mPointFrameLayout.setBgImgUrl(dataList.get(0).getPuzzleImg());
+        List<GetDatSchemeAreaListJson.ListBean> areaList = mArealListJson.getList();
+        ArrayList<PointBean> pointBeanList = new ArrayList<>();
+//        for (GetDatSchemeAreaListJson.ListBean area : areaList) {
+//            if (area.getAreaType().equals("1")) {//区域
+////                double Ox1 = area.getOx1();
+//
+//
+//            } else if (area.getAreaType().equals("2")) {//线
+//
+//            } else if (area.getAreaType().equals("1")) {//点
+//                PointBean pointBean = new PointBean();
+//                pointBean.setXScale(0.1);
+//                pointBean.setYScale(0.1);
+//                pointBean.setPlayAnimation(false);
+//                pointBean.setPointName("点");
+//            }
+//        }
+
+        PointBean pointBean = new PointBean();
+        pointBean.setXScale(0.1);
+        pointBean.setYScale(0.1);
+        pointBean.setPlayAnimation(false);
+        pointBean.setPointName("点");
+
+        PointBean pointBean1 = new PointBean();
+        pointBean1.setXScale(0.6);
+        pointBean1.setYScale(0.2);
+        pointBean1.setPlayAnimation(false);
+        pointBean1.setPointName("点1");
+
+        PointBean pointBean2 = new PointBean();
+        pointBean2.setXScale(0.2);
+        pointBean2.setYScale(0.4);
+        pointBean2.setPlayAnimation(false);
+        pointBean2.setPointName("点2");
+
+        PointBean pointBean3 = new PointBean();
+        pointBean3.setXScale(0.5);
+        pointBean3.setYScale(0.5);
+        pointBean3.setPlayAnimation(true);
+        pointBean3.setPointName("点3");
+
+        PointBean pointBean4 = new PointBean();
+        pointBean4.setXScale(0.6);
+        pointBean4.setYScale(0.7);
+        pointBean4.setPlayAnimation(true);
+        pointBean4.setPointName("点4");
+
+        PointBean pointBean5 = new PointBean();
+        pointBean5.setXScale(0.7);
+        pointBean5.setYScale(0.2);
+        pointBean5.setPlayAnimation(true);
+        pointBean5.setPointName("点4");
+
+        pointBeanList.add(pointBean);
+        pointBeanList.add(pointBean1);
+        pointBeanList.add(pointBean2);
+        pointBeanList.add(pointBean3);
+        pointBeanList.add(pointBean4);
+        pointBeanList.add(pointBean5);
+
+        List<LineBean> lineBeanList = new ArrayList<>();
+        lineBeanList.add(new LineBean(0, 1));
+        lineBeanList.add(new LineBean(3, 1));
+        lineBeanList.add(new LineBean(2, 3));
+        PointDataBean imgPointBean = new PointDataBean();
+        imgPointBean.setPointBeanList(pointBeanList);
+        imgPointBean.setLineList(lineBeanList);
+
+        mPointFrameLayout.setPointsInfo(imgPointBean);
     }
 
     @Override

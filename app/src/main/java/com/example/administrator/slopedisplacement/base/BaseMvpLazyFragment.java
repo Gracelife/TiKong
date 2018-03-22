@@ -81,4 +81,8 @@ public abstract class BaseMvpLazyFragment<P extends BasePresenter> extends BaseL
         return super.bindToLifecycle();
     }
 
+    @Override
+    public void showMsg(String msg) {
+        showToast(msg);
+    }
 }

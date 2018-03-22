@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.annotation.NonNull;
@@ -21,6 +22,9 @@ import com.bumptech.glide.request.target.Target;
 import com.example.administrator.slopedisplacement.R;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
 
 /**
  *
@@ -28,10 +32,15 @@ import java.util.List;
 
 public class PointFrameLayout extends FrameLayout {
     private Context mContext;
+    /**
+     * 背景图
+     */
     private ImageView mIvBg;
+    /**
+     * 水印层
+     */
+    private ImageView mIvTran;
     private FrameLayout mFlPoint;
-    private String mBgImgUrl;
-
     private PointDataBean imgPointBean;
     private int mPointSize = 1;
 
@@ -50,19 +59,12 @@ public class PointFrameLayout extends FrameLayout {
     }
 
     private void initView() {
-        mPointSize = dip2px(mContext, 25);//点的大小
+        mPointSize = dip2px(25);//点的大小
         View imgPointLayout = inflate(mContext, R.layout.widget_point_img, this);
         mIvBg = (ImageView) imgPointLayout.findViewById(R.id.IvWidgetPointAndImg);
+        mIvTran = (ImageView) imgPointLayout.findViewById(R.id.IvWidgetTran);
         mFlPoint = (FrameLayout) imgPointLayout.findViewById(R.id.FlWidgetPointAndImg);
-    }
 
-    /**
-     * 设置背景图
-     *
-     * @param bgImgUrl 图片网络地址
-     */
-    public void setBgImgUrl(String bgImgUrl) {
-        this.mBgImgUrl = bgImgUrl;
     }
 
     /**
@@ -75,13 +77,13 @@ public class PointFrameLayout extends FrameLayout {
     }
 
     /**
-     * 刷新（添加完数据再调用）
+     * 设置背景图
+     *
+     * @param bgImgUrl 图片网络地址
      */
-    public void refresh() {
-        ViewGroup.LayoutParams lp = mIvBg.getLayoutParams();
-        mIvBg.setLayoutParams(lp);
+    public void setBgImgUrl(String bgImgUrl) {
         Glide.with(mContext)
-                .load(mBgImgUrl)
+                .load(bgImgUrl)
                 .asBitmap()
                 .into(new SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL) {
                     @Override
@@ -100,30 +102,48 @@ public class PointFrameLayout extends FrameLayout {
                             currentWidth = mFlPoint.getHeight() * originalWidth / originalHeight;
                             currentHeight = mFlPoint.getHeight();
                         }
-                        refreshData(originalWidth, originalHeight, currentWidth, currentHeight);
+                        refreshData(currentWidth, currentHeight);
                         addPoint();
-                        Bitmap bitmap = createWaterMaskBitmap(resource);
-                        mIvBg.setImageBitmap(bitmap);
 
+                        //创建一个透明层，用于描绘线和文字
+                        Bitmap bm = Bitmap.createBitmap(currentWidth, currentHeight, Bitmap.Config.ARGB_8888);
+                        Bitmap bitmap = createWaterMaskBitmap(bm);
+                        mIvTran.setImageBitmap(bitmap);
+
+                        //压缩图片
+                        Matrix matrix = new Matrix();
+                        matrix.setScale(currentWidth * 1.0f / resource.getWidth(), currentHeight * 1.0f / resource.getHeight());
+                        resource = Bitmap.createBitmap(resource, 0, 0, resource.getWidth(), resource.getHeight(), matrix, true);
+                        mIvBg.setImageBitmap(resource);
                     }
                 });
     }
 
     /**
+     * 改变背景图
+     *
+     * @param bgImgUrl 图片网络地址
+     */
+    public void changeBg(String bgImgUrl) {
+        Glide.with(mContext)
+                .load(bgImgUrl)
+                .asBitmap()
+                .into(mIvBg);
+    }
+
+    /**
      * 根据图片的原始高和宽、拉伸后的高、宽更新imgPointBean里点的数据
      *
-     * @param originalWidth  原始图的宽度
-     * @param originalHeight 原始图的高度
-     * @param currentWidth   拉伸后图的宽度
-     * @param currentHeight  拉伸后图的高度
+     * @param currentWidth  拉伸后图的宽度
+     * @param currentHeight 拉伸后图的高度
      */
-    private void refreshData(int originalWidth, int originalHeight, int currentWidth, int currentHeight) {
+    private void refreshData(int currentWidth, int currentHeight) {
         List<PointBean> pointLists = imgPointBean.getPointBeanList();
         for (PointBean pointBean : pointLists) {
             //初始化
             // 点在拉伸后的图里的位置
-            pointBean.setOriginalMarginTop((int) (originalHeight * pointBean.getYScale()));
-            pointBean.setOriginalMarginLeft((int) (originalWidth * pointBean.getXScale()));
+            pointBean.setShowMarginTop((int) (currentHeight * pointBean.getYScale()));
+            pointBean.setShowMarginLeft((int) (currentWidth * pointBean.getXScale()));
 
             // 点在屏幕里实际的位置
             pointBean.setMarginLeft((getMargin(mFlPoint.getWidth(), currentWidth, mPointSize, pointBean.getXScale())));
@@ -141,7 +161,7 @@ public class PointFrameLayout extends FrameLayout {
         for (PointBean pointBean : pointLists) {
             //添加点
             imageView = new ImageView(mContext);
-//            imageView.setImageResource(R.drawable.prod_point_img);
+            imageView.setImageResource(R.drawable.anim_point_img);
             imageView.setTag(pointBean.getPointId());
             if (pointBean.isPlayAnimation()) {
                 ((AnimationDrawable) imageView.getDrawable()).start();
@@ -166,31 +186,28 @@ public class PointFrameLayout extends FrameLayout {
         if (bitmap == null) {
             return null;
         }
-        int width = bitmap.getWidth();
-        int height = bitmap.getHeight();   //创建一个bitmap
-        Bitmap newb = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);// 创建一个新的和SRC长度宽度一样的位图   //将该图片作为画布
-        Canvas canvas = new Canvas(newb);
+        Canvas canvas = new Canvas(bitmap);
         canvas.drawBitmap(bitmap, 0, 0, null);  //在画布 0，0坐标上开始绘制原始图片
         Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setColor(Color.parseColor("#FF4081"));
-        mPaint.setTextSize(16f);
+        mPaint.setTextSize(33f);
         //添加文字
         for (PointBean pointBean : imgPointBean.getPointBeanList()) {
             int margin = pointBean.getPointName().length();
-            canvas.drawText(pointBean.getPointName(), pointBean.getOriginalMarginLeft() - margin * 10, pointBean.getOriginalMarginTop() - 8, mPaint); //在画布上绘制水印图片
+            canvas.drawText(pointBean.getPointName(), pointBean.getShowMarginLeft() - margin * 10, pointBean.getShowMarginTop() - 20, mPaint); //在画布上绘制水印图片
         }
         //添加实线
         mPaint.setStrokeWidth(2);
         for (LineBean lineBean : imgPointBean.getLineList()) {
             PointBean startPoint = imgPointBean.getPointBeanList().get(lineBean.getStartIndex());
             PointBean endPoint = imgPointBean.getPointBeanList().get(lineBean.getEndIndex());
-            canvas.drawLine(startPoint.getOriginalMarginLeft(), startPoint.getOriginalMarginTop()
-                    , endPoint.getOriginalMarginLeft(), endPoint.getOriginalMarginTop(), mPaint);
+            canvas.drawLine(startPoint.getShowMarginLeft(), startPoint.getShowMarginTop()
+                    , endPoint.getShowMarginLeft(), endPoint.getShowMarginTop(), mPaint);
         }
 
         canvas.save(Canvas.ALL_SAVE_FLAG);// 保存
         canvas.restore();// 存储
-        return newb;
+        return bitmap;
     }
 
     /**
@@ -203,11 +220,11 @@ public class PointFrameLayout extends FrameLayout {
      * @return
      */
     private int getMargin(int layout, int img, int pointViewSize, double scale) {
-        return (int) ((layout - img) / 2.0 - pointViewSize / 2 + img * scale);
+        return (int) ((layout - img) / 2.0 - pointViewSize / 2.0 + img * scale);
     }
 
-    public static int dip2px(Context context, float dpValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
+    public int dip2px(float dpValue) {
+        final float scale = mContext.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
 }
