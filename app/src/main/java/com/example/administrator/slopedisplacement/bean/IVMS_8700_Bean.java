@@ -1,10 +1,12 @@
 package com.example.administrator.slopedisplacement.bean;
 
+import java.io.Serializable;
+
 /**
  * 海康8700播放视频所需数据
  */
 
-public class IVMS_8700_Bean {
+public class IVMS_8700_Bean implements Serializable{
 
     private String mUserName;
     private String mPassword;
@@ -13,6 +15,46 @@ public class IVMS_8700_Bean {
     private String mPort;
     private String mType;
 
+    private String Cam_Dx_Puid;
+    private String camId;
+    private String camName;
+
+    private String camFlowState;
+
+    public String getCamFlowState() {
+        return camFlowState;
+    }
+
+    public void setCamFlowState(String camFlowState) {
+        this.camFlowState = camFlowState;
+    }
+
+
+    public String getCam_Dx_Puid() {
+        return Cam_Dx_Puid;
+    }
+
+    public void setCam_Dx_Puid(String cam_Dx_Puid) {
+        Cam_Dx_Puid = cam_Dx_Puid;
+    }
+
+
+
+    public String getCamId() {
+        return camId;
+    }
+
+    public void setCamId(String camId) {
+        this.camId = camId;
+    }
+
+    public String getCamName() {
+        return camName;
+    }
+
+    public void setCamName(String camName) {
+        this.camName = camName;
+    }
     public String getmUserName() {
         return mUserName;
     }

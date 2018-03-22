@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.example.administrator.slopedisplacement.adapter.GetSchemeAlarmListAda
 import com.example.administrator.slopedisplacement.adapter.PanoramaAdapter;
 import com.example.administrator.slopedisplacement.base.BaseMvpActivity;
 import com.example.administrator.slopedisplacement.bean.DriverBean;
+import com.example.administrator.slopedisplacement.bean.IVMS_8700_Bean;
 import com.example.administrator.slopedisplacement.bean.PanoramaImgBean;
 import com.example.administrator.slopedisplacement.bean.SchemeAlarmListBean;
 import com.example.administrator.slopedisplacement.bean.SchemeBean;
@@ -60,6 +62,7 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
     GetSchemeAlarmListAdapter getSchemeAlarmListAdapter;
     PanoramaAdapter panoramaAdapter;
     int SchemeAlarmListPosition;
+    IVMS_8700_Bean ivms_8700_bean;
     String mSchemeID;
     private boolean isFromPush = false;//是否从推送跳转过来的
     private GetDatSchemeAreaListJson mArealListJson;//区域列表数据
@@ -77,6 +80,8 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        ivms_8700_bean = (IVMS_8700_Bean) getIntent().getSerializableExtra(JumpToUtils.KEY_IVMS_8700_BEAN);
+        Log.e("ivms_8700_bean",ivms_8700_bean.getCamFlowState());
         mSchemeID = getIntent().getStringExtra(JumpToUtils.KEY_SCHEMEID);
         String camId = getIntent().getStringExtra(JumpToUtils.KEY_CAMID);
         isFromPush = getIntent().getBooleanExtra(JumpToUtils.KEY_FROM_PUSH, false);
@@ -367,7 +372,7 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
         }
     }
 
-    @OnClick({R.id.btnAlarmInformation, R.id.btnPanorama, R.id.btnPanoramaDataReport})
+    @OnClick({R.id.btnAlarmInformation, R.id.btnPanorama, R.id.btnPanoramaDataReport,R.id.btnVideo})
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.btnAlarmInformation:
@@ -375,6 +380,18 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
                 break;
             case R.id.btnPanorama:
                 showPanoramaPopupWindow();
+                break;
+            case R.id.btnVideo:
+                if(ivms_8700_bean.getCamFlowState().equals("15")) {
+                    //2,5,8为互信、3中星微2.1、7中星微3.3、15海康8700
+                    if (ivms_8700_bean.getmType().equals("2") || ivms_8700_bean.getmType().equals("5") || ivms_8700_bean.getmType().equals("8") || ivms_8700_bean.getmType().equals("3") || ivms_8700_bean.getmType().equals("7")) {
+                        JumpToUtils.toHuXinVideoActivity(getActivity(),ivms_8700_bean);
+                    } else {
+                        showToast("此为海康平台：");
+                    }
+                }else{
+                    showToast("此视频维护或不在线");
+                }
                 break;
             case R.id.btnPanoramaDataReport://跳转到查看数据页面
 

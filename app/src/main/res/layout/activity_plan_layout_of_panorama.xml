@@ -76,12 +76,12 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/btnVideo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="Button" />
+                android:text="视频查看" />
         </RelativeLayout>
 
         <RelativeLayout

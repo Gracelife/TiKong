@@ -17,6 +17,7 @@ import com.example.administrator.slopedisplacement.adapter.SelectDriverAdapter;
 import com.example.administrator.slopedisplacement.adapter.SelectProjectAdapter;
 import com.example.administrator.slopedisplacement.base.BaseMvpActivity;
 import com.example.administrator.slopedisplacement.bean.DriverBean;
+import com.example.administrator.slopedisplacement.bean.IVMS_8700_Bean;
 import com.example.administrator.slopedisplacement.bean.LoginBean;
 import com.example.administrator.slopedisplacement.bean.ProjectBean;
 import com.example.administrator.slopedisplacement.bean.SchemeBean;
@@ -24,8 +25,13 @@ import com.example.administrator.slopedisplacement.db.UserInfoPref;
 import com.example.administrator.slopedisplacement.mvp.contact.SelectDriverContact;
 import com.example.administrator.slopedisplacement.mvp.presenter.SelectDriverPresenter;
 import com.example.administrator.slopedisplacement.utils.JumpToUtils;
+import com.example.administrator.slopedisplacement.utils.XmlUtils;
 import com.orhanobut.logger.Logger;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.StringReader;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -84,6 +90,7 @@ public class SelectDriverActivity extends BaseMvpActivity<SelectDriverPresenter>
         selectDriverAdapter.notifyDataSetChanged();
     }
 
+
     @Override
     public void onGetVideoCamListFail(String msg) {
         showToast(msg);
@@ -91,27 +98,43 @@ public class SelectDriverActivity extends BaseMvpActivity<SelectDriverPresenter>
 
     @Override
     public void onGetSchemeListSuccess(SchemeBean schemeBean) {
+        try {
         SchemeBean.ListBean listBean = null;
+        IVMS_8700_Bean ivms_8700_bean = XmlUtils.parseXMLWithPull(driverBean.getCam_Config());
+        ivms_8700_bean.setCam_Dx_Puid(driverBean.getCam_DX_PUID());
+            ivms_8700_bean.setCamFlowState(driverBean.getCamFlowState()+"");
+
         for (SchemeBean.ListBean list:schemeBean.getList()) {
             if(list.getStates()==1 ){
                 listBean = list;
             }
         }
-        try {
+
         if(listBean != null){
             //全景图页面
 //            intent.setClass(SelectDriverActivity.this,PlanLayoutOfPanoramaActivity.class);
 //            intent.putExtra("SchemeBean",listBean);
 //            intent.putExtra("DriverBean",driverBean);
 //            startActivity(intent);
-            JumpToUtils.toPlanLayoutOfPanoramaActivity(getActivity(),driverBean.getCamId()+"",listBean.getSchemeID()+"");
+            Log.e("ivms_8700_bean",ivms_8700_bean.getCamFlowState());
+            JumpToUtils.toPlanLayoutOfPanoramaActivity(getActivity(),driverBean.getCamId()+"",listBean.getSchemeID()+"",ivms_8700_bean);
         }else{
 //            intent.setClass(SelectDriverActivity.this,SelectSchemeActivity.class);
 //            intent.putExtra("DriverBean",driverBean);
 //            intent.putExtra("SchemeList",schemeBean);
 //            startActivity(intent);
-            JumpToUtils.toSelectSchemeActivity(getActivity(),driverBean.getCamId()+"",schemeBean);
+            JumpToUtils.toSelectSchemeActivity(getActivity(),driverBean.getCamId()+"",schemeBean,ivms_8700_bean);
         }
+            /*if(ivms_8700_bean.getCamFlowState().equals("15")) {
+                //2,5,8为互信、3中星微2.1、7中星微3.3、15海康8700
+                if (ivms_8700_bean.getmType().equals("2") || ivms_8700_bean.getmType().equals("5") || ivms_8700_bean.getmType().equals("8") || ivms_8700_bean.getmType().equals("3") || ivms_8700_bean.getmType().equals("7")) {
+                    JumpToUtils.toHuXinVideoActivity(getActivity(),ivms_8700_bean);
+                } else {
+                    showToast("此为海康平台：");
+                }
+            }else{
+                showToast("此视频维护或不在线");
+            }*/
         }catch (Exception e){
             e.printStackTrace();
         }

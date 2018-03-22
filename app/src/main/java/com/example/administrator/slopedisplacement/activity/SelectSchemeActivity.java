@@ -17,6 +17,7 @@ import com.example.administrator.slopedisplacement.adapter.SelectDriverAdapter;
 import com.example.administrator.slopedisplacement.adapter.SelectSchemeAdapter;
 import com.example.administrator.slopedisplacement.base.BaseMvpActivity;
 import com.example.administrator.slopedisplacement.bean.DriverBean;
+import com.example.administrator.slopedisplacement.bean.IVMS_8700_Bean;
 import com.example.administrator.slopedisplacement.bean.SchemeBean;
 import com.example.administrator.slopedisplacement.db.UserInfoPref;
 import com.example.administrator.slopedisplacement.mvp.contact.SelectDriverContact;
@@ -49,6 +50,8 @@ public class SelectSchemeActivity extends BaseMvpActivity<SelectSchemePresenter>
     protected void initData(Bundle savedInstanceState) {
         setToolBar("方案选择");
         intent = getIntent();
+        IVMS_8700_Bean ivms_8700_bean = (IVMS_8700_Bean) getIntent().getSerializableExtra(JumpToUtils.KEY_IVMS_8700_BEAN);
+        Log.e("ivms_8700_bean",ivms_8700_bean.getCamFlowState());
         schemeBean = (SchemeBean) intent.getSerializableExtra(JumpToUtils.KEY_SCHEMEBEAN);
         String camId = intent.getStringExtra(JumpToUtils.KEY_CAMID);
         rvScheme.setLayoutManager(new LinearLayoutManager(this));
@@ -62,7 +65,7 @@ public class SelectSchemeActivity extends BaseMvpActivity<SelectSchemePresenter>
 //                intent.setClass(SelectSchemeActivity.this,PlanLayoutOfPanoramaActivity.class);
 //                intent.putExtra("SchemeList",schemeBean.getList().get(position));
 //                startActivity(intent);
-                JumpToUtils.toPlanLayoutOfPanoramaActivity(getActivity(),schemeBean.getList().get(position).getSchemeID()+"",camId);
+                JumpToUtils.toPlanLayoutOfPanoramaActivity(getActivity(),schemeBean.getList().get(position).getSchemeID()+"",camId,ivms_8700_bean);
             }
         });
 

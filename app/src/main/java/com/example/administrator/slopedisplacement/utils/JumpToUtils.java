@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.administrator.slopedisplacement.activity.DataReportActivity;
+import com.example.administrator.slopedisplacement.activity.HuXinVideoActivity;
 import com.example.administrator.slopedisplacement.activity.PlanLayoutOfPanoramaActivity;
 import com.example.administrator.slopedisplacement.activity.SelectDriverActivity;
 import com.example.administrator.slopedisplacement.activity.SelectProjectActivity;
 import com.example.administrator.slopedisplacement.activity.SelectSchemeActivity;
 import com.example.administrator.slopedisplacement.activity.ShowMonitoringImgActivity;
+import com.example.administrator.slopedisplacement.bean.IVMS_8700_Bean;
 import com.example.administrator.slopedisplacement.bean.SchemeBean;
 import com.example.administrator.slopedisplacement.bean.json.GetDatSchemeAreaListJson;
 import com.example.administrator.slopedisplacement.bean.json.GetDatSchemeFixedListJson;
@@ -61,7 +63,7 @@ public class JumpToUtils {
 
     public static final String KEY_CAMID = "key_camId";
     public static final String KEY_SCHEMEID = "key_schemeID";
-
+    public static final String KEY_IVMS_8700_BEAN = "key_ivms_8700_bean";
     /**
      * 跳转到主页面页面
      *
@@ -69,10 +71,11 @@ public class JumpToUtils {
      * @param camId    设备id
      * @param schemeID 方案id
      */
-    public static void toPlanLayoutOfPanoramaActivity(Activity activity, String camId, String schemeID) {
+    public static void toPlanLayoutOfPanoramaActivity(Activity activity, String camId, String schemeID, IVMS_8700_Bean ivms_8700_bean) {
         Intent intent = new Intent(activity, PlanLayoutOfPanoramaActivity.class);
         intent.putExtra(KEY_CAMID, camId);
         intent.putExtra(KEY_SCHEMEID, schemeID);
+        intent.putExtra(KEY_IVMS_8700_BEAN, ivms_8700_bean);
         intent.putExtra(KEY_FROM_PUSH, false);//是否来至推送
         activity.startActivity(intent);
     }
@@ -95,7 +98,6 @@ public class JumpToUtils {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
-
     public static final String KEY_SCHEMEBEAN = "key_schemeBean";
 
     /**
@@ -105,11 +107,23 @@ public class JumpToUtils {
      * @param camId      设备id
      * @param schemeBean 方案列表数据
      */
-    public static void toSelectSchemeActivity(Activity activity, String camId, SchemeBean schemeBean) {
+    public static void toSelectSchemeActivity(Activity activity, String camId, SchemeBean schemeBean, IVMS_8700_Bean ivms_8700_bean) {
         Intent intent = new Intent(activity, SelectSchemeActivity.class);
         intent.putExtra(KEY_CAMID, camId);
         intent.putExtra(KEY_SCHEMEBEAN, schemeBean);
+        intent.putExtra(KEY_IVMS_8700_BEAN, ivms_8700_bean);
         activity.startActivity(intent);
     }
-
+    /**
+     * 跳转到互信播放页面
+     *
+     * @param activity
+     * @param ivms_8700_bean
+     *
+     */
+    public static void toHuXinVideoActivity(Activity activity, IVMS_8700_Bean ivms_8700_bean) {
+        Intent intent = new Intent(activity, HuXinVideoActivity.class);
+        intent.putExtra(KEY_IVMS_8700_BEAN, ivms_8700_bean);
+        activity.startActivity(intent);
+    }
 }

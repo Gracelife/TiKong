@@ -73,7 +73,11 @@ dependencies {
     /* 一个适用于ListView/GridView/RecyclerView的Adapter库,简化大量重复代码,支持多种布局,可自定义图片加载的实现*/
     //个推
     compile files('libs/GetuiSDK2.12.1.0.jar')
+    compile files('libs/ffcs-android-client-api-1.02.jar')
+    compile files('libs/tyjx.jar')
     //RecyclerView
+    /* 仿IOS选择器 */
+    /* 图表视图/图形视图库 支持折线图、条形图、饼图、蜘蛛网图 */
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.gyf.barlibrary:barlibrary:2.3.0'
@@ -88,10 +92,8 @@ dependencies {
     compile 'com.classic.adapter:commonadapter:2.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    compile 'com.contrarywind:Android-PickerView:3.2.7'
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
-    /* 仿IOS选择器 */
-    compile 'com.contrarywind:Android-PickerView:3.2.7'
-    /* 图表视图/图形视图库 支持折线图、条形图、饼图、蜘蛛网图 */
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }

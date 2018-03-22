@@ -14,7 +14,7 @@ import java.io.StringReader;
  */
 
 public class XmlUtils {
-    public static void parseXMLWithPull(String xmlData) throws Exception {
+    public static IVMS_8700_Bean parseXMLWithPull(String xmlData) throws Exception {
         XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
         XmlPullParser parser = factory.newPullParser();
         parser.setInput(new StringReader(xmlData));
@@ -37,6 +37,10 @@ public class XmlUtils {
                         dataBean.setmPassword(parser.nextText());
                     } else if ("naming".equals(nodeName)) {
                         dataBean.setmSysCode(parser.nextText());
+                    }else if("camId".equals(nodeName)){
+                        dataBean.setCamId(parser.nextText());
+                    }else if("camName".equals(nodeName)){
+                        dataBean.setCamName(parser.nextText());
                     }
                     break;
                 }
@@ -52,5 +56,6 @@ public class XmlUtils {
             }
             eventType = parser.next();
         }
+        return dataBean;
     }
 }
