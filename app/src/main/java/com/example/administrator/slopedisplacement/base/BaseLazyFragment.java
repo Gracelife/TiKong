@@ -27,12 +27,23 @@ public abstract class BaseLazyFragment extends RxFragment {
     protected boolean mIsPrepared;
     //标志位 fragment是否可见
     protected boolean mIsVisible;
+    /**
+     * 数据是否为空
+     */
+    protected boolean mIsDataEmpty = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
         mParentView = inflater.inflate(getLayoutResId(), container, false);
         mActivity = getSupportActivity();
         return mParentView;
+    }
+
+    /**
+     * 数据为空
+     */
+    public void setDataEmpty() {
+        this.mIsDataEmpty = true;
     }
 
     @Override
@@ -122,9 +133,11 @@ public abstract class BaseLazyFragment extends RxFragment {
         if (!mIsPrepared || !mIsVisible) {
             return;
         }
-        initView();
-        lazyLoadDate();
-        mIsPrepared = false;
+        if (!mIsDataEmpty) {
+            initView();
+            lazyLoadDate();
+            mIsPrepared = false;
+        }
     }
 
     /**

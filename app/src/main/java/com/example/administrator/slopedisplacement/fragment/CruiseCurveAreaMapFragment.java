@@ -61,6 +61,9 @@ public class CruiseCurveAreaMapFragment extends BaseLazyFragment {
 
     @OnClick({R.id.btCruiseDataStart, R.id.btCruiseDataEnd})
     void OnClick(View view) {
+        if(mIsDataEmpty){
+            return;
+        }
         switch (view.getId()) {
             case R.id.btCruiseDataStart:
                 showTimePickerStart();

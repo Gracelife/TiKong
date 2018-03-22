@@ -84,8 +84,12 @@ public class CruiseDataFragment extends BaseMvpLazyFragment<CruiseDataPresenter>
 
     public static CruiseDataFragment newInstance(GetDatSchemeAreaListJson areaListJson, String schemeID) {
         CruiseDataFragment cruiseDataFragment = new CruiseDataFragment();
-        cruiseDataFragment.mArealListJson = areaListJson;
-        cruiseDataFragment.mSchemeID = schemeID;
+        if(areaListJson==null||areaListJson.getList()==null||areaListJson.getList().isEmpty()){
+            cruiseDataFragment.setDataEmpty();
+        }else {
+            cruiseDataFragment.mArealListJson = areaListJson;
+            cruiseDataFragment.mSchemeID = schemeID;
+        }
         return cruiseDataFragment;
     }
 
@@ -219,6 +223,9 @@ public class CruiseDataFragment extends BaseMvpLazyFragment<CruiseDataPresenter>
 
     @OnClick({R.id.btCruiseDataStart, R.id.btCruiseDataEnd, R.id.btCruiseDataSearch})
     void OnClick(View view) {
+        if(mIsDataEmpty){
+            return;
+        }
         switch (view.getId()) {
             case R.id.btCruiseDataStart:
                 TimePickerUtils.showPickerView(getActivity(), "开始时间", mTvCruiseDataStart, mSelectTimeStart, "1234-10-11", mTvCruiseDataEnd.getText().toString());

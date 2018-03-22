@@ -3,11 +3,9 @@ package com.example.administrator.slopedisplacement.fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.classic.adapter.BaseAdapterHelper;
 import com.classic.adapter.CommonAdapter;
 import com.example.administrator.slopedisplacement.R;
@@ -17,11 +15,9 @@ import com.example.administrator.slopedisplacement.base.BaseMvpLazyFragment;
 import com.example.administrator.slopedisplacement.bean.json.GetDatSchemeAreaListJson;
 import com.example.administrator.slopedisplacement.bean.json.GetDatSchemeFixedListJson;
 import com.example.administrator.slopedisplacement.bean.json.GetSchemeFixedListLogJson;
-import com.example.administrator.slopedisplacement.bean.json.GetSchemeMonitorListLogJson;
 import com.example.administrator.slopedisplacement.db.UserInfoPref;
 import com.example.administrator.slopedisplacement.mvp.contact.FixedFlowDataContact;
 import com.example.administrator.slopedisplacement.mvp.presenter.FixedFlowDataPresenter;
-import com.example.administrator.slopedisplacement.utils.JumpToUtils;
 import com.example.administrator.slopedisplacement.utils.TimePickerUtils;
 import com.example.administrator.slopedisplacement.widget.CustomLoadMoreView;
 
@@ -81,8 +77,12 @@ public class FixedFlowDataFragment extends BaseMvpLazyFragment<FixedFlowDataPres
 
     public static FixedFlowDataFragment newInstance(GetDatSchemeFixedListJson fixedListJson,String schemeId) {
         FixedFlowDataFragment fixedFlowDataFragment = new FixedFlowDataFragment();
-        fixedFlowDataFragment.mFixedListJson = fixedListJson;
-        fixedFlowDataFragment.mSchemeID = schemeId;
+        if(fixedListJson==null||fixedListJson.getList()==null||fixedListJson.getList().isEmpty()){
+            fixedFlowDataFragment.setDataEmpty();
+        }else {
+            fixedFlowDataFragment.mFixedListJson = fixedListJson;
+            fixedFlowDataFragment.mSchemeID = schemeId;
+        }
         return fixedFlowDataFragment;
     }
 
@@ -167,6 +167,9 @@ public class FixedFlowDataFragment extends BaseMvpLazyFragment<FixedFlowDataPres
 
     @OnClick({R.id.btFixedFlowDataStart, R.id.btFixedFlowDataEnd, R.id.btFixedFlowDataSearch})
     void OnClick(View view) {
+        if(mIsDataEmpty){
+            return;
+        }
         switch (view.getId()) {
             case R.id.btFixedFlowDataStart:
                 TimePickerUtils.showPickerView(getActivity(), "开始时间", mTvFixedFlowDataStart, mSelectTimeStart, "1234-10-11", mTvFixedFlowDataEnd.getText().toString());

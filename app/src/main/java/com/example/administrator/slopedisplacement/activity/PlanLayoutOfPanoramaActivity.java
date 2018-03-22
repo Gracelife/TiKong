@@ -32,6 +32,7 @@ import com.example.administrator.slopedisplacement.mvp.presenter.PlanLayoutOfPan
 import com.example.administrator.slopedisplacement.utils.ActivityUtils;
 import com.example.administrator.slopedisplacement.utils.JumpToUtils;
 import com.example.administrator.slopedisplacement.widget.CustomLoadMoreView;
+import com.example.administrator.slopedisplacement.widget.point.PointFrameLayout;
 import com.example.administrator.slopedisplacement.widget.popupwindow.BindViewHelper;
 import com.example.administrator.slopedisplacement.widget.popupwindow.CommonPopupWindow;
 
@@ -48,10 +49,12 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
     ArrayList<PanoramaImgBean.ListBean> dataList = new ArrayList<PanoramaImgBean.ListBean>();
     ArrayList<SchemeAlarmListBean.ListBean> schemeAlarmList = new ArrayList<SchemeAlarmListBean.ListBean>();
     CommonPopupWindow mPopWindow;
-    @BindView(R.id.ivPlanLayoutOfPanorama)
-    ImageView ivPlanLayoutOfPanorama;
+//    @BindView(R.id.ivPlanLayoutOfPanorama)
+//    ImageView ivPlanLayoutOfPanorama;
     @BindView(R.id.btnAlarmInformation)
     Button btnAlarmInformation;
+    @BindView(R.id.pflPoint)
+    PointFrameLayout mPointFrameLayout;
     int schemeAlarmListPageIndex = 0;
     int SchemeAlarmListSumPage;
     GetSchemeAlarmListAdapter getSchemeAlarmListAdapter;
@@ -74,9 +77,6 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-//        intent = getIntent();
-//        String camId = ((DriverBean.ListBean) intent.getSerializableExtra("DriverBean")).getCamId() + "";
-//        schemeBean = ((SchemeBean.ListBean) intent.getSerializableExtra("SchemeBean"));
         mSchemeID = getIntent().getStringExtra(JumpToUtils.KEY_SCHEMEID);
         String camId = getIntent().getStringExtra(JumpToUtils.KEY_CAMID);
         isFromPush = getIntent().getBooleanExtra(JumpToUtils.KEY_FROM_PUSH, false);
@@ -84,18 +84,12 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
         mPresenter.getDatSchemeAreaList(mSchemeID + "", UserInfoPref.getUserId());
         mPresenter.getDatSchemeFixedList(mSchemeID + "", UserInfoPref.getUserId());
     }
-
     @Override
-    protected void initView() {
-
-    }
-
-
+    protected void initView() {}
     private void showPopupWindow() {
         mPopWindow = new CommonPopupWindow.Builder(this) {
             @Override
             public void popBindView(BindViewHelper popupWindowBindView) {
-
                 schemeAlarmList.clear();
                 mPresenter.getSchemeAlarmList(mSchemeID + "", "", "", "", schemeAlarmListPageIndex + "", "10", UserInfoPref.getUserId() + "");
                 LinearLayout pop_LinearLayout = (LinearLayout) popupWindowBindView.getView(R.id.pop_LinearLayout);
@@ -224,8 +218,6 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
                 .setFocusable(true)
                 .builder()
                 .showAtLocation(R.layout.activity_plan_layout_of_panorama, Gravity.BOTTOM, 0, 0);
-
-
     }
 
     private void showPanoramaPopupWindow() {
@@ -240,12 +232,12 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
                 panoramaAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                        Glide.with(PlanLayoutOfPanoramaActivity.this).load(dataList.get(position).getPuzzleImg())//拿到头像本地存放路径
-                                .error(R.mipmap.ic_launcher)//失败默认
-                                .placeholder(R.mipmap.ic_launcher)
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)//不单独缓存
-                                .skipMemoryCache(true)
-                                .into(ivPlanLayoutOfPanorama);
+//                        Glide.with(PlanLayoutOfPanoramaActivity.this).load(dataList.get(position).getPuzzleImg())//拿到头像本地存放路径
+//                                .error(R.mipmap.ic_launcher)//失败默认
+//                                .placeholder(R.mipmap.ic_launcher)
+//                                .diskCacheStrategy(DiskCacheStrategy.NONE)//不单独缓存
+//                                .skipMemoryCache(true)
+//                                .into(ivPlanLayoutOfPanorama);
                     }
                 });
 
@@ -292,12 +284,12 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
             pageIndex++;
         }
         if (isLoad) {
-            Glide.with(PlanLayoutOfPanoramaActivity.this).load(dataList.get(0).getPuzzleImg())//拿到头像本地存放路径
-                    .error(R.mipmap.ic_launcher)//失败默认
-                    .placeholder(R.mipmap.ic_launcher)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)//不单独缓存
-                    .skipMemoryCache(true)
-                    .into(ivPlanLayoutOfPanorama);
+//            Glide.with(PlanLayoutOfPanoramaActivity.this).load(dataList.get(0).getPuzzleImg())//拿到头像本地存放路径
+//                    .error(R.mipmap.ic_launcher)//失败默认
+//                    .placeholder(R.mipmap.ic_launcher)
+//                    .diskCacheStrategy(DiskCacheStrategy.NONE)//不单独缓存
+//                    .skipMemoryCache(true)
+//                    .into(ivPlanLayoutOfPanorama);
             isLoad = false;
         }
 
