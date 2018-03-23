@@ -14,6 +14,14 @@ public class PointBean {
      */
     private String mPointName;
     /**
+     * 标记点在原图上x轴位置
+     */
+    private double mOriginalX;
+    /**
+     * 标记点在原图上Y轴位置
+     */
+    private double mOriginalY;
+    /**
      * 标记点相对于X轴方向上的比例
      */
     private double mXScale;
@@ -112,5 +120,21 @@ public class PointBean {
 
     public void setShowMarginTop(int showMarginTop) {
         this.mShowMarginTop = showMarginTop;
+    }
+
+    public double getOriginalX() {
+        return mOriginalX;
+    }
+
+    public void setOriginalX(double originalX) {
+        this.mOriginalX = originalX;
+    }
+
+    public double getOriginalY() {
+        return mOriginalY;
+    }
+
+    public void setOriginalY(double originalY) {
+        this.mOriginalY = originalY;
     }
 }

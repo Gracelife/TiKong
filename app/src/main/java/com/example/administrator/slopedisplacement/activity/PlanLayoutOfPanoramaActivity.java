@@ -388,21 +388,24 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
         mPointFrameLayout.setBgImgUrl(dataList.get(0).getPuzzleImg());
         List<GetDatSchemeAreaListJson.ListBean> areaList = mArealListJson.getList();
         ArrayList<PointBean> pointBeanList = new ArrayList<>();
-//        for (GetDatSchemeAreaListJson.ListBean area : areaList) {
-//            if (area.getAreaType().equals("1")) {//区域
-////                double Ox1 = area.getOx1();
-//
-//
-//            } else if (area.getAreaType().equals("2")) {//线
-//
-//            } else if (area.getAreaType().equals("1")) {//点
-//                PointBean pointBean = new PointBean();
-//                pointBean.setXScale(0.1);
-//                pointBean.setYScale(0.1);
+        for (GetDatSchemeAreaListJson.ListBean area : areaList) {
+            if (area.getAreaType().equals("1")) {//区域
+//                double Ox1 = area.getOx1();
+                PointBean pointBean = new PointBean();
+                pointBean.setOriginalX(Double.parseDouble(area.getOx1()));
+                pointBean.setOriginalY(Double.parseDouble(area.getOy1()));
+
+            } else if (area.getAreaType().equals("2")) {//线
+
+            } else if (area.getAreaType().equals("3")) {//点
+                PointBean pointBean = new PointBean();
+                pointBean.setOriginalX(Double.parseDouble(area.getOx1()));
+                pointBean.setOriginalY(Double.parseDouble(area.getOy1()));
+
 //                pointBean.setPlayAnimation(false);
 //                pointBean.setPointName("点");
-//            }
-//        }
+            }
+        }
 
         PointBean pointBean = new PointBean();
         pointBean.setXScale(0.1);
