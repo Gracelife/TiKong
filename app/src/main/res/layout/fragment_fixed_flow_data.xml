@@ -6,35 +6,40 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_height="@dimen/y96"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="开始日期:" />
+            android:layout_marginLeft="@dimen/x218"
+            android:textSize="@dimen/y30"
+            android:textColor="#000000"
+            android:text="开始日期：" />
 
         <TextView
             android:id="@+id/btFixedFlowDataStart"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/x200"
+            android:layout_height="@dimen/y56"
             android:gravity="center"
-            android:background="@drawable/shape_blue_round"
+            android:background="@drawable/selectprojectsearch"
             android:text="" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_small"
+            android:layout_marginLeft="@dimen/x74"
+            android:textSize="@dimen/y30"
+            android:textColor="#000000"
             android:text="结束日期：" />
 
         <TextView
             android:id="@+id/btFixedFlowDataEnd"
-            android:layout_width="85dp"
+            android:layout_width="@dimen/x200"
+            android:layout_height="@dimen/y56"
             android:gravity="center"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_blue_round"
+            android:background="@drawable/selectprojectsearch"
             android:text=" " />
 
         <TextView
@@ -54,70 +59,90 @@
             android:src="@drawable/iv_search" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/y70"
+        android:background="#4ca7e8"
         android:orientation="horizontal">
 
         <TextView
-            style="@style/TvDataStyle"
-            android:layout_weight="2"
-            android:text="序号" />
-
-        <View
-            style="@style/LineVerticalStyle"
-            android:layout_width="1dp" />
-
-        <TextView
-            style="@style/TvDataStyle"
-            android:layout_weight="4"
-            android:text="生成时间" />
-
-        <View
-            style="@style/LineVerticalStyle"
-            android:layout_width="1dp" />
+            android:layout_width="@dimen/x70"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="@dimen/x30"
+            android:textColor="#ffffff"
+            android:text="序号"
+            android:id="@+id/textView9" />
 
         <TextView
-            style="@style/TvDataStyle"
-            android:layout_weight="2"
-            android:text="定点" />
+            android:layout_width="@dimen/x250"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="@dimen/x30"
+            android:textColor="#ffffff"
+            android:text="生成时间"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/textView9"
+            android:layout_toEndOf="@+id/textView9"
+            android:id="@+id/textView10" />
 
-        <View
-            style="@style/LineVerticalStyle"
-            android:layout_width="1dp" />
+        <TextView
+
+        android:layout_width="@dimen/x106"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/x30"
+        android:textColor="#ffffff"
+            android:text="定点"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/textView10"
+            android:layout_toEndOf="@+id/textView10"
+            android:id="@+id/textView11" />
+
+        <TextView
+            android:layout_width="@dimen/x240"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="@dimen/x30"
+            android:textColor="#ffffff"
+            android:text="本次位移(mm)"
+            android:id="@+id/textView8"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/textView11"
+            android:layout_toEndOf="@+id/textView11" />
+
+        <TextView
+            android:layout_width="@dimen/x240"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="@dimen/x30"
+            android:textColor="#ffffff"
+            android:text="阶段位移(mm)"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/textView8"
+            android:layout_toEndOf="@+id/textView8"
+            android:id="@+id/textView15" />
+
+        <TextView
+            android:layout_width="@dimen/x240"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="@dimen/x30"
+            android:textColor="#ffffff"
+            android:text="累计位移(mm)"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/textView15"
+            android:layout_toEndOf="@+id/textView15"
+            android:id="@+id/textView16" />
 
         <TextView
             style="@style/TvDataStyle"
             android:layout_weight="3"
-            android:text="本次位移(mm)" />
-
-        <View
-            style="@style/LineVerticalStyle"
-            android:layout_width="1dp" />
-
-        <TextView
-            style="@style/TvDataStyle"
-            android:layout_weight="3"
-            android:text="阶段位移(mm)" />
-
-        <View
-            style="@style/LineVerticalStyle"
-            android:layout_width="1dp" />
-
-        <TextView
-            style="@style/TvDataStyle"
-            android:layout_weight="3"
-            android:text="累计位移(mm)" />
-
-        <View
-            style="@style/LineVerticalStyle"
-            android:layout_width="1dp" />
-
-        <TextView
-            style="@style/TvDataStyle"
-            android:layout_weight="3"
-            android:text="距离(m)" />
-    </LinearLayout>
+            android:text="距离(m)"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/textView16"
+            android:layout_toEndOf="@+id/textView16" />
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvFixedFlowData"
