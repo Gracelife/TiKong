@@ -6,35 +6,40 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_height="@dimen/y96"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="开始日期:" />
+            android:layout_marginLeft="@dimen/x218"
+            android:textSize="@dimen/y30"
+            android:textColor="#000000"
+            android:text="开始日期：" />
 
         <TextView
             android:id="@+id/btFixedFlowDataStart"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/x200"
+            android:layout_height="@dimen/y56"
             android:gravity="center"
-            android:background="@drawable/shape_blue_round"
+            android:background="@drawable/selectprojectsearch"
             android:text="" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_small"
+            android:layout_marginLeft="@dimen/x74"
+            android:textSize="@dimen/y30"
+            android:textColor="#000000"
             android:text="结束日期：" />
 
         <TextView
             android:id="@+id/btFixedFlowDataEnd"
-            android:layout_width="85dp"
+            android:layout_width="@dimen/x200"
+            android:layout_height="@dimen/y56"
             android:gravity="center"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_blue_round"
+            android:background="@drawable/selectprojectsearch"
             android:text=" " />
 
         <TextView
@@ -54,19 +59,20 @@
             android:src="@drawable/iv_search" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/y70"
+        android:background="#4ca7e8"
         android:orientation="horizontal">
 
         <TextView
-            style="@style/TvDataStyle"
-            android:layout_weight="2"
-            android:text="序号" />
-
-        <View
-            style="@style/LineVerticalStyle"
-            android:layout_width="1dp" />
+            android:layout_width="@dimen/x70"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="@dimen/x30"
+            android:textColor="#ffffff"
+            android:text="序号"
+            />
 
         <TextView
             style="@style/TvDataStyle"
@@ -117,7 +123,7 @@
             style="@style/TvDataStyle"
             android:layout_weight="3"
             android:text="距离(m)" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvFixedFlowData"
