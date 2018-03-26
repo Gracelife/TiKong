@@ -27,11 +27,10 @@ android {
         ]
 
 
-        multiDexEnabled true
-    }
+
+}
     buildTypes {
         release {
-
 
 
             minifyEnabled false
@@ -54,13 +53,14 @@ ext {
     supportLibraryVersion = "25.3.1"
 }
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:multidex:1.0.0'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile "com.android.support:appcompat-v7:${supportLibraryVersion}"
     compile "com.android.support:design:${supportLibraryVersion}"
+
     //  RxJava & RxAndroid & RetrofitUtils & OkHttp
     compile "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
     compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
@@ -71,20 +71,36 @@ dependencies {
     compile "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}"
 
     /*view依赖注入*/
+
     /*RxAndroid*/
+
     /*RxJava*/
+
     /*Rx生命周期管理*/
+
     /* rx动态申请权限*/
+
     /* Rxbinding2 绑定API Android UI部件从平台和支持库 */
+
     /* log日志工具*/
+
     /* 一个适用于ListView/GridView/RecyclerView的Adapter库,简化大量重复代码,支持多种布局,可自定义图片加载的实现*/
+
     //个推
     compile files('libs/GetuiSDK2.12.1.0.jar')
     compile files('libs/ffcs-android-client-api-1.02.jar')
     compile files('libs/tyjx.jar')
-    compile files('libs/ivms_8700_sdk_library.jar')
+
+    //            {
+
+    //        exclude group: 'com.android.support', module: 'support-annotations'
+
+    //    }
+
     //RecyclerView
+
     /* 仿IOS选择器 */
+
     /* 图表视图/图形视图库 支持折线图、条形图、饼图、蜘蛛网图 */
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.github.bumptech.glide:glide:3.7.0'

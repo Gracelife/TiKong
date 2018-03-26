@@ -152,6 +152,30 @@ public class PlanLayoutOfPanoramaPresenter extends BasePresenter<PlanLayoutOfPan
                         getIView().showMsg(msg.getMessage());
                     }
                 });
+    }
+    /**
+     *  获取区域监测点日志top1(最新一条)
+     * @param schemeID
+     * @param uid
+     */
+    @Override
+    public void getSchemeMonitorLog(String schemeID, String uid) {
+        getIView().showLoading("正在加载中...");
+        new PlanLayoutOfPanoramaModel()
+                .getSchemeMonitorLog(schemeID, uid)
+                .compose(getIView().bindLifecycle())
+                .subscribe(new HttpObserver<HttpResponse<GetDatSchemeFixedListJson>>() {
+                    @Override
+                    public void onSuccess(HttpResponse<GetDatSchemeFixedListJson> httpResponse) {
+                        getIView().hideLoading();
+                        getIView().onGetDatSchemeFixedListSuccess(httpResponse.getData());
+                    }
 
+                    @Override
+                    public void onFail(ApiException msg) {
+                        getIView().hideLoading();
+                        getIView().showMsg(msg.getMessage());
+                    }
+                });
     }
 }

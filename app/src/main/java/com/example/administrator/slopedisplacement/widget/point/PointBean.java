@@ -6,21 +6,18 @@ package com.example.administrator.slopedisplacement.widget.point;
 
 public class PointBean {
     /**
-     * 点的id
+     * 点的monitorID
      */
-    private String mPointId;
+    private String mMonitorID;
+    /**
+     * 点的显示数据里的下标
+     */
+    private int mPointIndex;
     /**
      * 点上方显示的字
      */
-    private String mPointName;
-    /**
-     * 标记点在原图上x轴位置
-     */
-    private double mOriginalX;
-    /**
-     * 标记点在原图上Y轴位置
-     */
-    private double mOriginalY;
+    private String mPointName="";
+
     /**
      * 标记点相对于X轴方向上的比例
      */
@@ -50,12 +47,12 @@ public class PointBean {
      */
     private boolean isPlayAnimation;
 
-    public String getPointId() {
-        return mPointId;
+    public int getPointIndex() {
+        return mPointIndex;
     }
 
-    public void setPointId(String mPointId) {
-        this.mPointId = mPointId;
+    public void setPointIndex(int mPointIndex) {
+        this.mPointIndex = mPointIndex;
     }
 
     public double getXScale() {
@@ -122,19 +119,11 @@ public class PointBean {
         this.mShowMarginTop = showMarginTop;
     }
 
-    public double getOriginalX() {
-        return mOriginalX;
+    public String getmMonitorID() {
+        return mMonitorID;
     }
 
-    public void setOriginalX(double originalX) {
-        this.mOriginalX = originalX;
-    }
-
-    public double getOriginalY() {
-        return mOriginalY;
-    }
-
-    public void setOriginalY(double originalY) {
-        this.mOriginalY = originalY;
+    public void setmMonitorID(String mMonitorID) {
+        this.mMonitorID = mMonitorID;
     }
 }

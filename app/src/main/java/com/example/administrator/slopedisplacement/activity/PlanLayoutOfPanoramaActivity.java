@@ -49,7 +49,7 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
     ArrayList<PanoramaImgBean.ListBean> dataList = new ArrayList<PanoramaImgBean.ListBean>();
     ArrayList<SchemeAlarmListBean.ListBean> schemeAlarmList = new ArrayList<SchemeAlarmListBean.ListBean>();
     CommonPopupWindow mPopWindow;
-//    @BindView(R.id.ivPlanLayoutOfPanorama)
+    //    @BindView(R.id.ivPlanLayoutOfPanorama)
 //    ImageView ivPlanLayoutOfPanorama;
     @BindView(R.id.btnAlarmInformation)
     Button btnAlarmInformation;
@@ -91,7 +91,7 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
     @Override
     protected void initData(Bundle savedInstanceState) {
         ivms_8700_bean = (IVMS_8700_Bean) getIntent().getSerializableExtra(JumpToUtils.KEY_IVMS_8700_BEAN);
-        Log.e("ivms_8700_bean",ivms_8700_bean.getCamFlowState());
+        Log.e("ivms_8700_bean", ivms_8700_bean.getCamFlowState());
         mSchemeID = getIntent().getStringExtra(JumpToUtils.KEY_SCHEMEID);
         String camId = getIntent().getStringExtra(JumpToUtils.KEY_CAMID);
         isFromPush = getIntent().getBooleanExtra(JumpToUtils.KEY_FROM_PUSH, false);
@@ -101,9 +101,13 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
         mPresenter.getPanoramaImg(camId, pageIndex + "", "10", UserInfoPref.getUserId());
         mPresenter.getDatSchemeAreaList(mSchemeID + "", UserInfoPref.getUserId());
         mPresenter.getDatSchemeFixedList(mSchemeID + "", UserInfoPref.getUserId());
+        mPresenter.getSchemeMonitorLog(mSchemeID + "", UserInfoPref.getUserId());
     }
+
     @Override
-    protected void initView() {}
+    protected void initView() {
+    }
+
     private void showPopupWindow() {
         mPopWindow = new CommonPopupWindow.Builder(this) {
             @Override
@@ -381,84 +385,149 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
         loadPointImg();
     }
 
+    @Override
+    public void getSchemeMonitorLogSuccess(GetDatSchemeFixedListJson fixedListJson) {
+
+    }
+
     private synchronized void loadPointImg() {
+        //区域列表、定点列表、获取全景图接口都调用完成后才执行加载点相关信息
         if (!mIsPrepareFixedData || !mIsPrepareAreaData || !mIsPrepareImg) {
             return;
         }
-        mPointFrameLayout.setBgImgUrl(dataList.get(0).getPuzzleImg());
+        ArrayList<PointBean> pointBeanList = new ArrayList<>();//点
+        List<LineBean> lineBeanList = new ArrayList<>();//线
+        List<LineBean> dottedLineList = new ArrayList<>();//虚线
+
+        //区域列表里的点线
         List<GetDatSchemeAreaListJson.ListBean> areaList = mArealListJson.getList();
-        ArrayList<PointBean> pointBeanList = new ArrayList<>();
         for (GetDatSchemeAreaListJson.ListBean area : areaList) {
             if (area.getAreaType().equals("1")) {//区域
-//                double Ox1 = area.getOx1();
-                PointBean pointBean = new PointBean();
-                pointBean.setOriginalX(Double.parseDouble(area.getOx1()));
-                pointBean.setOriginalY(Double.parseDouble(area.getOy1()));
+                double startX = Double.parseDouble(area.getOx1());
+                double startY = Double.parseDouble(area.getOy1());
+                double endX = Double.parseDouble(area.getOx2());
+                double endY = Double.parseDouble(area.getOy2());
+                int num = area.getNewMonitor().size();
+                boolean isPointVertical = isPointVertical(startX, startY, endX, endY);
+                int pointBeanListIndex = pointBeanList.size();
+                for (int i = 0; i < num / 2; i++) {
+                    PointBean pointBean1 = new PointBean();
+                    double scaleX = fun(startX, endX, i, num / 2 - 1);
+                    double scaleY = fun(startY, endY, i, num / 2 - 1);
+                    pointBean1.setXScale(scaleX);
+                    pointBean1.setYScale(scaleY);
+                    pointBean1.setmMonitorID(area.getNewMonitor().get(i * 2).getMonitorID());
+                    if (i == 0) {
+                        pointBean1.setPointName(area.getAreaNmae());
+                    }
+                    pointBean1.setPointIndex(pointBeanListIndex + i * 2);
+
+                    PointBean pointBean2 = new PointBean();
+                    if (isPointVertical) {
+                        pointBean2.setXScale(scaleX + 6);
+                        pointBean2.setYScale(scaleY);
+                    } else {
+                        pointBean2.setXScale(scaleX);
+                        pointBean2.setYScale(scaleY + 6);
+                    }
+                    pointBean2.setmMonitorID(area.getNewMonitor().get(i * 2 + 1).getMonitorID());
+                    pointBean2.setPointIndex(pointBeanListIndex + i * 2 + 1);
+                    pointBeanList.add(pointBean1);
+                    pointBeanList.add(pointBean2);
+                }
+                if (num > 2) {
+                    dottedLineList.add(new LineBean(pointBeanList.get(pointBeanListIndex).getPointIndex(), pointBeanList.get(pointBeanListIndex + 1).getPointIndex()));
+                    dottedLineList.add(new LineBean(pointBeanList.get(pointBeanListIndex + num - 2).getPointIndex(), pointBeanList.get(pointBeanListIndex + num - 1).getPointIndex()));
+                }
+                lineBeanList.add(new LineBean(pointBeanList.get(pointBeanListIndex).getPointIndex(), pointBeanList.get(pointBeanListIndex + num - 2).getPointIndex()));
 
             } else if (area.getAreaType().equals("2")) {//线
+                String areaName = area.getAreaNmae();
+                double startX = Double.parseDouble(area.getOx1());
+                double startY = Double.parseDouble(area.getOy1());
+                double endX = Double.parseDouble(area.getOx2());
+                double endY = Double.parseDouble(area.getOy2());
 
+                PointBean pointStart = new PointBean();
+                pointStart.setXScale(startX);
+                pointStart.setYScale(startY);
+                PointBean pointEnd = new PointBean();
+                pointEnd.setXScale(endX);
+                pointEnd.setYScale(endY);
+
+                if (startX < endX || (startX == endX && startY > endY)) {
+                    pointStart.setPointName(areaName);
+                } else {
+                    pointEnd.setPointName(areaName);
+                }
+                //添加newMonitorId用于启动和关闭点的动画
+                List<GetDatSchemeAreaListJson.ListBean.NewMonitorBean> newMonitorBeanList = area.getNewMonitor();
+                if (newMonitorBeanList != null && newMonitorBeanList.size() >= 2) {
+                    pointStart.setmMonitorID(area.getNewMonitor().get(0).getMonitorID());
+                    pointEnd.setmMonitorID(area.getNewMonitor().get(1).getMonitorID());
+                }
+
+                pointStart.setPointIndex(pointBeanList.size());
+                pointBeanList.add(pointStart);
+
+                pointEnd.setPointIndex(pointBeanList.size());
+                pointBeanList.add(pointEnd);
+                lineBeanList.add(new LineBean(pointStart.getPointIndex(), pointEnd.getPointIndex()));
             } else if (area.getAreaType().equals("3")) {//点
-                PointBean pointBean = new PointBean();
-                pointBean.setOriginalX(Double.parseDouble(area.getOx1()));
-                pointBean.setOriginalY(Double.parseDouble(area.getOy1()));
-
-//                pointBean.setPlayAnimation(false);
-//                pointBean.setPointName("点");
+                List<GetDatSchemeAreaListJson.ListBean.NewMonitorBean> newMonitorBeanList = area.getNewMonitor();
+                int num = newMonitorBeanList.size();
+                String areaName = area.getAreaNmae();
+                for (int i = 0; i < num; i++) {
+                    PointBean pointBean = new PointBean();
+                    pointBean.setXScale(Double.parseDouble(newMonitorBeanList.get(i).getOx()));
+                    pointBean.setYScale(Double.parseDouble(newMonitorBeanList.get(i).getOy()));
+                    pointBean.setPointIndex(pointBeanList.size());
+                    pointBean.setPointName(areaName + "_" + (i + 1));
+                    pointBean.setmMonitorID(newMonitorBeanList.get(i).getMonitorID());
+                    pointBeanList.add(pointBean);
+                }
             }
         }
-
-        PointBean pointBean = new PointBean();
-        pointBean.setXScale(0.1);
-        pointBean.setYScale(0.1);
-        pointBean.setPlayAnimation(false);
-        pointBean.setPointName("点");
-
-        PointBean pointBean1 = new PointBean();
-        pointBean1.setXScale(0.6);
-        pointBean1.setYScale(0.2);
-        pointBean1.setPlayAnimation(false);
-        pointBean1.setPointName("点1");
-
-        PointBean pointBean2 = new PointBean();
-        pointBean2.setXScale(0.2);
-        pointBean2.setYScale(0.4);
-        pointBean2.setPlayAnimation(false);
-        pointBean2.setPointName("点2");
-
-        PointBean pointBean3 = new PointBean();
-        pointBean3.setXScale(0.5);
-        pointBean3.setYScale(0.5);
-        pointBean3.setPlayAnimation(true);
-        pointBean3.setPointName("点3");
-
-        PointBean pointBean4 = new PointBean();
-        pointBean4.setXScale(0.6);
-        pointBean4.setYScale(0.7);
-        pointBean4.setPlayAnimation(true);
-        pointBean4.setPointName("点4");
-
-        PointBean pointBean5 = new PointBean();
-        pointBean5.setXScale(0.7);
-        pointBean5.setYScale(0.2);
-        pointBean5.setPlayAnimation(true);
-        pointBean5.setPointName("点4");
-
-        pointBeanList.add(pointBean);
-        pointBeanList.add(pointBean1);
-        pointBeanList.add(pointBean2);
-        pointBeanList.add(pointBean3);
-        pointBeanList.add(pointBean4);
-        pointBeanList.add(pointBean5);
-
-        List<LineBean> lineBeanList = new ArrayList<>();
-        lineBeanList.add(new LineBean(0, 1));
-        lineBeanList.add(new LineBean(3, 1));
-        lineBeanList.add(new LineBean(2, 3));
+        //定点列表里的点
+        List<GetDatSchemeFixedListJson.ListBean> fixedList = mFixedListJson.getList();
+        for (GetDatSchemeFixedListJson.ListBean fixed : fixedList) {
+            PointBean pointBean = new PointBean();
+            pointBean.setXScale(Double.parseDouble(fixed.getOx()));
+            pointBean.setYScale(Double.parseDouble(fixed.getOy()));
+            pointBean.setPointIndex(pointBeanList.size());
+            pointBean.setPointName(fixed.getFixedName());
+            pointBean.setmMonitorID(fixed.getFixedID());
+            pointBeanList.add(pointBean);
+        }
         PointDataBean imgPointBean = new PointDataBean();
         imgPointBean.setPointBeanList(pointBeanList);
         imgPointBean.setLineList(lineBeanList);
-
+        imgPointBean.setDottedLineList(dottedLineList);
         mPointFrameLayout.setPointsInfo(imgPointBean);
+        mPointFrameLayout.setBgImgUrl(dataList.get(0).getPuzzleImg());
+    }
+
+    /**
+     * 点的方向
+     *
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @return true 向右 false 向下
+     */
+    private boolean isPointVertical(double x1, double y1, double x2, double y2) {
+        if (x1 == x2) {
+            return true;
+        }
+        if (y1 == y2) {
+            return false;
+        }
+        return Math.abs((y2 - y1) / (x2 - x1)) < 1;
+    }
+
+    private double fun(double start, double end, int n, int m) {
+        return (end - start) * n / m + start;
     }
 
     @Override
@@ -467,13 +536,13 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
         if (mPopWindow != null) {
             mPopWindow.dismiss();
         }
-        if (isFromPush) {//关闭所有页面，并跳转到选择项目页面
+        if (isFromPush) {//从推送页面过来，则关闭所有页面，并跳转到选择项目页面
             Intent intent = new Intent(getActivity(), SelectProjectActivity.class);
             startActivity(intent);
         }
     }
 
-    @OnClick({R.id.btnAlarmInformation, R.id.btnPanorama, R.id.btnPanoramaDataReport,R.id.btnVideo})
+    @OnClick({R.id.btnAlarmInformation, R.id.btnPanorama, R.id.btnPanoramaDataReport, R.id.btnVideo})
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.btnAlarmInformation:
@@ -483,15 +552,15 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
                 showPanoramaPopupWindow();
                 break;
             case R.id.btnVideo:
-                if(ivms_8700_bean.getCamFlowState().equals("15")) {
+                if (ivms_8700_bean.getCamFlowState().equals("15")) {
                     //2,5,8为互信、3中星微2.1、7中星微3.3、15海康8700
                     if (ivms_8700_bean.getmType().equals("2") || ivms_8700_bean.getmType().equals("5") || ivms_8700_bean.getmType().equals("8") || ivms_8700_bean.getmType().equals("3") || ivms_8700_bean.getmType().equals("7")) {
-                        JumpToUtils.toHuXinVideoActivity(getActivity(),ivms_8700_bean);
+                        JumpToUtils.toHuXinVideoActivity(getActivity(), ivms_8700_bean);
                     } else {
                         //showToast("此为海康平台：");
                         JumpToUtils.toHKVideoActivity(getActivity(),ivms_8700_bean);
                     }
-                }else{
+                } else {
                     showToast("此视频维护或不在线");
                 }
                 break;

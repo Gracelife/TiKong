@@ -31,12 +31,13 @@ public class PlanLayoutOfPanoramaContact {
 
         /**
          * 获取区域(巡航)列表成功
+         *
          * @param arealListJson
          */
         void onGetDatSchemeAreaListSuccess(GetDatSchemeAreaListJson arealListJson);
 
         void onGetDatSchemeFixedListSuccess(GetDatSchemeFixedListJson fixedListJson);
-
+        void getSchemeMonitorLogSuccess(GetDatSchemeFixedListJson fixedListJson);
     }
 
     public interface Presenter {
@@ -51,5 +52,7 @@ public class PlanLayoutOfPanoramaContact {
         void getDatSchemeAreaList(String schemeID, String uid);
 
         void getDatSchemeFixedList(String schemeID, String uid);
+
+        void getSchemeMonitorLog(String schemeID, String uid);
     }
 }

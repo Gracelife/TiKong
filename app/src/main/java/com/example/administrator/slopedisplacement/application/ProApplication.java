@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
+import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
 import com.example.administrator.slopedisplacement.pushmi.PushMiUtils;
@@ -33,12 +34,15 @@ public class ProApplication extends MultiDexApplication {
     public Vibrator mVibrator;
 
     private static ProApplication mInstance;
+
     public static ProApplication getInstance() {
         return mInstance;
     }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        MultiDex.install(this);
         //locationService = new LocationService(getApplicationContext());
         mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
         // SDKInitializer.initialize(getApplicationContext());
@@ -50,7 +54,7 @@ public class ProApplication extends MultiDexApplication {
             PushMiUtils.init();
         }
 
-    //海康8700初始化
+        //海康8700初始化
         MCRSDK.init();
         // 初始化RTSP
         RtspClient.initLib();
@@ -59,10 +63,13 @@ public class ProApplication extends MultiDexApplication {
         TalkClientSDK.initLib();
         // SDK初始化
         VMSNetSDK.init(this);
+
     }
+
     public static ProApplication getIns() {
         return mInstance;
     }
+
     @Override
     public void onTerminate() {
         super.onTerminate();

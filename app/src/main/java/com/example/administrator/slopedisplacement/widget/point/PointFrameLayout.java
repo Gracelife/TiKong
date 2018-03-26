@@ -4,11 +4,14 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +24,10 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.example.administrator.slopedisplacement.R;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -43,6 +49,7 @@ public class PointFrameLayout extends FrameLayout {
     private FrameLayout mFlPoint;
     private PointDataBean imgPointBean;
     private int mPointSize = 1;
+    private HashMap<String, ImageView> mPointImageViews = new HashMap<>();
 
     public PointFrameLayout(@NonNull Context context) {
         this(context, null);
@@ -59,7 +66,7 @@ public class PointFrameLayout extends FrameLayout {
     }
 
     private void initView() {
-        mPointSize = dip2px(25);//点的大小
+        mPointSize = dip2px(15);//点的大小
         View imgPointLayout = inflate(mContext, R.layout.widget_point_img, this);
         mIvBg = (ImageView) imgPointLayout.findViewById(R.id.IvWidgetPointAndImg);
         mIvTran = (ImageView) imgPointLayout.findViewById(R.id.IvWidgetTran);
@@ -142,8 +149,8 @@ public class PointFrameLayout extends FrameLayout {
         for (PointBean pointBean : pointLists) {
             //初始化
             // 点在拉伸后的图里的位置
-            pointBean.setShowMarginTop((int) (currentHeight * pointBean.getYScale()));
-            pointBean.setShowMarginLeft((int) (currentWidth * pointBean.getXScale()));
+            pointBean.setShowMarginTop((int) (currentHeight * pointBean.getYScale() / 100));
+            pointBean.setShowMarginLeft((int) (currentWidth * pointBean.getXScale() / 100));
 
             // 点在屏幕里实际的位置
             pointBean.setMarginLeft((getMargin(mFlPoint.getWidth(), currentWidth, mPointSize, pointBean.getXScale())));
@@ -162,7 +169,7 @@ public class PointFrameLayout extends FrameLayout {
             //添加点
             imageView = new ImageView(mContext);
             imageView.setImageResource(R.drawable.anim_point_img);
-            imageView.setTag(pointBean.getPointId());
+            imageView.setTag(pointBean.getPointIndex());
             if (pointBean.isPlayAnimation()) {
                 ((AnimationDrawable) imageView.getDrawable()).start();
             } else {
@@ -173,6 +180,43 @@ public class PointFrameLayout extends FrameLayout {
             layoutParams.topMargin = pointBean.getMarginTop();
             imageView.setLayoutParams(layoutParams);
             mFlPoint.addView(imageView);
+            mPointImageViews.put(pointBean.getmMonitorID(), imageView);
+        }
+    }
+
+    /**
+     * 启动点的动画(闪烁)
+     *
+     * @param monitorId
+     */
+    public void startPointAnimation(String monitorId) {
+        ImageView imageView = mPointImageViews.get(monitorId);
+        if (imageView != null)
+            ((AnimationDrawable) imageView.getDrawable()).start();
+    }
+
+    /**
+     * 停止点的动画(闪烁)
+     *
+     * @param monitorId
+     */
+    public void stopPointAnimation(String monitorId) {
+        ImageView imageView = mPointImageViews.get(monitorId);
+        if (imageView != null)
+            ((AnimationDrawable) imageView.getDrawable()).stop();
+    }
+
+    /**
+     * 停止所有点的动画(闪烁)
+     */
+    public void stopAllPointAnimation() {
+        Iterator iter = mPointImageViews.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            Object key = entry.getKey();
+            ImageView imageView = (ImageView) entry.getValue();
+            if (imageView != null)
+                ((AnimationDrawable) imageView.getDrawable()).stop();
         }
     }
 
@@ -190,9 +234,11 @@ public class PointFrameLayout extends FrameLayout {
         canvas.drawBitmap(bitmap, 0, 0, null);  //在画布 0，0坐标上开始绘制原始图片
         Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setColor(Color.parseColor("#FF4081"));
-        mPaint.setTextSize(33f);
+        mPaint.setTextSize(21f);
         //添加文字
         for (PointBean pointBean : imgPointBean.getPointBeanList()) {
+            if (TextUtils.isEmpty(pointBean.getPointName()))
+                continue;
             int margin = pointBean.getPointName().length();
             canvas.drawText(pointBean.getPointName(), pointBean.getShowMarginLeft() - margin * 10, pointBean.getShowMarginTop() - 20, mPaint); //在画布上绘制水印图片
         }
@@ -204,6 +250,23 @@ public class PointFrameLayout extends FrameLayout {
             canvas.drawLine(startPoint.getShowMarginLeft(), startPoint.getShowMarginTop()
                     , endPoint.getShowMarginLeft(), endPoint.getShowMarginTop(), mPaint);
         }
+        for (LineBean lineBean : imgPointBean.getDottedLineList()) {
+            PointBean startPoint = imgPointBean.getPointBeanList().get(lineBean.getStartIndex());
+            PointBean endPoint = imgPointBean.getPointBeanList().get(lineBean.getEndIndex());
+            DashPathEffect pathEffect = new DashPathEffect(new float[]{4, 3}, 1);
+            Paint paint = new Paint();
+            paint.reset();
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeWidth(5);
+            paint.setColor(Color.parseColor("#FF4081"));
+            paint.setAntiAlias(true);
+            paint.setPathEffect(pathEffect);
+            Path path = new Path();
+            path.moveTo(startPoint.getShowMarginLeft(), startPoint.getShowMarginTop());
+            path.lineTo(endPoint.getShowMarginLeft(), endPoint.getShowMarginTop());
+            canvas.drawPath(path, paint);
+        }
+
 
         canvas.save(Canvas.ALL_SAVE_FLAG);// 保存
         canvas.restore();// 存储
@@ -220,7 +283,7 @@ public class PointFrameLayout extends FrameLayout {
      * @return
      */
     private int getMargin(int layout, int img, int pointViewSize, double scale) {
-        return (int) ((layout - img) / 2.0 - pointViewSize / 2.0 + img * scale);
+        return (int) ((layout - img) / 2.0 - pointViewSize / 2.0 + img * scale / 100);
     }
 
     public int dip2px(float dpValue) {

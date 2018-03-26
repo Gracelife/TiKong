@@ -53,4 +53,10 @@ public class PlanLayoutOfPanoramaModel implements IModel {
                 .getDatSchemeFixedList(schemeID, uid)
                 .compose(NetTransformer.compose());
     }
+    public Observable getSchemeMonitorLog(String schemeID, String uid) {
+        return RetrofitUtils.Instance
+                .getApiService()
+                .getSchemeMonitorLog(schemeID, uid)
+                .compose(NetTransformer.compose());
+    }
 }

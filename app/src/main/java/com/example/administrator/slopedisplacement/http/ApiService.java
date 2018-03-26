@@ -74,6 +74,18 @@ public interface ApiService {
     @POST(UrlHelper.API + "GetDatSchemeFixedList")
     Observable<HttpResponse<GetDatSchemeFixedListJson>> getDatSchemeFixedList(@Field("schemeID") String schemeID, @Field("uid") String uid);
 
+    /**
+     * 获取区域监测点日志top1(最新一条)
+     *
+     * @param schemeID 方案id
+     * @param uid      用户id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlHelper.API + "GetSchemeMonitorLog")
+    Observable<HttpResponse<GetDatSchemeFixedListJson>> getSchemeMonitorLog(@Field("schemeID") String schemeID, @Field("uid") String uid);
+
+
     @FormUrlEncoded
     @POST(UrlHelper.API + "GetSchemeAlarmList")
     Observable<HttpResponse<SchemeAlarmListBean>> getSchemeAlarmList(@Field("schemeID") String schemeID, @Field("states") String states, @Field("startTime") String startTime, @Field("endTime") String endTime, @Field("pageindex") String pageindex, @Field("pagesize") String pagesize, @Field("uid") String uid);
