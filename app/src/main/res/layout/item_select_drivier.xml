@@ -2,43 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="45dp">
+    android:layout_height="@dimen/y100">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="@dimen/y100">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="43dp"
-            android:layout_marginStart="43dp"
-            app:srcCompat="@mipmap/ic_launcher"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_width="@dimen/x70"
+            android:layout_height="@dimen/y70"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x24"
+            app:srcCompat="@drawable/equipment_icon_iv" />
 
         <TextView
             android:id="@+id/tvDriverName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="44dp"
-            android:layout_marginStart="44dp"
-            android:text="TextView"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x32"
+            android:layout_toEndOf="@+id/imageView"
             android:layout_toRightOf="@+id/imageView"
-            android:layout_toEndOf="@+id/imageView" />
+            android:textSize="@dimen/x30"
+            android:textColor="#000000"
+            android:text="TextView" />
 
         <ImageView
             android:id="@+id/ivDriverStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/x40"
+            android:layout_height="@dimen/y40"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            app:srcCompat="@mipmap/ic_launcher" />
+            android:layout_marginRight="@dimen/x24"
+            app:srcCompat="@drawable/equipment_normal_iv" />
     </RelativeLayout>
 </LinearLayout>

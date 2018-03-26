@@ -2,32 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="45dp">
+    android:layout_height="@dimen/y100">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="@dimen/y100">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="43dp"
-            android:layout_marginStart="43dp"
-            app:srcCompat="@mipmap/ic_launcher"
-            android:layout_alignParentTop="true"
+            android:layout_width="@dimen/x70"
+            android:layout_height="@dimen/y70"
+            android:layout_marginLeft="@dimen/x24"
+            app:srcCompat="@drawable/scheme_icon_iv"
+            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="11dp" />
 
         <TextView
             android:id="@+id/tvSchemeName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="44dp"
-            android:layout_marginStart="44dp"
+            android:layout_marginLeft="@dimen/x24"
             android:layout_toEndOf="@+id/imageView"
             android:layout_toRightOf="@+id/imageView"
+            android:textSize="@dimen/y30"
+            android:textColor="#000000"
             android:text="TextView" />
 
     </RelativeLayout>

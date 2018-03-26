@@ -18,6 +18,7 @@ import com.example.administrator.slopedisplacement.bean.LoginBean;
 import com.example.administrator.slopedisplacement.mvp.IView;
 import com.example.administrator.slopedisplacement.mvp.contact.HuXinVideoContact;
 import com.example.administrator.slopedisplacement.mvp.presenter.HuXinVideoPresenter;
+import com.example.administrator.slopedisplacement.utils.HuXinUtil;
 import com.example.administrator.slopedisplacement.utils.JumpToUtils;
 import com.ffcs.surfingscene.function.GeyeUserLogin;
 import com.ffcs.surfingscene.function.SurfingScenePlayer;
@@ -39,15 +40,6 @@ public class HuXinVideoActivity extends BaseMvpActivity<HuXinVideoPresenter> imp
     public TextView prossTV;
     public SurfingScenePlayer splay;
     IVMS_8700_Bean ivms_8700_bean;
-    @Override
-    public void onLoginSuccess(LoginBean loginBean) {
-
-    }
-
-    @Override
-    public void onLoginFail(String msg) {
-
-    }
 
     @Override
     protected HuXinVideoPresenter loadPresenter() {
@@ -62,10 +54,73 @@ public class HuXinVideoActivity extends BaseMvpActivity<HuXinVideoPresenter> imp
     @Override
     protected void initView() {
         ivms_8700_bean = (IVMS_8700_Bean) getIntent().getSerializableExtra(JumpToUtils.KEY_IVMS_8700_BEAN);
-        initVideoSDK();
+        splay = new SurfingScenePlayer(this);
+        glv = (GLSurfaceView) this.findViewById(R.id.GLsurface_view);
+        showLoading("正在加载中...");
+        HuXinUtil.initVideoSDK(this,ivms_8700_bean.getmUserName(), ivms_8700_bean.getmPassword(),new HttpCallBack<BaseResponse>() {
+            @Override
+            public void callBack(BaseResponse arg0, String arg1) {
+
+                if ("1".equals(arg0.getReturnCode())) {
+                    hideLoading();
+                    HuXinUtil.initVideo(splay,glv,"086591-1435552375",ivms_8700_bean.getmUserName(),new  onPlayListener() {
+
+                        @Override
+                        public void setOnPlaysuccess() {
+                            prossTV.setText("视频缓冲进度：100%");
+                            layoutPross.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onPlayFail(int arg0, final String error) {
+                            layoutPross.setVisibility(View.GONE);
+                            // DialogUtil.showDialog(PuIdPlayerActivity.this, error);
+
+                            showErrorDialog(HuXinVideoActivity.this,"播放失败："+error);
+                            //上传错误信息
+                            //sendErrorData(error);
+
+                        }
+                        @Override
+                        public void onBufferProssgress(int bufferValue) {
+
+                            if (bufferValue >= 99) {
+                                prossTV.setText("视频缓冲进度：100%");
+                                layoutPross.setVisibility(View.GONE);
+                            } else {
+                                prossTV.setText("视频缓冲进度：" + bufferValue + "%");
+                            }
+                        }
+                    });
+                } else {
+                    hideLoading();
+                    new AlertDialog.Builder(HuXinVideoActivity.this).setTitle("播放提示")
+                            .setMessage("播放失败："+arg0.getMsg()).setPositiveButton("确定",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                }
+                            })
+                            .setCancelable(false).create().show();
+
+                }
+            }
+        });
 
     }
-    private void initVideo() {
+    public static void showErrorDialog(final Context context, String error) {
+        new AlertDialog.Builder(context).setTitle("播放提示").setMessage(error+"")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        ((HuXinVideoActivity) context).finish();
+
+                    }
+                }).setCancelable(false).create().show();
+    }
+   /* private void initVideo() {
 
         splay = new SurfingScenePlayer(this);
         glv = (GLSurfaceView) this.findViewById(R.id.GLsurface_view);
@@ -145,7 +200,7 @@ public class HuXinVideoActivity extends BaseMvpActivity<HuXinVideoPresenter> imp
                         }
                     }
                 });
-    }
+    }*/
 
 
 }

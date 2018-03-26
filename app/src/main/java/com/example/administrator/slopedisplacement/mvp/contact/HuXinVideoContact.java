@@ -11,12 +11,9 @@ import com.example.administrator.slopedisplacement.mvp.IView;
 
 public class HuXinVideoContact {
     public interface View extends IView {
-        void onLoginSuccess(LoginBean loginBean);
-        void onLoginFail(String msg);
 
     }
 
     public interface Presenter {
-        void login(String passWord, String userName);
     }
 }

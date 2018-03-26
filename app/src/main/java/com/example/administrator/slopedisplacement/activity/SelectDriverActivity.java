@@ -130,7 +130,7 @@ public class SelectDriverActivity extends BaseMvpActivity<SelectDriverPresenter>
             //TODO 测试数据暂时写死
             JumpToUtils.toSelectSchemeActivity(getActivity(),"1014462",schemeBean,ivms_8700_bean);
         }
-            /*if(ivms_8700_bean.getCamFlowState().equals("15")) {
+           /* if(ivms_8700_bean.getCamFlowState().equals("15")) {
                 //2,5,8为互信、3中星微2.1、7中星微3.3、15海康8700
                 if (ivms_8700_bean.getmType().equals("2") || ivms_8700_bean.getmType().equals("5") || ivms_8700_bean.getmType().equals("8") || ivms_8700_bean.getmType().equals("3") || ivms_8700_bean.getmType().equals("7")) {
                     JumpToUtils.toHuXinVideoActivity(getActivity(),ivms_8700_bean);

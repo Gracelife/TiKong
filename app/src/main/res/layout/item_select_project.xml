@@ -1,55 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="38dp">
+    android:layout_height="@dimen/y70">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="38dp">
-
+        android:layout_height="@dimen/y70">>
         <TextView
             android:id="@+id/tvProjectId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
-            android:layout_marginStart="12dp"
-            android:text="序号" />
+            android:layout_width="@dimen/x110"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="序号"
+            android:textColor="#000000"
+            android:textSize="@dimen/x30" />
+
+
+        <com.example.administrator.slopedisplacement.widget.FocuseTextView
+                android:id="@+id/tvProjectName"
+                android:layout_width="@dimen/x440"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/tvProjectId"
+                android:layout_toRightOf="@+id/tvProjectId"
+                android:gravity="center"
+                android:text="企业名称"
+                android:textColor="#000000"
+                android:textSize="@dimen/x30"
+
+                android:ellipsize="marquee"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+            />
 
         <TextView
-            android:id="@+id/tvProjectName"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:layout_alignBaseline="@+id/tvProjectId"
-            android:layout_alignBottom="@+id/tvProjectId"
-            android:layout_toRightOf="@+id/tvProjectId"
-            android:layout_toEndOf="@+id/tvProjectId"
-            android:layout_marginLeft="17dp"
-            android:layout_marginStart="17dp" />
+                android:id="@+id/tvProjectStatic"
+                android:layout_width="@dimen/x260"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/tvProjectName"
+                android:layout_toRightOf="@+id/tvProjectName"
+                android:gravity="center"
+                android:text="状态"
+                android:textColor="#000000"
+                android:textSize="@dimen/x30" />
 
-        <TextView
-            android:id="@+id/tvProjectStatic"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/tvProjectName"
-            android:layout_alignBottom="@+id/tvProjectName"
-            android:layout_marginLeft="21dp"
-            android:layout_marginStart="21dp"
-            android:layout_toRightOf="@+id/tvProjectName"
-            android:text="状态" />
-
-        <TextView
-            android:id="@+id/tvProjectAddress"
-            android:layout_width="260dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/tvProjectStatic"
-            android:layout_alignBottom="@+id/tvProjectStatic"
-            android:layout_marginLeft="12dp"
-            android:layout_marginStart="12dp"
-            android:layout_toRightOf="@+id/tvProjectStatic"
-            android:text="TextView" />
+        <com.example.administrator.slopedisplacement.widget.FocuseTextView
+                android:id="@+id/tvProjectAddress"
+                android:layout_width="@dimen/x524"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/tvProjectStatic"
+                android:layout_toRightOf="@+id/tvProjectStatic"
+                android:gravity="center_vertical"
+                android:text="状态"
+                android:textColor="#000000"
+                android:textSize="@dimen/x30"
+                android:ellipsize="marquee"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+            />
     </RelativeLayout>
+
+
 </LinearLayout>

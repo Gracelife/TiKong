@@ -488,7 +488,8 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
                     if (ivms_8700_bean.getmType().equals("2") || ivms_8700_bean.getmType().equals("5") || ivms_8700_bean.getmType().equals("8") || ivms_8700_bean.getmType().equals("3") || ivms_8700_bean.getmType().equals("7")) {
                         JumpToUtils.toHuXinVideoActivity(getActivity(),ivms_8700_bean);
                     } else {
-                        showToast("此为海康平台：");
+                        //showToast("此为海康平台：");
+                        JumpToUtils.toHKVideoActivity(getActivity(),ivms_8700_bean);
                     }
                 }else{
                     showToast("此视频维护或不在线");

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -27,8 +28,8 @@ import butterknife.OnClick;
 public class SelectProjectActivity extends BaseMvpActivity<SelectProjectPresenter> implements SelectProjectContact.View{
     @BindView(R.id.etProjectName)
     EditText etProjectName;
-    @BindView(R.id.btnProjectSearch)
-    Button btnProjectSearch;
+    @BindView(R.id.ivProjectSearch)
+    ImageView ivProjectSearch;
     @BindView(R.id.rvProject)
     RecyclerView rvProject;
     int pageIndex = 0;
@@ -49,6 +50,8 @@ public class SelectProjectActivity extends BaseMvpActivity<SelectProjectPresente
     @Override
     protected void initView() {
         setToolBar("项目选择");
+
+
         rvProject.setLayoutManager(new LinearLayoutManager(this));
         selectProjectAdapter = new SelectProjectAdapter(R.layout.item_select_project,dataList);
         rvProject.setAdapter(selectProjectAdapter);
@@ -91,10 +94,10 @@ public class SelectProjectActivity extends BaseMvpActivity<SelectProjectPresente
 
 
 
-    @OnClick({R.id.btnProjectSearch})
+    @OnClick({R.id.ivProjectSearch})
     void OnClick(View view){
         switch (view.getId()){
-            case R.id.btnProjectSearch:
+            case R.id.ivProjectSearch:
                 dataList.clear();
                 selectProjectAdapter.notifyDataSetChanged();
                 mPresenter.getVideoMonitorList(etProjectName.getText().toString(),pageIndex+"","10", UserInfoPref.getUserId());

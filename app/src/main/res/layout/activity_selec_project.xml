@@ -14,30 +14,93 @@
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
-        <EditText
-            android:id="@+id/etProjectName"
-            android:layout_width="400dp"
-            android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="@dimen/x112"
+            android:layout_height="@dimen/y56"
+            android:text="项目："
+            android:textSize="@dimen/y35"
+            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="33dp"
-            android:layout_marginStart="33dp"
-            android:ems="10"
-            android:inputType="textPersonName" />
+            android:layout_marginLeft="@dimen/x180"
+            android:gravity="center"
+            android:textColor="#000000"/>
 
-        <Button
-            android:id="@+id/btnProjectSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <EditText
+            android:id="@+id/etProjectName"
+            android:background="@drawable/selectprojectsearch"
+            android:layout_width="@dimen/x640"
+            android:layout_height="@dimen/y56"
+            android:ems="10"
+            android:hint="请输入关键字"
+            android:textColorHint="#ffffff"
+            android:inputType="textPersonName"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="19dp"
-            android:layout_marginStart="19dp"
-            android:layout_toEndOf="@+id/etProjectName"
+            android:layout_toRightOf="@+id/textView"
+            android:layout_toEndOf="@+id/textView" />
+
+        <ImageView
+            android:id="@+id/ivProjectSearch"
+            android:layout_width="@dimen/x120"
+            android:layout_height="@dimen/y56"
+            android:layout_marginLeft="@dimen/x36"
+            android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/etProjectName"
-            android:text="搜索" />
+            android:layout_toEndOf="@+id/etProjectName"
+            android:src="@drawable/project_search_btn"/>
+
     </RelativeLayout>
-   <LinearLayout
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y70"
+        android:background="#4ca7e8">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="@dimen/x110"
+            android:layout_height="match_parent"
+            android:text="序号"
+            android:textColor="#feffff"
+            android:gravity="center"
+            android:textSize="@dimen/x30"/>
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="@dimen/x440"
+            android:layout_height="match_parent"
+            android:text="企业名称"
+            android:textColor="#feffff"
+            android:gravity="center"
+            android:textSize="@dimen/x30"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/textView2"
+            android:layout_toEndOf="@+id/textView2" />
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="@dimen/x260"
+            android:layout_height="match_parent"
+            android:text="状态"
+            android:textColor="#feffff"
+            android:gravity="center"
+            android:textSize="@dimen/x30"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/textView3"
+            android:layout_toEndOf="@+id/textView3" />
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="@dimen/x524"
+            android:layout_height="match_parent"
+            android:text="工程地址"
+            android:textColor="#feffff"
+            android:gravity="center"
+            android:textSize="@dimen/x30"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/textView4"
+            android:layout_toEndOf="@+id/textView4" />
+    </RelativeLayout>
+
+    <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent">
 

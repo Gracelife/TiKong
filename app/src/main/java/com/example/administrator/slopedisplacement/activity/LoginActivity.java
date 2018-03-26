@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.example.administrator.slopedisplacement.R;
 import com.example.administrator.slopedisplacement.application.ProApplication;
@@ -33,8 +34,8 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     EditText etUserName;
     @BindView(R.id.etPassWord)
     EditText etPassWord;
-    @BindView(R.id.btnLogin)
-    Button btnLogin;
+    @BindView(R.id.ivLogin)
+    ImageView ivLogin;
     @BindView(R.id.cbSavePassWord)
     CheckBox cbSavePassWord;
     LoginBean loginBean;
@@ -99,10 +100,10 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     }
 
 
-    @OnClick({R.id.btnLogin})
+    @OnClick({R.id.ivLogin})
     void OnClick(View view) {
         switch (view.getId()) {
-            case R.id.btnLogin:
+            case R.id.ivLogin:
                 if (etUserName.getText().toString().isEmpty()) {
                     showToast("用户名不能为空");
                     return;

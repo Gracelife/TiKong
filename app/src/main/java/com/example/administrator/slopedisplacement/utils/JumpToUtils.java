@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.administrator.slopedisplacement.activity.DataReportActivity;
+import com.example.administrator.slopedisplacement.activity.HKVideoActivity;
 import com.example.administrator.slopedisplacement.activity.HuXinVideoActivity;
 import com.example.administrator.slopedisplacement.activity.PlanLayoutOfPanoramaActivity;
 import com.example.administrator.slopedisplacement.activity.SelectDriverActivity;
@@ -123,6 +124,18 @@ public class JumpToUtils {
      */
     public static void toHuXinVideoActivity(Activity activity, IVMS_8700_Bean ivms_8700_bean) {
         Intent intent = new Intent(activity, HuXinVideoActivity.class);
+        intent.putExtra(KEY_IVMS_8700_BEAN, ivms_8700_bean);
+        activity.startActivity(intent);
+    }
+    /**
+     * 跳转到海康播放页面
+     *
+     * @param activity
+     * @param ivms_8700_bean
+     *
+     */
+    public static void toHKVideoActivity(Activity activity, IVMS_8700_Bean ivms_8700_bean) {
+        Intent intent = new Intent(activity, HKVideoActivity.class);
         intent.putExtra(KEY_IVMS_8700_BEAN, ivms_8700_bean);
         activity.startActivity(intent);
     }

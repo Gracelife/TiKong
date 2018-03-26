@@ -15,10 +15,7 @@ import com.example.administrator.slopedisplacement.mvp.model.LoginModel;
  */
 
 public class HuXinVideoPresenter extends BasePresenter<HuXinVideoContact.View> implements HuXinVideoContact.Presenter {
-    @Override
-    public void login(String passWord, String userName) {
 
-    }
     /*@Override
     public void login(String passWord, String userName) {
         getIView().showLoading("正在登录中...");

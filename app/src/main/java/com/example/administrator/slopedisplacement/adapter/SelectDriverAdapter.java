@@ -20,10 +20,12 @@ public class SelectDriverAdapter extends BaseItemDraggableAdapter<DriverBean.Lis
            helper.setText(R.id.tvDriverName,item.getCamName()+"");
            if((item.getCamFlowState()+"").equals("16")){
                //16 维护中
-               helper.setImageResource(R.id.ivDriverStatus,R.mipmap.ic_launcher_round);
-           }else{
+               helper.setImageResource(R.id.ivDriverStatus,R.drawable.equipment_maintain_iv);
+           }else if((item.getCamFlowState()+"").equals("15")){
                //监控中
-               helper.setImageResource(R.id.ivDriverStatus,R.mipmap.ic_launcher_round);
+               helper.setImageResource(R.id.ivDriverStatus,R.drawable.equipment_normal_iv);
+           }else{
+               helper.setImageResource(R.id.ivDriverStatus,R.drawable.equipment_fault_iv);
            }
            //helper.addOnClickListener(R.id.text_samll);
 

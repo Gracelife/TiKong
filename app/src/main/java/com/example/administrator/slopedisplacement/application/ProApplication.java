@@ -8,10 +8,15 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
+import android.support.multidex.MultiDexApplication;
 
 import com.example.administrator.slopedisplacement.pushmi.PushMiUtils;
 import com.example.administrator.slopedisplacement.utils.L;
 import com.example.administrator.slopedisplacement.utils.PhoneSystemUtils;
+import com.hik.mcrsdk.MCRSDK;
+import com.hik.mcrsdk.rtsp.RtspClient;
+import com.hik.mcrsdk.talk.TalkClientSDK;
+import com.hikvision.sdk.VMSNetSDK;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.BuildConfig;
 import com.orhanobut.logger.Logger;
@@ -22,7 +27,7 @@ import com.orhanobut.logger.Logger;
  * 应用,主要用来做一下初始化的操作
  */
 
-public class ProApplication extends Application {
+public class ProApplication extends MultiDexApplication {
     private static Context mContext;
     // public LocationService locationService;
     public Vibrator mVibrator;
@@ -44,8 +49,20 @@ public class ProApplication extends Application {
         if (PhoneSystemUtils.isMIUI()) {
             PushMiUtils.init();
         }
-    }
 
+    //海康8700初始化
+        MCRSDK.init();
+        // 初始化RTSP
+        RtspClient.initLib();
+        MCRSDK.setPrint(1, null);
+        // 初始化语音对讲
+        TalkClientSDK.initLib();
+        // SDK初始化
+        VMSNetSDK.init(this);
+    }
+    public static ProApplication getIns() {
+        return mInstance;
+    }
     @Override
     public void onTerminate() {
         super.onTerminate();

@@ -199,7 +199,8 @@
             </intent-filter>
         </receiver>
         <!-- 小米推送配置 -->
-        <activity android:name=".activity.HuXinVideoActivity"></activity>
+        <activity android:name=".activity.HuXinVideoActivity" />
+        <activity android:name=".activity.HKVideoActivity"></activity>
     </application>
 
 </manifest>
