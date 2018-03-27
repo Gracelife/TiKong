@@ -583,12 +583,15 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
                 }
                 break;
             case R.id.btnPanoramaDataReport://跳转到查看数据页面
-
+            try {
                 if (mArealListJson == null || mFixedListJson == null) {
                     showToast("错误码：" + ErrorType.DATE_NULL);
                 } else {
                     JumpToUtils.toDataReportActivity(getActivity(), mArealListJson, mFixedListJson, mSchemeID + "");
                 }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
                 break;
             case R.id.ivPlanLayoutOfPanormamBack:
                 finish();

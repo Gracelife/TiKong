@@ -21,12 +21,7 @@ import butterknife.OnClick;
  */
 
 public class CruiseCurveAreaMapFragment extends BaseLazyFragment {
-    @BindView(R.id.rvCruiseData)
-    RecyclerView mRecyclerView;
-    @BindView(R.id.btCruiseDataStart)
-    TextView mTvCruiseDataStart;
-    @BindView(R.id.btCruiseDataEnd)
-    TextView mTvCruiseDataEnd;
+
     private CruiseDataAdapter adapter;
 //    private String mSchemeID;
 
@@ -38,7 +33,7 @@ public class CruiseCurveAreaMapFragment extends BaseLazyFragment {
 
     @Override
     public int getLayoutResId() {
-        return R.layout.fragment_cruise_data;
+        return R.layout.fragment_fixed_point_curve_area_map;
     }
 
     @Override
@@ -59,18 +54,5 @@ public class CruiseCurveAreaMapFragment extends BaseLazyFragment {
 //        TimePickerUtils.showPickerView(getActivity(),"结束时间",mTvCruiseDataEnd,mTvCruiseDataStart.getText().toString(),mTvCruiseDataEnd.getText().toString());
     }
 
-    @OnClick({R.id.btCruiseDataStart, R.id.btCruiseDataEnd})
-    void OnClick(View view) {
-        if(mIsDataEmpty){
-            return;
-        }
-        switch (view.getId()) {
-            case R.id.btCruiseDataStart:
-                showTimePickerStart();
-                break;
-            case R.id.btCruiseDataEnd:
-                showTimePickerEnd();
-                break;
-        }
-    }
+
 }

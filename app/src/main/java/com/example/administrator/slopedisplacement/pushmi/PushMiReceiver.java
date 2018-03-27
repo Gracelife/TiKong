@@ -11,6 +11,8 @@ import android.util.Log;
 import com.example.administrator.slopedisplacement.MainActivity;
 import com.example.administrator.slopedisplacement.R;
 import com.example.administrator.slopedisplacement.activity.PlanLayoutOfPanoramaActivity;
+import com.example.administrator.slopedisplacement.bean.IVMS_8700_Bean;
+import com.example.administrator.slopedisplacement.pushgetui.PushGeTuiMsgJson;
 import com.example.administrator.slopedisplacement.utils.JumpToUtils;
 import com.example.administrator.slopedisplacement.utils.L;
 import com.google.gson.Gson;
@@ -51,7 +53,10 @@ public class PushMiReceiver extends PushMessageReceiver {
         Log.e("mipush", "点击通知后收到的推送信息: " + data);
         try {
             PushMiJson json = new Gson().fromJson(data, PushMiJson.class);
-            JumpToUtils.toPlanLayoutOfPanoramaActivity((Activity) context,json.getData().getCamId(),json.getData().getSchemeID());
+            IVMS_8700_Bean ivms_8700_bean = new IVMS_8700_Bean(json.getData().getMUserName(),json.getData().getMPassword()
+                    ,json.getData().getMsysCode(),json.getData().getMIp(),json.getData().getMPort(),json.getData().getMType()
+                    ,json.getData().getCam_Dx_Puid(),json.getData().getCamId(),json.getData().getCamName(),json.getData().getCamFlowState());
+            JumpToUtils.toPlanLayoutOfPanoramaActivity((Activity) context,json.getData().getCamId(),json.getData().getSchemeID(),ivms_8700_bean);
         }catch (Exception e){
             Log.e("mipush", "收到的推选信息解析异常:");
             e.printStackTrace();

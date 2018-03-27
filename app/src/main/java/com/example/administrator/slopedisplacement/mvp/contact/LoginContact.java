@@ -6,6 +6,8 @@ import com.example.administrator.slopedisplacement.bean.UpdateBean;
 import com.example.administrator.slopedisplacement.http.HttpResponse;
 import com.example.administrator.slopedisplacement.mvp.IView;
 
+import retrofit2.http.Field;
+
 /**
  * Created by administration on 2017/9/4.
  */
@@ -20,6 +22,6 @@ public class LoginContact {
 
     public interface Presenter {
         void login(String passWord, String userName);
-        void updateLoginMessage(String userName, String clentid);
+        void updateLoginMessage(String userName, String clentid, @Field("uid") String uid);
     }
 }

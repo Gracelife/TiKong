@@ -30,13 +30,17 @@ public class DataReportActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        setToolBar("数据报表");
-        GetDatSchemeAreaListJson areaListJson = (GetDatSchemeAreaListJson) getIntent().getSerializableExtra(JumpToUtils.KEY_AREAL_LIST);
-        GetDatSchemeFixedListJson fixedListJson = (GetDatSchemeFixedListJson) getIntent().getSerializableExtra(JumpToUtils.KEY_FIXED_LIST);
-        String schemeID = getIntent().getStringExtra(JumpToUtils.KEY_SCHEME_ID);
-        DataReportAdapter mHomeAdapter = new DataReportAdapter(getSupportFragmentManager(), areaListJson, fixedListJson, schemeID);
-        mViewPager.setOffscreenPageLimit(4);//设置缓存
-        mViewPager.setAdapter(mHomeAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
+        try {
+            setToolBar("数据报表");
+            GetDatSchemeAreaListJson areaListJson = (GetDatSchemeAreaListJson) getIntent().getSerializableExtra(JumpToUtils.KEY_AREAL_LIST);
+            GetDatSchemeFixedListJson fixedListJson = (GetDatSchemeFixedListJson) getIntent().getSerializableExtra(JumpToUtils.KEY_FIXED_LIST);
+            String schemeID = getIntent().getStringExtra(JumpToUtils.KEY_SCHEME_ID);
+            DataReportAdapter mHomeAdapter = new DataReportAdapter(getSupportFragmentManager(), areaListJson, fixedListJson, schemeID);
+            mViewPager.setOffscreenPageLimit(4);//设置缓存
+            mViewPager.setAdapter(mHomeAdapter);
+            mTabLayout.setupWithViewPager(mViewPager);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

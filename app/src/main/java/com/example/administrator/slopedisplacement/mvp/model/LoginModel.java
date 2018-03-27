@@ -19,10 +19,10 @@ public class LoginModel implements IModel {
                 .login(passWord, userName)
                 .compose(NetTransformer.compose());
     }
-    public Observable updateLoginMessage(String userName, String clentid) {
+    public Observable updateLoginMessage(String userName, String clentid, String uid) {
         return RetrofitUtils.Instance
                 .getApiService()
-                .updateLoginMessage(userName, clentid)
+                .updateLoginMessage(userName, clentid,uid)
                 .compose(NetTransformer.compose());
     }
 

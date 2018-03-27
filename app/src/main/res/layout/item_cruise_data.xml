@@ -12,7 +12,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tvItemCruiseDataMonitorID"
+            android:id="@+id/tvItemCruiseDataId"
             android:layout_width="@dimen/x70"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -37,8 +37,9 @@
             android:text="面"
             android:textColor="#000000"
             android:textSize="@dimen/x24" />
+
         <TextView
-            android:id="@+id/tvItemCruiseDataId"
+            android:id="@+id/tvItemCruiseDataMonitorID"
             android:layout_width="@dimen/x100"
             android:layout_height="match_parent"
             android:gravity="center"

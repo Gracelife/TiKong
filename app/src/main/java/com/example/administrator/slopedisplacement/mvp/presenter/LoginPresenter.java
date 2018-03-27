@@ -39,10 +39,10 @@ public class LoginPresenter extends BasePresenter<LoginContact.View> implements 
     }
 
     @Override
-    public void updateLoginMessage(String userName, String clentid) {
+    public void updateLoginMessage(String userName, String clentid,String uid) {
         getIView().showLoading("正在登录中...");
         new LoginModel()
-                .updateLoginMessage(userName, clentid)
+                .updateLoginMessage(userName, clentid,uid)
                 .compose(getIView().bindLifecycle())
                 .subscribe(new HttpObserver<HttpResponse>() {
                     @Override

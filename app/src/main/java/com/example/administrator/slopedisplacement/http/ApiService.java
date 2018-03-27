@@ -38,7 +38,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST(UrlHelper.API + "UpdateLoginMessage")
-    Observable<HttpResponse> updateLoginMessage(@Field("userName") String userName, @Field("clentid") String clentid);
+    Observable<HttpResponse> updateLoginMessage(@Field("userName") String userName, @Field("clentid") String clentid, @Field("uid") String uid);
 
     @FormUrlEncoded
     @POST(UrlHelper.API + "GetVideoMonitorList")

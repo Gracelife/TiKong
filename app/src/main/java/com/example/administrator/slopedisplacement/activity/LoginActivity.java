@@ -77,9 +77,9 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
             MiPushClient.setUserAccount(ProApplication.getInstance(), UserInfoPref.getUserId(), "");
             Intent intent = new Intent(LoginActivity.this, SelectProjectActivity.class);
             startActivity(intent);
-//            mPresenter.updateLoginMessage(etUserName.getText().toString(), "");
+              //mPresenter.updateLoginMessage(etUserName.getText().toString(), UserInfoPref.getGeTuiClientId());
         } else {
-            mPresenter.updateLoginMessage(etUserName.getText().toString(), UserInfoPref.getGeTuiClientId());
+            mPresenter.updateLoginMessage(etUserName.getText().toString(), UserInfoPref.getGeTuiClientId(),UserInfoPref.getUserId());
         }
     }
 
