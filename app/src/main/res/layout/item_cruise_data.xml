@@ -1,83 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/y71"
+    android:background="#bfbfbf"
     android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tvItemCruiseDataId"
-        style="@style/TvDataStyle"
-        android:layout_weight="2"
-        android:text="123_12" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y70"
+        android:background="#ffffff"
+        android:orientation="horizontal">
 
-    <View
-        style="@style/LineVerticalStyle"
-        android:layout_width="1dp" />
+        <TextView
+            android:id="@+id/tvItemCruiseDataMonitorID"
+            android:layout_width="@dimen/x70"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="90"
+            android:textColor="#000000"
+            android:textSize="@dimen/x24" />
 
-    <TextView
-        android:id="@+id/tvItemCruiseDataCreateTime"
-        style="@style/TvDataStyle"
-        android:layout_weight="4"
-        android:text="2018-3-13 15:49:04" />
+        <TextView
+            android:id="@+id/tvItemCruiseDataCreateTime"
+            android:layout_width="@dimen/x280"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="2018-3-13 15:49:04"
+            android:lines="2"
+            android:textColor="#000000"
+            android:textSize="@dimen/x24" />
+        <TextView
+            android:id="@+id/tvItemCruiseDataAreaName"
+            android:layout_width="@dimen/x180"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="面"
+            android:textColor="#000000"
+            android:textSize="@dimen/x24" />
+        <TextView
+            android:id="@+id/tvItemCruiseDataId"
+            android:layout_width="@dimen/x100"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="123_12"
+            android:textColor="#000000"
+            android:textSize="@dimen/x24" />
+        <TextView
+            android:id="@+id/tvItemCruiseDataNowShift"
+            android:layout_width="@dimen/x165"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="2.00"
+            android:textColor="#000000"
+            android:textSize="@dimen/x24" />
 
-    <View
-        style="@style/LineVerticalStyle"
-        android:layout_width="1dp" />
 
-    <TextView
-        android:id="@+id/tvItemCruiseDataAreaName"
-        style="@style/TvDataStyle"
-        android:layout_weight="1"
-        android:text="面" />
 
-    <View
-        style="@style/LineVerticalStyle"
-        android:layout_width="1dp" />
 
-    <TextView
-        style="@style/TvDataStyle"
-        android:id="@+id/tvItemCruiseDataMonitorID"
-        android:layout_weight="2"
-        android:text="90" />
 
-    <View
-        style="@style/LineVerticalStyle"
-        android:layout_width="1dp" />
 
-    <TextView
-        android:id="@+id/tvItemCruiseDataNowShift"
-        style="@style/TvDataStyle"
-        android:layout_weight="3"
-        android:textColor="@color/dodgerblue"
-        android:text="2.00" />
 
-    <View
-        style="@style/LineVerticalStyle"
-        android:layout_width="1dp" />
 
-    <TextView
-        android:id="@+id/tvItemCruiseDataShift"
-        style="@style/TvDataStyle"
-        android:layout_weight="3"
-        android:text="2.00" />
 
-    <View
-        style="@style/LineVerticalStyle"
-        android:layout_width="1dp" />
+        <TextView
+            android:id="@+id/tvItemCruiseDataShift"
+            android:layout_width="@dimen/x165"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="2.00"
+            android:textColor="#000000"
+            android:textSize="@dimen/x24" />
+        <TextView
+            android:id="@+id/tvItemCruiseDataAddShift"
+            android:layout_width="@dimen/x165"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="2.00"
+            android:textColor="#000000"
+            android:textSize="@dimen/x24" />
+        <TextView
+            android:id="@+id/tvItemCruiseDataObd"
+            android:layout_width="@dimen/x165"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="3.74600"
+            android:textColor="#000000"
+            android:textSize="@dimen/x24" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvItemCruiseDataAddShift"
-        style="@style/TvDataStyle"
-        android:layout_weight="3"
-        android:text="2.00" />
-
-    <View
-        style="@style/LineVerticalStyle"
-        android:layout_width="1dp" />
-
-    <TextView
-        android:id="@+id/tvItemCruiseDataObd"
-        style="@style/TvDataStyle"
-        android:layout_weight="3"
-        android:text="3.74600" />
 </LinearLayout>

@@ -12,90 +12,77 @@
         android:layout_height="match_parent"
         android:layout_marginTop="30dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:background="#229be5"
             android:layout_alignParentTop="true"
-            android:background="#229be5">
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
 
             <TextView
                 android:id="@+id/tvSchemeAlaramListNum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="14dp"
-                android:layout_marginStart="14dp"
+                android:layout_width="@dimen/x70"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="@dimen/y24"
+                android:textColor="#ffffff"
                 android:text="序号" />
 
             <TextView
                 android:id="@+id/tvSchemeAlaramListTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/tvSchemeAlaramListNum"
-                android:layout_alignBottom="@+id/tvSchemeAlaramListNum"
-                android:layout_marginLeft="39dp"
-                android:layout_marginStart="39dp"
-                android:layout_toEndOf="@+id/tvSchemeAlaramListNum"
-                android:layout_toRightOf="@+id/tvSchemeAlaramListNum"
+                android:layout_width="@dimen/x250"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="@dimen/y24"
+                android:textColor="#ffffff"
                 android:text="生成时间" />
 
             <TextView
                 android:id="@+id/tvSchemeAlaramListTarget"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="42dp"
-                android:layout_marginStart="42dp"
-                android:layout_toEndOf="@+id/tvSchemeAlaramListTime"
-                android:layout_toRightOf="@+id/tvSchemeAlaramListTime"
+                android:layout_width="@dimen/x106"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="@dimen/y24"
+                android:textColor="#ffffff"
                 android:text="目标" />
 
             <TextView
                 android:id="@+id/tvSchemeAlaramListMove2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/tvSchemeAlaramListTarget"
-                android:layout_alignBottom="@+id/tvSchemeAlaramListTarget"
-                android:layout_centerHorizontal="true"
+                android:layout_width="@dimen/x422"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="@dimen/y24"
+                android:textColor="#ffffff"
                 android:text="本次位移" />
 
             <TextView
                 android:id="@+id/tvSchemeAlaramListMessage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/tvSchemeAlaramListMove2"
-                android:layout_alignBottom="@+id/tvSchemeAlaramListMove2"
-                android:layout_marginEnd="27dp"
-                android:layout_marginRight="27dp"
-                android:layout_toLeftOf="@+id/tvSchemeAlaramListNumConfirm"
-                android:layout_toStartOf="@+id/tvSchemeAlaramListNumConfirm"
+                android:layout_width="@dimen/x150"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="@dimen/y24"
+                android:textColor="#ffffff"
                 android:text="短信发出" />
 
             <TextView
                 android:id="@+id/tvSchemeAlaramListNumConfirm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/tvSchemeAlaramListMessage"
-                android:layout_alignBottom="@+id/tvSchemeAlaramListMessage"
-                android:layout_toLeftOf="@+id/ivAlarmInformationPopDismiss"
-                android:layout_toStartOf="@+id/ivAlarmInformationPopDismiss"
+                android:layout_width="@dimen/x200"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="@dimen/y24"
+                android:textColor="#ffffff"
                 android:text="告警确认" />
 
             <ImageView
                 android:id="@+id/ivAlarmInformationPopDismiss"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@mipmap/ic_launcher_round" />
+                android:layout_width="@dimen/x24"
+                android:layout_height="@dimen/y24"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/notice_close_iv" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvAlarmInformation"

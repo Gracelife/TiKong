@@ -1,71 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/y71"
+    android:background="#bfbfbf"
     android:orientation="horizontal">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y70"
+        android:background="#ffffff"
+        android:orientation="horizontal"
+        >
     <TextView
         android:id="@+id/tvItemFixedFlowDataId"
-        style="@style/TvDataStyle"
-        android:layout_weight="2"
-        android:text="123_12" />
-
-    <View
-        style="@style/LineVerticalStyle"
-        android:layout_width="1dp" />
+        android:layout_width="@dimen/x70"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/x24"
+        android:textColor="#000000"/>
 
     <TextView
         android:id="@+id/tvItemFixedFlowDataCreateTime"
-        style="@style/TvDataStyle"
-        android:layout_weight="4"
+        android:layout_width="@dimen/x300"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/x24"
+        android:textColor="#000000"
         android:text="2018-3-13 15:49:04" />
-
-    <View
-        style="@style/LineVerticalStyle"
-        android:layout_width="1dp" />
 
     <TextView
         android:id="@+id/tvItemFixedFlowName"
-        style="@style/TvDataStyle"
-        android:layout_weight="2"
+        android:layout_width="@dimen/x200"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/x24"
+        android:textColor="#000000"
         android:text="定点" />
-    <View
-        style="@style/LineVerticalStyle"
-        android:layout_width="1dp" />
 
     <TextView
         android:id="@+id/tvItemFixedFlowDataNowShift"
-        style="@style/TvDataStyle"
-        android:layout_weight="3"
+        android:layout_width="@dimen/x191"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/x24"
+        android:textColor="#000000"
         android:text="2.00" />
-
-    <View
-        style="@style/LineVerticalStyle"
-        android:layout_width="1dp" />
 
     <TextView
         android:id="@+id/tvItemFixedFlowDataShift"
-        style="@style/TvDataStyle"
-        android:layout_weight="3"
+        android:layout_width="@dimen/x191"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/x24"
+        android:textColor="#000000"
         android:text="2.00" />
-
-    <View
-        style="@style/LineVerticalStyle"
-        android:layout_width="1dp" />
 
     <TextView
         android:id="@+id/tvItemFixedFlowDataAddShift"
-        style="@style/TvDataStyle"
-        android:layout_weight="3"
+        android:layout_width="@dimen/x191"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/x24"
+        android:textColor="#000000"
         android:text="2.00" />
-
-    <View
-        style="@style/LineVerticalStyle"
-        android:layout_width="1dp" />
 
     <TextView
         android:id="@+id/tvItemFixedFlowDataObd"
-        style="@style/TvDataStyle"
-        android:layout_weight="3"
+        android:layout_width="@dimen/x191"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/x24"
+        android:textColor="#000000"
         android:text="3.74600" />
+    </LinearLayout>
 </LinearLayout>

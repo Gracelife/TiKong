@@ -2,6 +2,7 @@ package com.example.administrator.slopedisplacement.widget.popupwindow;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -24,6 +25,7 @@ public class CommonPopupWindow {
         mPopupWindow = new PopupWindow(contentview, builder.width, builder.height, builder.fouse);
         //需要跟 setBackGroundDrawable 结合
         mPopupWindow.setOutsideTouchable(builder.outsidecancel);
+//        setBackgroundAlpha(0.5f);
         mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         builder.popBindView(new BindViewHelper(contentview, mContext));
         if (builder.animstyle != -1)
@@ -159,7 +161,6 @@ public class CommonPopupWindow {
             this.animstyle = animstyle;
             return this;
         }
-
         public CommonPopupWindow builder() {
             return new CommonPopupWindow(this);
         }

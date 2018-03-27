@@ -42,7 +42,7 @@ public class PlanLayoutOfPanoramaPresenter extends BasePresenter<PlanLayoutOfPan
     public void getSchemeAlarmList(String schemeID, String states, String startTime, String endTime, String pageindex, String pagesize, String uid) {
         getIView().showLoading("正在加载中...");
         new PlanLayoutOfPanoramaModel()
-                .getSchemeAlarmList(schemeID, states, startTime, endTime, pageindex, pagesize, uid)
+                .getSchemeAlarmList("56", "3", startTime, endTime, pageindex, pagesize, uid)
                 .compose(getIView().bindLifecycle())
                 .subscribe(new HttpObserver<HttpResponse<SchemeAlarmListBean>>() {
                     @Override

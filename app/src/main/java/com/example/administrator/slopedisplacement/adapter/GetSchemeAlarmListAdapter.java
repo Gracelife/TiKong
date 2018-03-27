@@ -45,12 +45,12 @@ public class GetSchemeAlarmListAdapter extends BaseItemDraggableAdapter<SchemeAl
                     .addOnClickListener(R.id.tvSchemeAlaramListMove5);
         }
         if(item.getStates() == 0 || item.getStates() == 1){
-            helper.getView(R.id.btnSchemeAlaramListNumConfirm).setVisibility(View.VISIBLE);
+            helper.getView(R.id.ivSchemeAlaramListNumConfirm).setVisibility(View.VISIBLE);
             helper.getView(R.id.tvSchemeAlaramListNumConfirm).setVisibility(View.GONE);
-            helper.addOnClickListener(R.id.btnSchemeAlaramListNumConfirm);
+            helper.addOnClickListener(R.id.ivSchemeAlaramListNumConfirm);
         }else{
             helper.getView(R.id.tvSchemeAlaramListNumConfirm).setVisibility(View.VISIBLE);
-            helper.getView(R.id.btnSchemeAlaramListNumConfirm).setVisibility(View.GONE);
+            helper.getView(R.id.ivSchemeAlaramListNumConfirm).setVisibility(View.GONE);
             helper.setText(R.id.tvSchemeAlaramListNumConfirm,"已确认");
         }
     }

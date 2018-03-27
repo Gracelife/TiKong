@@ -6,138 +6,190 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_height="@dimen/y96"
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/textViewStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="开始日期:" />
+            android:layout_marginLeft="@dimen/x218"
+            android:layout_gravity="center_vertical"
+            android:text="开始日期："
+            android:textColor="#000000"
+            android:textSize="@dimen/y30" />
 
         <TextView
             android:id="@+id/btCruiseDataStart"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:background="@drawable/shape_blue_round"
-            android:text="" />
+            android:layout_width="@dimen/x200"
+            android:layout_height="@dimen/y56"
+            android:background="@drawable/selectprojectsearch"
+            android:layout_gravity="center_vertical"
+            android:text=""
+            android:layout_centerVertical="true" />
 
         <TextView
+            android:id="@+id/textViewTimeEnd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_small"
-            android:text="结束日期：" />
+            android:layout_marginLeft="@dimen/x74"
+            android:layout_gravity="center_vertical"
+            android:text="结束日期："
+            android:textColor="#000000"
+            android:textSize="@dimen/y30" />
 
         <TextView
             android:id="@+id/btCruiseDataEnd"
-            android:layout_width="85dp"
+            android:layout_width="@dimen/x200"
+            android:layout_height="@dimen/y56"
+            android:layout_marginEnd="140dp"
+            android:layout_marginRight="140dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/selectprojectsearch"
             android:gravity="center"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_blue_round"
             android:text=" " />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_small"
-            android:text="区域:" />
-
-        <Spinner
-            android:id="@+id/spnCruiseDataArea"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="监控点:" />
-
-        <Spinner
-            android:id="@+id/spnCruiseDataMonitor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/btCruiseDataSearch"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/iv_search" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:layout_marginLeft="@dimen/x218"
+            android:textSize="@dimen/y30"
+            android:text="区域：" />
+
+        <Spinner
+            android:id="@+id/spnCruiseDataArea"
+            android:layout_width="@dimen/x280"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:layout_marginLeft="@dimen/x52"
+            android:textSize="@dimen/y30"
+            android:text="监控点：" />
+
+        <Spinner
+            android:id="@+id/spnCruiseDataMonitor"
+            android:layout_width="@dimen/x258"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/btCruiseDataSearch"
+            android:layout_width="@dimen/x150"
+            android:layout_height="@dimen/y40"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/selectprojectsearchbg" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y70"
+        android:background="#4ca7e8"
         android:orientation="horizontal">
 
         <TextView
-            style="@style/TvDataStyle"
-            android:layout_weight="2"
-            android:text="序号" />
+            android:id="@+id/textView9"
+            android:layout_width="@dimen/x70"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="序号"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/x24" />
 
-        <View
-            style="@style/LineVerticalStyle"
-            android:layout_width="1dp" />
-
-        <TextView
-            style="@style/TvDataStyle"
-            android:layout_weight="4"
-            android:text="生成时间" />
-
-        <View
-            style="@style/LineVerticalStyle"
-            android:layout_width="1dp" />
 
         <TextView
-            style="@style/TvDataStyle"
-            android:layout_weight="1"
-            android:text="区域" />
-
-        <View
-            style="@style/LineVerticalStyle"
-            android:layout_width="1dp" />
-
-        <TextView
-            style="@style/TvDataStyle"
-            android:layout_weight="2"
-            android:text="监测点" />
-
-        <View
-            style="@style/LineVerticalStyle"
-            android:layout_width="1dp" />
+            android:id="@+id/textView10"
+            android:layout_width="@dimen/x280"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/textView9"
+            android:layout_toRightOf="@+id/textView9"
+            android:gravity="center"
+            android:text="生成时间"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/x24" />
 
         <TextView
-            style="@style/TvDataStyle"
-            android:layout_weight="3"
-            android:text="本次位移(mm)" />
 
-        <View
-            style="@style/LineVerticalStyle"
-            android:layout_width="1dp" />
+            android:id="@+id/textView11"
+            android:layout_width="@dimen/x180"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/textView10"
+            android:layout_toRightOf="@+id/textView10"
+            android:gravity="center"
+            android:text="区域"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/x24" />
+        <TextView
+
+            android:id="@+id/textView18"
+            android:layout_width="@dimen/x100"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/textView11"
+            android:layout_toRightOf="@+id/textView11"
+            android:gravity="center"
+            android:text="监测点"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/x24" />
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="@dimen/x165"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/textView18"
+            android:layout_toRightOf="@+id/textView18"
+            android:gravity="center"
+            android:text="本次位移(mm)"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/x24" />
 
         <TextView
-            style="@style/TvDataStyle"
-            android:layout_weight="3"
-            android:text="阶段位移(mm)" />
-
-        <View
-            style="@style/LineVerticalStyle"
-            android:layout_width="1dp" />
-
-        <TextView
-            style="@style/TvDataStyle"
-            android:layout_weight="3"
-            android:text="累计位移(mm)" />
-
-        <View
-            style="@style/LineVerticalStyle"
-            android:layout_width="1dp" />
+            android:id="@+id/textView15"
+            android:layout_width="@dimen/x165"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/textView8"
+            android:layout_toRightOf="@+id/textView8"
+            android:gravity="center"
+            android:text="阶段位移(mm)"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/x24" />
 
         <TextView
-            style="@style/TvDataStyle"
-            android:layout_weight="3"
-            android:text="距离(m)" />
-    </LinearLayout>
+            android:id="@+id/textView16"
+            android:layout_width="@dimen/x165"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/textView15"
+            android:layout_toRightOf="@+id/textView15"
+            android:gravity="center"
+            android:text="累计位移(mm)"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/x24" />
+
+        <TextView
+            android:layout_width="@dimen/x165"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/textView16"
+            android:layout_toRightOf="@+id/textView16"
+            android:gravity="center"
+            android:text="距离(m)"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/x24" />
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvCruiseData"

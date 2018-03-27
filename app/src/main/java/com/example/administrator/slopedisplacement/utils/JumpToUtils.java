@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import com.example.administrator.slopedisplacement.activity.AlarmChartViewActivity;
 import com.example.administrator.slopedisplacement.activity.DataReportActivity;
 import com.example.administrator.slopedisplacement.activity.HKVideoActivity;
 import com.example.administrator.slopedisplacement.activity.HuXinVideoActivity;
@@ -139,4 +140,36 @@ public class JumpToUtils {
         intent.putExtra(KEY_IVMS_8700_BEAN, ivms_8700_bean);
         activity.startActivity(intent);
     }
+
+    public static final String KEY_MONITORID = "MonitorID";
+    public static final String KEY_AHA = "Aha";
+    public static final String KEY_AVA = "Ava";
+    public static final String KEY_SHIFT = "Shift";
+    public static final String KEY_PATHA = "Patha";
+    public static final String KEY_NEXTPATHA = "nextPatha";
+    public static final String KEY_OLDPATHA = "oldPatha";
+    /**
+     * 跳转到查看告警图页面
+     * @param activity
+     * @param MonitorID
+     * @param Aha
+     * @param Ava
+     * @param Shift
+     * @param Patha
+     * @param nextPatha
+     * @param oldPatha
+     */
+
+    public static void toAlarmChartViewActivity(Activity activity, int MonitorID, double Aha, double Ava, double Shift, String Patha, String nextPatha, String oldPatha) {
+        Intent intent = new Intent(activity, AlarmChartViewActivity.class);
+        intent.putExtra(KEY_MONITORID, MonitorID);
+        intent.putExtra(KEY_AHA, Aha);
+        intent.putExtra(KEY_AVA, Ava);
+        intent.putExtra(KEY_SHIFT, Shift);
+        intent.putExtra(KEY_PATHA, Patha);
+        intent.putExtra(KEY_NEXTPATHA, nextPatha);
+        intent.putExtra(KEY_OLDPATHA, oldPatha);
+        activity.startActivity(intent);
+    }
+
 }
