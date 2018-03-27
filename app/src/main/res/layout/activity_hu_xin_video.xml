@@ -8,10 +8,26 @@
 
     <android.opengl.GLSurfaceView
         android:id="@+id/GLsurface_view"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:visibility="gone"
         />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivHuXinBack"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical|left"
+            android:layout_marginLeft="@dimen/x24"
+            android:layout_marginTop="@dimen/y24"
+            android:scaleType="center"
+            android:src="@drawable/back" />
+    </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/layout_pross"
         android:layout_width="wrap_content"

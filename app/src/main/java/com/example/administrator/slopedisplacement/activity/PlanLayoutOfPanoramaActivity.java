@@ -55,7 +55,7 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
     ArrayList<SchemeAlarmListBean.ListBean> schemeAlarmList = new ArrayList<SchemeAlarmListBean.ListBean>();
     CommonPopupWindow mPopWindow;
     @BindView(R.id.ivPlanLayoutOfPanormamBack)
-    ImageView ivPlanLayoutOfPanorama;
+    ImageView ivPlanLayoutOfPanormamBack;
     @BindView(R.id.btnAlarmInformation)
     TextView btnAlarmInformation;
     @BindView(R.id.pflPoint)

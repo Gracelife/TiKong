@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.slopedisplacement.R;
@@ -29,6 +30,7 @@ import com.ffcs.surfingscene.util.PublicUtils;
 
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 
 public class HuXinVideoActivity extends BaseMvpActivity<HuXinVideoPresenter> implements HuXinVideoContact.View {
@@ -40,7 +42,8 @@ public class HuXinVideoActivity extends BaseMvpActivity<HuXinVideoPresenter> imp
     public TextView prossTV;
     public SurfingScenePlayer splay;
     IVMS_8700_Bean ivms_8700_bean;
-
+    @BindView(R.id.ivHuXinBack)
+    ImageView ivHuXinBack;
     @Override
     protected HuXinVideoPresenter loadPresenter() {
         return new HuXinVideoPresenter();
@@ -119,6 +122,14 @@ public class HuXinVideoActivity extends BaseMvpActivity<HuXinVideoPresenter> imp
 
                     }
                 }).setCancelable(false).create().show();
+    }
+    @OnClick({R.id.ivHuXinBack})
+    void OnClick(View view) {
+        switch (view.getId()) {
+            case R.id.ivHuXinBack:
+                finish();
+                break;
+        }
     }
    /* private void initVideo() {
 
