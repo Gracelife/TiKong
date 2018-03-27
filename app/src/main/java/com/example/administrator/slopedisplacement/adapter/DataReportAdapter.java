@@ -49,7 +49,7 @@ public class DataReportAdapter extends FragmentPagerAdapter {
                     fragments[position] = FixedFlowDataFragment.newInstance(mFixedListJson, mSchemeID);
                     break;
                 case 2:
-                    fragments[position] = CruiseCurveAreaMapFragment.newInstance();
+                    fragments[position] = CruiseCurveAreaMapFragment.newInstance(mArealListJson, mSchemeID);
                     break;
                 case 3:
                     fragments[position] = FixedPointCurveAreaMapFragment.newInstance();
