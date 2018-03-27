@@ -50,6 +50,7 @@ public class PointFrameLayout extends FrameLayout {
     private PointDataBean imgPointBean;
     private int mPointSize = 1;
     private HashMap<String, ImageView> mPointImageViews = new HashMap<>();
+    private boolean mIsPreparePoint = false;//点是否加载完成
 
     public PointFrameLayout(@NonNull Context context) {
         this(context, null);
@@ -145,6 +146,7 @@ public class PointFrameLayout extends FrameLayout {
      * @param currentHeight 拉伸后图的高度
      */
     private void refreshData(int currentWidth, int currentHeight) {
+        mIsPreparePoint = false;
         List<PointBean> pointLists = imgPointBean.getPointBeanList();
         for (PointBean pointBean : pointLists) {
             //初始化
@@ -182,6 +184,7 @@ public class PointFrameLayout extends FrameLayout {
             mFlPoint.addView(imageView);
             mPointImageViews.put(pointBean.getmMonitorID(), imageView);
         }
+        mIsPreparePoint = true;
     }
 
     /**
@@ -272,7 +275,9 @@ public class PointFrameLayout extends FrameLayout {
         canvas.restore();// 存储
         return bitmap;
     }
-
+    public boolean isPreparePoint(){
+        return mIsPreparePoint;
+    }
     /**
      * 获取在容器里实际的位置
      *

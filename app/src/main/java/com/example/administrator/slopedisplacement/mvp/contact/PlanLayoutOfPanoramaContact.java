@@ -5,7 +5,11 @@ import com.example.administrator.slopedisplacement.bean.PanoramaImgBean;
 import com.example.administrator.slopedisplacement.bean.SchemeAlarmListBean;
 import com.example.administrator.slopedisplacement.bean.json.GetDatSchemeAreaListJson;
 import com.example.administrator.slopedisplacement.bean.json.GetDatSchemeFixedListJson;
+import com.example.administrator.slopedisplacement.bean.json.GetSchemeAlarmJson;
+import com.example.administrator.slopedisplacement.bean.json.GetSchemeMonitorLogJson;
 import com.example.administrator.slopedisplacement.mvp.IView;
+
+import java.util.List;
 
 /**
  * Created by administration on 2017/9/4.
@@ -21,7 +25,7 @@ public class PlanLayoutOfPanoramaContact {
 
         void onGetSchemeAlarmListFail(String msg);
 
-        void onGetSchemeAlarmSuccess(PanoramaImgBean panoramaImgBean);
+        void onGetSchemeAlarmSuccess(GetSchemeAlarmJson panoramaImgBean);
 
         void onGetSchemeAlarmFail(String msg);
 
@@ -37,7 +41,11 @@ public class PlanLayoutOfPanoramaContact {
         void onGetDatSchemeAreaListSuccess(GetDatSchemeAreaListJson arealListJson);
 
         void onGetDatSchemeFixedListSuccess(GetDatSchemeFixedListJson fixedListJson);
-        void getSchemeMonitorLogSuccess(GetDatSchemeFixedListJson fixedListJson);
+        /**
+         * 获取区域监测点日志
+         * @param getSchemeMonitorLogJson
+         */
+        void getSchemeMonitorLogSuccess(List<GetSchemeMonitorLogJson> getSchemeMonitorLogJson);
     }
 
     public interface Presenter {
@@ -54,5 +62,6 @@ public class PlanLayoutOfPanoramaContact {
         void getDatSchemeFixedList(String schemeID, String uid);
 
         void getSchemeMonitorLog(String schemeID, String uid);
+
     }
 }

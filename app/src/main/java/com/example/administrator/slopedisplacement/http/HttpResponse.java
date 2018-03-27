@@ -18,7 +18,7 @@ public class HttpResponse<T> {
     /**
      * 状态码
      */
-    @SerializedName("code")
+    @SerializedName("result")
     private int code;
     /**
      * 数据对象[成功返回对象,失败返回错误说明]

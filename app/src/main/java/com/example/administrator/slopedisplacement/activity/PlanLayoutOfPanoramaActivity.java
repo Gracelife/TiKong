@@ -2,6 +2,7 @@ package com.example.administrator.slopedisplacement.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,6 +24,8 @@ import com.example.administrator.slopedisplacement.bean.PanoramaImgBean;
 import com.example.administrator.slopedisplacement.bean.SchemeAlarmListBean;
 import com.example.administrator.slopedisplacement.bean.json.GetDatSchemeAreaListJson;
 import com.example.administrator.slopedisplacement.bean.json.GetDatSchemeFixedListJson;
+import com.example.administrator.slopedisplacement.bean.json.GetSchemeAlarmJson;
+import com.example.administrator.slopedisplacement.bean.json.GetSchemeMonitorLogJson;
 import com.example.administrator.slopedisplacement.db.UserInfoPref;
 import com.example.administrator.slopedisplacement.exception.ErrorType;
 import com.example.administrator.slopedisplacement.mvp.contact.PlanLayoutOfPanoramaContact;
@@ -103,6 +106,7 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
         mPresenter.getDatSchemeAreaList(mSchemeID + "", UserInfoPref.getUserId());
         mPresenter.getDatSchemeFixedList(mSchemeID + "", UserInfoPref.getUserId());
         mPresenter.getSchemeMonitorLog(mSchemeID + "", UserInfoPref.getUserId());
+        mPresenter.getSchemeAlarm(mSchemeID + "", "2",UserInfoPref.getUserId() );
     }
 
     @Override
@@ -328,17 +332,32 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
 
     @Override
     public void onGetSchemeAlarmListFail(String msg) {
-
+        showToast(msg);
     }
-
+    Handler handlerAlarm = new Handler();
     @Override
-    public void onGetSchemeAlarmSuccess(PanoramaImgBean panoramaImgBean) {
-
+    public void onGetSchemeAlarmSuccess(GetSchemeAlarmJson getSchemeAlarmJsons) {
+        handlerAlarm.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mPointFrameLayout.isPreparePoint()) {
+                    for (GetSchemeAlarmJson.ListBean json : getSchemeAlarmJsons.getList()) {
+                        mPointFrameLayout.startPointAnimation(json.getMonitorID1());
+                        mPointFrameLayout.startPointAnimation(json.getMonitorID2());
+                        mPointFrameLayout.startPointAnimation(json.getMonitorID3());
+                        mPointFrameLayout.startPointAnimation(json.getMonitorID4());
+                    }
+                    return;
+                }
+                handlerAlarm.postDelayed(this, 100);
+            }
+        }, 100);
     }
+
 
     @Override
     public void onGetSchemeAlarmFail(String msg) {
-
+        showToast(msg);
     }
 
     @Override
@@ -367,12 +386,26 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
         mIsPrepareFixedData = true;
         loadPointImg();
     }
-
+    Handler handlerSchemeMonitorLog = new Handler();
     @Override
-    public void getSchemeMonitorLogSuccess(GetDatSchemeFixedListJson fixedListJson) {
-
+    public void getSchemeMonitorLogSuccess(List<GetSchemeMonitorLogJson> getSchemeMonitorLogJson) {
+        handlerSchemeMonitorLog.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mPointFrameLayout.isPreparePoint()) {
+                    for (GetSchemeMonitorLogJson json : getSchemeMonitorLogJson) {
+                        mPointFrameLayout.startPointAnimation(json.getMonitorID());
+                    }
+                    return;
+                }
+                handlerSchemeMonitorLog.postDelayed(this, 100);
+            }
+        }, 100);
     }
-
+    /**
+     * 区域 状态为面 点偏移百分比
+     */
+    private int pointOffsetScale = 4;
     private synchronized void loadPointImg() {
         //区域列表、定点列表、获取全景图接口都调用完成后才执行加载点相关信息
         if (!mIsPrepareFixedData || !mIsPrepareAreaData || !mIsPrepareImg) {
@@ -407,11 +440,11 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
 
                     PointBean pointBean2 = new PointBean();
                     if (isPointVertical) {
-                        pointBean2.setXScale(scaleX + 6);
+                        pointBean2.setXScale(scaleX + pointOffsetScale);
                         pointBean2.setYScale(scaleY);
                     } else {
                         pointBean2.setXScale(scaleX);
-                        pointBean2.setYScale(scaleY + 6);
+                        pointBean2.setYScale(scaleY + pointOffsetScale);
                     }
                     pointBean2.setmMonitorID(area.getNewMonitor().get(i * 2 + 1).getMonitorID());
                     pointBean2.setPointIndex(pointBeanListIndex + i * 2 + 1);

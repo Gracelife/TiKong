@@ -9,9 +9,13 @@ import com.example.administrator.slopedisplacement.bean.SchemeAlarmListBean;
 import com.example.administrator.slopedisplacement.bean.SchemeBean;
 import com.example.administrator.slopedisplacement.bean.json.GetDatSchemeAreaListJson;
 import com.example.administrator.slopedisplacement.bean.json.GetDatSchemeFixedListJson;
+import com.example.administrator.slopedisplacement.bean.json.GetSchemeAlarmJson;
 import com.example.administrator.slopedisplacement.bean.json.GetSchemeFixedListLogJson;
 import com.example.administrator.slopedisplacement.bean.json.GetSchemeMonitorListLogJson;
+import com.example.administrator.slopedisplacement.bean.json.GetSchemeMonitorLogJson;
 import com.example.administrator.slopedisplacement.url.UrlHelper;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -83,7 +87,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(UrlHelper.API + "GetSchemeMonitorLog")
-    Observable<HttpResponse<GetDatSchemeFixedListJson>> getSchemeMonitorLog(@Field("schemeID") String schemeID, @Field("uid") String uid);
+    Observable<HttpResponse<List<GetSchemeMonitorLogJson>>> getSchemeMonitorLog(@Field("schemeID") String schemeID, @Field("uid") String uid);
 
 
     @FormUrlEncoded
@@ -92,7 +96,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST(UrlHelper.API + "GetSchemeAlarm")
-    Observable<HttpResponse<PanoramaImgBean>> getSchemeAlarm(@Field("schemeID") String schemeID, @Field("states") String states, @Field("uid") String uid);
+    Observable<HttpResponse<GetSchemeAlarmJson>> getSchemeAlarm(@Field("schemeID") String schemeID, @Field("states") String states, @Field("uid") String uid);
 
     @FormUrlEncoded
     @POST(UrlHelper.API + "UpdateSchemeAlarmByAlarmID")

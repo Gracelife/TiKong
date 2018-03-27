@@ -5,12 +5,16 @@ import com.example.administrator.slopedisplacement.bean.PanoramaImgBean;
 import com.example.administrator.slopedisplacement.bean.SchemeAlarmListBean;
 import com.example.administrator.slopedisplacement.bean.json.GetDatSchemeAreaListJson;
 import com.example.administrator.slopedisplacement.bean.json.GetDatSchemeFixedListJson;
+import com.example.administrator.slopedisplacement.bean.json.GetSchemeAlarmJson;
+import com.example.administrator.slopedisplacement.bean.json.GetSchemeMonitorLogJson;
 import com.example.administrator.slopedisplacement.exception.ApiException;
 import com.example.administrator.slopedisplacement.http.HttpObserver;
 import com.example.administrator.slopedisplacement.http.HttpResponse;
 import com.example.administrator.slopedisplacement.mvp.BasePresenter;
 import com.example.administrator.slopedisplacement.mvp.contact.PlanLayoutOfPanoramaContact;
 import com.example.administrator.slopedisplacement.mvp.model.PlanLayoutOfPanoramaModel;
+
+import java.util.List;
 
 /**
  * 登录Presenter
@@ -87,17 +91,17 @@ public class PlanLayoutOfPanoramaPresenter extends BasePresenter<PlanLayoutOfPan
         new PlanLayoutOfPanoramaModel()
                 .getSchemeAlarm(schemeID, states, uid)
                 .compose(getIView().bindLifecycle())
-                .subscribe(new HttpObserver<HttpResponse<PanoramaImgBean>>() {
+                .subscribe(new HttpObserver<HttpResponse<GetSchemeAlarmJson>>() {
                     @Override
-                    public void onSuccess(HttpResponse<PanoramaImgBean> panoramaImgBean) {
+                    public void onSuccess(HttpResponse<GetSchemeAlarmJson> panoramaImgBean) {
                         getIView().hideLoading();
-                        getIView().onGetPanoramaImgSuccess(panoramaImgBean.getData());
+                        getIView().onGetSchemeAlarmSuccess(panoramaImgBean.getData());
                     }
 
                     @Override
                     public void onFail(ApiException msg) {
                         getIView().hideLoading();
-                        getIView().onGetPanoramaImgFail(msg.getMessage().toString());
+                        getIView().onGetSchemeAlarmFail(msg.getMessage());
                     }
                 });
     }
@@ -164,11 +168,11 @@ public class PlanLayoutOfPanoramaPresenter extends BasePresenter<PlanLayoutOfPan
         new PlanLayoutOfPanoramaModel()
                 .getSchemeMonitorLog(schemeID, uid)
                 .compose(getIView().bindLifecycle())
-                .subscribe(new HttpObserver<HttpResponse<GetDatSchemeFixedListJson>>() {
+                .subscribe(new HttpObserver<HttpResponse<List<GetSchemeMonitorLogJson>>>() {
                     @Override
-                    public void onSuccess(HttpResponse<GetDatSchemeFixedListJson> httpResponse) {
+                    public void onSuccess(HttpResponse<List<GetSchemeMonitorLogJson>> httpResponse) {
                         getIView().hideLoading();
-                        getIView().onGetDatSchemeFixedListSuccess(httpResponse.getData());
+                        getIView().getSchemeMonitorLogSuccess(httpResponse.getData());
                     }
 
                     @Override
