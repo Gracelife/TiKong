@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -53,8 +54,8 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
     ArrayList<PanoramaImgBean.ListBean> dataList = new ArrayList<PanoramaImgBean.ListBean>();
     ArrayList<SchemeAlarmListBean.ListBean> schemeAlarmList = new ArrayList<SchemeAlarmListBean.ListBean>();
     CommonPopupWindow mPopWindow;
-    //    @BindView(R.id.ivPlanLayoutOfPanorama)
-//    ImageView ivPlanLayoutOfPanorama;
+    @BindView(R.id.ivPlanLayoutOfPanormamBack)
+    ImageView ivPlanLayoutOfPanorama;
     @BindView(R.id.btnAlarmInformation)
     TextView btnAlarmInformation;
     @BindView(R.id.pflPoint)
@@ -242,6 +243,7 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
 //                                .skipMemoryCache(true)
 //                                .into(ivPlanLayoutOfPanorama);
                         mPointFrameLayout.changeBg(dataList.get(position).getPuzzleImg());
+                        mPopWindow.dismiss();
                     }
                 });
 
@@ -587,6 +589,9 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
                 } else {
                     JumpToUtils.toDataReportActivity(getActivity(), mArealListJson, mFixedListJson, mSchemeID + "");
                 }
+                break;
+            case R.id.ivPlanLayoutOfPanormamBack:
+                finish();
                 break;
         }
     }

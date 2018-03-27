@@ -1,6 +1,7 @@
 package com.example.administrator.slopedisplacement.pushmi;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
@@ -50,7 +51,7 @@ public class PushMiReceiver extends PushMessageReceiver {
         Log.e("mipush", "点击通知后收到的推送信息: " + data);
         try {
             PushMiJson json = new Gson().fromJson(data, PushMiJson.class);
-            JumpToUtils.toPlanLayoutOfPanoramaActivity(context,json.getData().getCamId(),json.getData().getSchemeID());
+            JumpToUtils.toPlanLayoutOfPanoramaActivity((Activity) context,json.getData().getCamId(),json.getData().getSchemeID());
         }catch (Exception e){
             Log.e("mipush", "收到的推选信息解析异常:");
             e.printStackTrace();

@@ -21,6 +21,22 @@ public class IVMS_8700_Bean implements Serializable{
 
     private String camFlowState;
 
+    public IVMS_8700_Bean() {
+    }
+
+    public IVMS_8700_Bean(String mUserName, String mPassword, String mSysCode, String mIp, String mPort, String mType, String cam_Dx_Puid, String camId, String camName, String camFlowState) {
+        this.mUserName = mUserName;
+        this.mPassword = mPassword;
+        this.mSysCode = mSysCode;
+        this.mIp = mIp;
+        this.mPort = mPort;
+        this.mType = mType;
+        Cam_Dx_Puid = cam_Dx_Puid;
+        this.camId = camId;
+        this.camName = camName;
+        this.camFlowState = camFlowState;
+    }
+
     public String getCamFlowState() {
         return camFlowState;
     }

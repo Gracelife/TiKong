@@ -1,5 +1,6 @@
 package com.example.administrator.slopedisplacement.widget.popupwindow;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -8,6 +9,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
@@ -23,6 +25,7 @@ public class CommonPopupWindow {
     public CommonPopupWindow(Builder builder) {
         contentview = LayoutInflater.from(mContext).inflate(builder.mConvertViewId, null);
         mPopupWindow = new PopupWindow(contentview, builder.width, builder.height, builder.fouse);
+        setBackgroundAlpha(0.5f);
         //需要跟 setBackGroundDrawable 结合
         mPopupWindow.setOutsideTouchable(builder.outsidecancel);
 //        setBackgroundAlpha(0.5f);
@@ -31,12 +34,18 @@ public class CommonPopupWindow {
         if (builder.animstyle != -1)
             mPopupWindow.setAnimationStyle(builder.animstyle);
     }
-
+    public void setBackgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = ((Activity) mContext).getWindow()
+                .getAttributes();
+        lp.alpha = bgAlpha;
+        ((Activity) mContext).getWindow().setAttributes(lp);
+    }
     /**
      * popup 消失
      */
     public void dismiss() {
         if (mPopupWindow != null && mPopupWindow.isShowing()) {
+            setBackgroundAlpha(1.0f);
             mPopupWindow.dismiss();
         }
     }

@@ -81,7 +81,13 @@ public class JumpToUtils {
         intent.putExtra(KEY_FROM_PUSH, false);//是否来至推送
         activity.startActivity(intent);
     }
-
+    public static void toPlanLayoutOfPanoramaActivity(Activity activity, String camId, String schemeID) {
+        Intent intent = new Intent(activity, PlanLayoutOfPanoramaActivity.class);
+        intent.putExtra(KEY_CAMID, camId);
+        intent.putExtra(KEY_SCHEMEID, schemeID);
+        intent.putExtra(KEY_FROM_PUSH, false);//是否来至推送
+        activity.startActivity(intent);
+    }
     public static final String KEY_FROM_PUSH = "key_from_push";
 
     /**
@@ -91,11 +97,12 @@ public class JumpToUtils {
      * @param camId    设备id
      * @param schemeID 方案id
      */
-    public static void toPlanLayoutOfPanoramaActivity(Context context, String camId, String schemeID) {
+    public static void toPlanLayoutOfPanoramaActivity(Context context, String camId, String schemeID, IVMS_8700_Bean ivms_8700_bean) {
         ActivityUtils.INSTANCE.finishOthersActivity(SelectProjectActivity.class);
         Intent intent = new Intent(context, PlanLayoutOfPanoramaActivity.class);
         intent.putExtra(KEY_CAMID, camId);
         intent.putExtra(KEY_SCHEMEID, schemeID);
+        intent.putExtra(KEY_IVMS_8700_BEAN,ivms_8700_bean);
         intent.putExtra(KEY_FROM_PUSH, true);//是否来至推送
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);

@@ -50,5 +50,6 @@ public class WelcomeActivity extends BaseActivity {
 
     private void toMainActivity() {
         startActivity(new Intent(getActivity(), LoginActivity.class));
+        finish();
     }
 }
