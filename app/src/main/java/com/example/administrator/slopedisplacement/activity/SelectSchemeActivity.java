@@ -66,7 +66,7 @@ public class SelectSchemeActivity extends BaseMvpActivity<SelectSchemePresenter>
 //                intent.putExtra("SchemeList",schemeBean.getList().get(position));
 //                startActivity(intent);
                 JumpToUtils.toPlanLayoutOfPanoramaActivity(getActivity(),camId,schemeBean.getList().get(position).getSchemeID()+"",ivms_8700_bean);
-                //JumpToUtils.toPlanLayoutOfPanoramaActivity(getActivity(),camId,schemeBean.getList().get(position).getSchemeID()+"");
+                //JumpToUtils.toPlanLayoutOfPanoramaActivityFromPush(getActivity(),camId,schemeBean.getList().get(position).getSchemeID()+"");
             }
         });
 

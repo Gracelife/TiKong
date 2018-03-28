@@ -118,7 +118,7 @@ public class SelectDriverActivity extends BaseMvpActivity<SelectDriverPresenter>
 //            intent.putExtra("DriverBean",driverBean);
 //            startActivity(intent);
             Log.e("ivms_8700_bean",ivms_8700_bean.getCamFlowState());
-//            JumpToUtils.toPlanLayoutOfPanoramaActivity(getActivity(),driverBean.getCamId()+"",listBean.getSchemeID()+"",ivms_8700_bean);
+//            JumpToUtils.toPlanLayoutOfPanoramaActivityFromPush(getActivity(),driverBean.getCamId()+"",listBean.getSchemeID()+"",ivms_8700_bean);
             //TODO 测试数据暂时写死
             JumpToUtils.toPlanLayoutOfPanoramaActivity(getActivity(),"1014462",listBean.getSchemeID()+"",ivms_8700_bean);
         }else{

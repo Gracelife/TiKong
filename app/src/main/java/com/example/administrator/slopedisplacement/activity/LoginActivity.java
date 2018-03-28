@@ -71,7 +71,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         this.loginBean = loginBean;
         UserInfoPref.setSavePassWord(cbSavePassWord.isChecked());
         UserInfoPref.saveLoginInfo(etUserName.getText().toString(), loginBean.getUserName(), etPassWord.getText().toString(), loginBean.getUid());
-        if (!PhoneSystemUtils.isMIUI()) {
+        if (PhoneSystemUtils.isMIUI()) {
             //小米推送注册别名和用户账号
             MiPushClient.setAlias(ProApplication.getInstance(), UserInfoPref.getUserId(), "");
             MiPushClient.setUserAccount(ProApplication.getInstance(), UserInfoPref.getUserId(), "");

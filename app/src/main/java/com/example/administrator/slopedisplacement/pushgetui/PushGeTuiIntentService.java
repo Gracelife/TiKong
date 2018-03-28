@@ -48,7 +48,7 @@ public class PushGeTuiIntentService extends GTIntentService {
                 IVMS_8700_Bean ivms_8700_bean = new IVMS_8700_Bean(json.getData().getMUserName(),json.getData().getMPassword()
                         ,json.getData().getMsysCode(),json.getData().getMIp(),json.getData().getMPort(),json.getData().getMType()
                         ,json.getData().getCam_Dx_Puid(),json.getData().getCamId(),json.getData().getCamName(),json.getData().getCamFlowState());
-                JumpToUtils.toPlanLayoutOfPanoramaActivity(context,json.getData().getCamId(),json.getData().getSchemeID(),ivms_8700_bean);
+                JumpToUtils.toPlanLayoutOfPanoramaActivityFromPush(context,json.getData().getCamId(),json.getData().getSchemeID(),ivms_8700_bean);
             }catch (Exception e){
                 Log.e("getui", "收到的推选信息解析异常:");
                 e.printStackTrace();

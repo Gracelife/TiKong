@@ -107,7 +107,7 @@
         android:layout_height="wrap_content"
        android:layout_marginTop="@dimen/y176"
         android:layout_centerHorizontal="true"
-        app:srcCompat="@drawable/login_icon_iv" />
+        app:srcCompat="@drawable/logo" />
 
     <ImageView
         android:id="@+id/ivLogin"

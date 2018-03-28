@@ -40,12 +40,23 @@ public class PlanLayoutOfPanoramaContact {
          */
         void onGetDatSchemeAreaListSuccess(GetDatSchemeAreaListJson arealListJson);
 
+        void onGetDatSchemeAreaListFail(String msg);
+
+        /**
+         * 获取定点列表
+         * @param fixedListJson
+         */
         void onGetDatSchemeFixedListSuccess(GetDatSchemeFixedListJson fixedListJson);
+
+        void onGetDatSchemeFixedListFail(String msg);
+
         /**
          * 获取区域监测点日志
+         *
          * @param getSchemeMonitorLogJson
          */
         void getSchemeMonitorLogSuccess(List<GetSchemeMonitorLogJson> getSchemeMonitorLogJson);
+        void getSchemeMonitorLogFail(String msg);
     }
 
     public interface Presenter {
