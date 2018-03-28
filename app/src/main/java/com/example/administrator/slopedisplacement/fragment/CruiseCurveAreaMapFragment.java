@@ -114,7 +114,7 @@ public class CruiseCurveAreaMapFragment extends BaseMvpLazyFragment<CruiseCurveA
     }
     @Override
     public int getLayoutResId() {
-        return R.layout.fragment_fixed_point_curve_area_map;
+        return R.layout.fragment_cruise_curve_area_map;
     }
 
     @Override
