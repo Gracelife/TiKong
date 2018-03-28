@@ -40,7 +40,7 @@ import butterknife.OnClick;
  */
 
 public class FixedPointCurveAreaMapFragment extends BaseLazyFragment {
-    @BindView(R.id.line_chart_test)
+    @BindView(R.id.lcAreaMap)
     LineChart mChart;
 
     public static FixedPointCurveAreaMapFragment newInstance() {

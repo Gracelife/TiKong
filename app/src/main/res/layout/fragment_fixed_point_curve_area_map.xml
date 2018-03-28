@@ -19,7 +19,7 @@
             android:textSize="@dimen/y30" />
 
         <TextView
-            android:id="@+id/textView17"
+            android:id="@+id/tvTimeMap"
             android:layout_width="@dimen/x300"
             android:layout_height="@dimen/y56"
             android:layout_centerVertical="true"
@@ -27,22 +27,24 @@
             android:text="" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnTimeForDayMap"
             android:layout_width="@dimen/x180"
             android:layout_height="@dimen/y80"
             android:textSize="@dimen/y30"
             android:text="按天统计" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnTimeForMonthMap"
             android:layout_width="@dimen/x180"
             android:layout_height="@dimen/y80"
+            android:textSize="@dimen/y30"
             android:text="按月统计" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btnTimeForYearMap"
             android:layout_width="@dimen/x180"
             android:layout_height="@dimen/y80"
+            android:textSize="@dimen/y30"
             android:text="按年统计" />
     </LinearLayout>
 
@@ -88,8 +90,8 @@
             android:text="数据类型：" />
 
         <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="@dimen/x150"
+            android:id="@+id/spnCruiseDataTypeMap"
+            android:layout_width="@dimen/x200"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
@@ -100,7 +102,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView19"
+            android:id="@+id/tvMapName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="巡航监测点日线图"
@@ -109,7 +111,7 @@
     </LinearLayout>
 
     <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/line_chart_test"
+        android:id="@+id/lcAreaMap"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

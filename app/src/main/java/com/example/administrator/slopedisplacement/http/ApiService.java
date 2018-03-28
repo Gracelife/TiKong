@@ -1,6 +1,7 @@
 package com.example.administrator.slopedisplacement.http;
 
 
+import com.example.administrator.slopedisplacement.bean.AreaMapBean;
 import com.example.administrator.slopedisplacement.bean.DriverBean;
 import com.example.administrator.slopedisplacement.bean.LoginBean;
 import com.example.administrator.slopedisplacement.bean.PanoramaImgBean;
@@ -13,6 +14,7 @@ import com.example.administrator.slopedisplacement.bean.json.GetSchemeAlarmJson;
 import com.example.administrator.slopedisplacement.bean.json.GetSchemeFixedListLogJson;
 import com.example.administrator.slopedisplacement.bean.json.GetSchemeMonitorListLogJson;
 import com.example.administrator.slopedisplacement.bean.json.GetSchemeMonitorLogJson;
+import com.example.administrator.slopedisplacement.mvp.model.CruiseCurveAreaMapModel;
 import com.example.administrator.slopedisplacement.url.UrlHelper;
 
 import java.util.List;
@@ -111,4 +113,7 @@ public interface ApiService {
     @POST(UrlHelper.API + "GetSchemeFixedListLog")
     Observable<HttpResponse<GetSchemeFixedListLogJson>> getSchemeFixedListLog(@Field("schemeID") String schemeID, @Field("fixedID") String fixedID, @Field("startTime") String startTime, @Field("endTime") String endTime, @Field("monitorID") String monitorID, @Field("pageindex") int pageindex, @Field("pagesize") int pagesize, @Field("uid") String uid);
 
+    @FormUrlEncoded
+    @POST(UrlHelper.API + "GetNewSchemeMonitorChartsByDateTop ")
+    Observable<HttpResponse<List<AreaMapBean>>> getNewSchemeMonitorChartsByDateTop(@Field("schemeID") String schemeID, @Field("areaID") String areaID, @Field("monitorID") String monitorID, @Field("timeType") int timeType, @Field("selDate") String selDate, @Field("uid") String uid);
 }

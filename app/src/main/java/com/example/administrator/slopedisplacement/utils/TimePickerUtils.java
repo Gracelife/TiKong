@@ -25,7 +25,20 @@ public class TimePickerUtils {
         return pvTime;
     }
 
-
+    public static void showPickerView(Context context, String title, TextView textView ,boolean month,boolean day,TimePickerView.OnTimeSelectListener onTimeSelectListener) {
+        //时间选择器
+        //.Builder(context, (Date date, View view) -> textView.setText(FormatUtils.dateToString(date,month,day)))
+        TimePickerView timePickerView = new TimePickerView
+                .Builder(context, onTimeSelectListener)
+                .setTitleText(title)
+                .setType(new boolean[]{true, month, day, false, false, false})// 默认全部显示
+                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .setRangDate(FormatUtils.stringToCalendar("1234-10-11"), Calendar.getInstance())//起始终止年月日设定
+                .isCyclic(false)//是否循环滚动
+                .build();
+        timePickerView.setDate(Calendar.getInstance());
+        timePickerView.show();
+    }
     public static void showPickerView(Context context, String title, TextView textView, String  defaultCalendar, String rangStartTime, String rangEndTime) {
         //时间选择器
         TimePickerView timePickerView = new TimePickerView

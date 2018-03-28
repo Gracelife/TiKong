@@ -63,7 +63,7 @@ dependencies {
 
     //  RxJava & RxAndroid & RetrofitUtils & OkHttp
     compile "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
-//    compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+
     compile "com.squareup.retrofit2:converter-scalars:${retrofitVersion}"
     compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
     compile "com.squareup.okhttp3:okhttp:${okhttpVersion}"
@@ -91,12 +91,14 @@ dependencies {
     compile files('libs/ffcs-android-client-api-1.02.jar')
     compile files('libs/tyjx.jar')
     compile files('libs/ivms_8700_sdk_library.jar')
+        compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+        compile 'com.google.code.gson:gson:2.7'
     //RecyclerView
 
     /* 仿IOS选择器 */
 
     /* 图表视图/图形视图库 支持折线图、条形图、饼图、蜘蛛网图 */
-//    compile 'com.google.code.gson:gson:2.7'
+
 
 
 

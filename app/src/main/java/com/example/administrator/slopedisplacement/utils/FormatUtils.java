@@ -23,6 +23,8 @@ public class FormatUtils {
         return String.format("%.5f", value);
     }
     private final static String FORMAT_TIME = "yyyy-MM-dd";
+    private final static String FORMAT_TIME_MONTH = "yyyy-MM";
+    private final static String FORMAT_TIME_YEAR = "yyyy";
     /**
      * 将Date类型格式化成String yyyy-MM-dd
      *
@@ -36,6 +38,26 @@ public class FormatUtils {
             return new SimpleDateFormat(FORMAT_TIME).format(date);
         }
     }
+    /**
+     * 将Date类型格式化成String yyyy-MM-dd
+     *
+     * @param date 时间
+     * @return
+     */
+    public static String dateToString(Date date,boolean month,boolean day) {
+        if (date == null) {
+            return "";
+        } else {
+            if(month == true && day == true) {
+                return new SimpleDateFormat(FORMAT_TIME).format(date);
+            }else if(month == true&& day == false){
+                return new SimpleDateFormat(FORMAT_TIME_MONTH).format(date);
+            }
+            return new SimpleDateFormat(FORMAT_TIME_YEAR).format(date);
+
+        }
+    }
+
     /**
      * 将Calendar类型格式化成String yyyy-MM-dd
      *
