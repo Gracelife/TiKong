@@ -209,10 +209,10 @@ public class CruiseDataFragment extends BaseMvpLazyFragment<CruiseDataPresenter>
     @Override
     public void onGetSchemeMonitorListLogSuccess(GetSchemeMonitorListLogJson jsonData) {
         mPageSizeNum = jsonData.getTotalCount();
-
-        if (mAdapter != null && mAdapter.isLoading()) {
+        if(mAdapter!=null){
             mAdapter.addData(jsonData.getList());
-            mAdapter.loadMoreComplete();
+            if (mAdapter.isLoading())
+                mAdapter.loadMoreComplete();
         }
     }
 
