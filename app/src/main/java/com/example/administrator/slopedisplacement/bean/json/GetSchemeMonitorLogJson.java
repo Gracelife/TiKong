@@ -1,6 +1,7 @@
 package com.example.administrator.slopedisplacement.bean.json;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 获取区域监测点日志top1(最新一条)
@@ -9,136 +10,172 @@ import java.io.Serializable;
 public class GetSchemeMonitorLogJson implements Serializable {
 
     /**
-     * RecordID : 3878
-     * MonitorID : 113
-     * SchemeID : 58
-     * AreaID : 74
-     * Aha : 110.09400177001953
-     * Ava : 35.49599838256836
-     * Obd : 1.847000002861023
-     * Photo1 : http://ftp.jsqqy.com:8121/upfile/Puzzle/105785374_002/11/20180311010028.jpg
-     * Photo2 : http://ftp.jsqqy.com:8121/upfile/Puzzle/105785374_002/11/20180311010101.jpg
-     * CreateTime : 2018-03-11 01:00:59
-     * Shift : 0.0
-     * AddShift : 0.0
-     * NowShift : 0.001000046730041504
+     * List : [{"RecordID":3878,"MonitorID":113,"SchemeID":58,"AreaID":74,"Aha":110.09400177001953,"Ava":35.49599838256836,"Obd":1.847000002861023,"Photo1":"http://ftp.jsqqy.com:8121/upfile/Puzzle/105785374_002/11/20180311010028.jpg","Photo2":"http://ftp.jsqqy.com:8121/upfile/Puzzle/105785374_002/11/20180311010101.jpg","CreateTime":"2018-03-11 01:00:59","Shift":0,"AddShift":0,"NowShift":0.001000046730041504}]
+     * TotalCount : 1
+     * SchemeMonitorAndAlarm : 40
      */
 
-    private String RecordID;
-    private String MonitorID;
-    private String SchemeID;
-    private String AreaID;
-    private String Aha;
-    private String Ava;
-    private String Obd;
-    private String Photo1;
-    private String Photo2;
-    private String CreateTime;
-    private String Shift;
-    private String AddShift;
-    private String NowShift;
+    private String TotalCount;
+    private int SchemeMonitorAndAlarm;
+    private java.util.List<ListBean> List;
 
-    public String getRecordID() {
-        return RecordID;
+    public String getTotalCount() {
+        return TotalCount;
     }
 
-    public void setRecordID(String RecordID) {
-        this.RecordID = RecordID;
+    public void setTotalCount(String TotalCount) {
+        this.TotalCount = TotalCount;
     }
 
-    public String getMonitorID() {
-        return MonitorID;
+    public int getSchemeMonitorAndAlarm() {
+        return SchemeMonitorAndAlarm;
     }
 
-    public void setMonitorID(String MonitorID) {
-        this.MonitorID = MonitorID;
+    public void setSchemeMonitorAndAlarm(int SchemeMonitorAndAlarm) {
+        this.SchemeMonitorAndAlarm = SchemeMonitorAndAlarm;
     }
 
-    public String getSchemeID() {
-        return SchemeID;
+    public List<ListBean> getList() {
+        return List;
     }
 
-    public void setSchemeID(String SchemeID) {
-        this.SchemeID = SchemeID;
+    public void setList(List<ListBean> List) {
+        this.List = List;
     }
 
-    public String getAreaID() {
-        return AreaID;
-    }
+    public static class ListBean {
+        /**
+         * RecordID : 3878
+         * MonitorID : 113
+         * SchemeID : 58
+         * AreaID : 74
+         * Aha : 110.09400177001953
+         * Ava : 35.49599838256836
+         * Obd : 1.847000002861023
+         * Photo1 : http://ftp.jsqqy.com:8121/upfile/Puzzle/105785374_002/11/20180311010028.jpg
+         * Photo2 : http://ftp.jsqqy.com:8121/upfile/Puzzle/105785374_002/11/20180311010101.jpg
+         * CreateTime : 2018-03-11 01:00:59
+         * Shift : 0.0
+         * AddShift : 0.0
+         * NowShift : 0.001000046730041504
+         */
 
-    public void setAreaID(String AreaID) {
-        this.AreaID = AreaID;
-    }
+        private String RecordID;
+        private String MonitorID;
+        private String SchemeID;
+        private String AreaID;
+        private String Aha;
+        private String Ava;
+        private String Obd;
+        private String Photo1;
+        private String Photo2;
+        private String CreateTime;
+        private String Shift;
+        private String AddShift;
+        private String NowShift;
 
-    public String getAha() {
-        return Aha;
-    }
+        public String getRecordID() {
+            return RecordID;
+        }
 
-    public void setAha(String Aha) {
-        this.Aha = Aha;
-    }
+        public void setRecordID(String RecordID) {
+            this.RecordID = RecordID;
+        }
 
-    public String getAva() {
-        return Ava;
-    }
+        public String getMonitorID() {
+            return MonitorID;
+        }
 
-    public void setAva(String Ava) {
-        this.Ava = Ava;
-    }
+        public void setMonitorID(String MonitorID) {
+            this.MonitorID = MonitorID;
+        }
 
-    public String getObd() {
-        return Obd;
-    }
+        public String getSchemeID() {
+            return SchemeID;
+        }
 
-    public void setObd(String Obd) {
-        this.Obd = Obd;
-    }
+        public void setSchemeID(String SchemeID) {
+            this.SchemeID = SchemeID;
+        }
 
-    public String getPhoto1() {
-        return Photo1;
-    }
+        public String getAreaID() {
+            return AreaID;
+        }
 
-    public void setPhoto1(String Photo1) {
-        this.Photo1 = Photo1;
-    }
+        public void setAreaID(String AreaID) {
+            this.AreaID = AreaID;
+        }
 
-    public String getPhoto2() {
-        return Photo2;
-    }
+        public String getAha() {
+            return Aha;
+        }
 
-    public void setPhoto2(String Photo2) {
-        this.Photo2 = Photo2;
-    }
+        public void setAha(String Aha) {
+            this.Aha = Aha;
+        }
 
-    public String getCreateTime() {
-        return CreateTime;
-    }
+        public String getAva() {
+            return Ava;
+        }
 
-    public void setCreateTime(String CreateTime) {
-        this.CreateTime = CreateTime;
-    }
+        public void setAva(String Ava) {
+            this.Ava = Ava;
+        }
 
-    public String getShift() {
-        return Shift;
-    }
+        public String getObd() {
+            return Obd;
+        }
 
-    public void setShift(String Shift) {
-        this.Shift = Shift;
-    }
+        public void setObd(String Obd) {
+            this.Obd = Obd;
+        }
 
-    public String getAddShift() {
-        return AddShift;
-    }
+        public String getPhoto1() {
+            return Photo1;
+        }
 
-    public void setAddShift(String AddShift) {
-        this.AddShift = AddShift;
-    }
+        public void setPhoto1(String Photo1) {
+            this.Photo1 = Photo1;
+        }
 
-    public String getNowShift() {
-        return NowShift;
-    }
+        public String getPhoto2() {
+            return Photo2;
+        }
 
-    public void setNowShift(String NowShift) {
-        this.NowShift = NowShift;
+        public void setPhoto2(String Photo2) {
+            this.Photo2 = Photo2;
+        }
+
+        public String getCreateTime() {
+            return CreateTime;
+        }
+
+        public void setCreateTime(String CreateTime) {
+            this.CreateTime = CreateTime;
+        }
+
+        public String getShift() {
+            return Shift;
+        }
+
+        public void setShift(String Shift) {
+            this.Shift = Shift;
+        }
+
+        public String getAddShift() {
+            return AddShift;
+        }
+
+        public void setAddShift(String AddShift) {
+            this.AddShift = AddShift;
+        }
+
+        public String getNowShift() {
+            return NowShift;
+        }
+
+        public void setNowShift(String NowShift) {
+            this.NowShift = NowShift;
+        }
     }
 }

@@ -49,10 +49,14 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPanoramaPresenter> implements PlanLayoutOfPanoramaContact.View {
-    Intent intent;
-    int pageIndex = 0;
-    int sumPage;
-    boolean isLoad = true;//判断是否已经记载全景图
+
+    private int mPageIndexImg = 0;//当前的页数(全景图列表)
+    private int mPageSizeImg = 10;//每页的数量(全景图列表)
+    private int mPageSizeNumImg = 0;//数据的总数(全景图列表)
+    private int mPageIndexAlarm = 0;//当前的页数(告警列表)
+    private int mPageSizeAlarm = 10;//每页的数量(告警列表)
+    private int mPageSizeNumAlarm = 0;//数据的总数(告警列表)
+
     ArrayList<PanoramaImgBean.ListBean> dataList = new ArrayList<PanoramaImgBean.ListBean>();
     ArrayList<SchemeAlarmListBean.ListBean> schemeAlarmList = new ArrayList<SchemeAlarmListBean.ListBean>();
     CommonPopupWindow mPopWindow;
@@ -62,8 +66,6 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
     TextView btnAlarmInformation;
     @BindView(R.id.pflPoint)
     PointFrameLayout mPointFrameLayout;
-    int schemeAlarmListPageIndex = 0;
-    int SchemeAlarmListSumPage;
     GetSchemeAlarmListAdapter getSchemeAlarmListAdapter;
     PanoramaAdapter panoramaAdapter;
     int SchemeAlarmListPosition;
@@ -87,11 +89,11 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
     /**
      * 获取最新巡航点接口请求是否完成
      */
-    private boolean mIsRequestGetSchemeMonitorLog = true;
+    private boolean mIsRequestGetSchemeMonitorLog = false;
     /**
      * 获取告警点接口请求是否完成
      */
-    private boolean mIsRequestGetSchemeAlarm = true;
+    private boolean mIsRequestGetSchemeAlarm = false;
 
     @Override
     protected PlanLayoutOfPanoramaPresenter loadPresenter() {
@@ -113,30 +115,38 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
         mIsPrepareAreaData = false;
         mIsPrepareFixedData = false;
         mIsPrepareImg = false;
-        mPresenter.getPanoramaImg(camId, pageIndex + "", "10", UserInfoPref.getUserId());
+        mPresenter.getPanoramaImg(camId, mPageIndexImg + "", "10", UserInfoPref.getUserId());
         mPresenter.getDatSchemeAreaList(mSchemeID + "", UserInfoPref.getUserId());
         mPresenter.getDatSchemeFixedList(mSchemeID + "", UserInfoPref.getUserId());
-        loopQuery();
+        mPresenter.getSchemeAlarm(mSchemeID + "", "2", UserInfoPref.getUserId());
+        mPresenter.getSchemeMonitorLog(mSchemeID + "", UserInfoPref.getUserId());
+        loopQuery(0, 40);
     }
 
+    /**
+     * 调用获取告警点和巡航点接口的时间间隔(秒)
+     */
+    private int mTimeInterval;
     Disposable mDisposableLoopQuery;
 
-    private void loopQuery() {
+    private void loopQuery(int initialDelay, int timeInterval) {
         if (mDisposableLoopQuery != null) {
             mDisposableLoopQuery.dispose();
         }
+        mTimeInterval = timeInterval;
+        mIsRequestGetSchemeMonitorLog = true;
+        mIsRequestGetSchemeAlarm = true;
         //每隔10秒
-        mDisposableLoopQuery = Observable.interval(0, 10, TimeUnit.SECONDS)
+        mDisposableLoopQuery = Observable.interval(initialDelay, timeInterval, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(aLong -> {
                     if (mIsRequestGetSchemeMonitorLog) {
                         mIsRequestGetSchemeMonitorLog = false;
-                        mPresenter.getSchemeMonitorLog(mSchemeID + "", UserInfoPref.getUserId());
+
                     }
                     if (mIsRequestGetSchemeAlarm) {
                         mIsRequestGetSchemeAlarm = false;
-                        mPresenter.getSchemeAlarm(mSchemeID + "", "2", UserInfoPref.getUserId());
                     }
                 });
     }
@@ -145,12 +155,16 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
     protected void initView() {
     }
 
+    /**
+     * 显示告警列表
+     */
     private void showPopupWindow() {
+        mPageIndexAlarm = 0;//重置
         mPopWindow = new CommonPopupWindow.Builder(this) {
             @Override
             public void popBindView(BindViewHelper popupWindowBindView) {
                 schemeAlarmList.clear();
-                mPresenter.getSchemeAlarmList(mSchemeID + "", "", "", "", schemeAlarmListPageIndex + "", "10", UserInfoPref.getUserId() + "");
+                mPresenter.getSchemeAlarmList(mSchemeID + "", "", "", "", mPageIndexAlarm + "", "10", UserInfoPref.getUserId() + "");
                 LinearLayout pop_LinearLayout = (LinearLayout) popupWindowBindView.getView(R.id.pop_LinearLayout);
                 RecyclerView rvAlarmInformation = (RecyclerView) popupWindowBindView.getView(R.id.rvAlarmInformation);
                 rvAlarmInformation.setLayoutManager(new LinearLayoutManager(PlanLayoutOfPanoramaActivity.this));
@@ -170,13 +184,13 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
                         rvAlarmInformation.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                if (pageIndex > sumPage) {
+                                if (mPageIndexAlarm * mPageSizeAlarm > mPageSizeNumAlarm) {
                                     showToast("已经是最后一页了");
                                     getSchemeAlarmListAdapter.loadMoreEnd();
                                 } else {
-                                    mPresenter.getSchemeAlarmList(mSchemeID + "", "", "", "", schemeAlarmListPageIndex + "", "10", UserInfoPref.getUserId() + "");
+                                    mPageIndexAlarm++;
+                                    mPresenter.getSchemeAlarmList(mSchemeID + "", "", "", "", mPageIndexAlarm + "", "10", UserInfoPref.getUserId() + "");
                                 }
-
                             }
 
                         }, 1000);
@@ -228,22 +242,13 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
                                 //记录点击的position，
                                 SchemeAlarmListPosition = position;
                                 mPresenter.updateSchemeAlarmByAlarmID(schemeAlarmList.get(position).getAlarmID() + "", "2", UserInfoPref.getUserId() + "");
-
                                 break;
                             default:
                                 break;
                         }
-
                     }
                 });
-
-
-                pop_LinearLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mPopWindow.dismiss();
-                    }
-                });
+                pop_LinearLayout.setOnClickListener(v->mPopWindow.dismiss());
             }
         }.setContentView(R.layout.view_popupwindow_listview)
                 .setWidth(ViewGroup.LayoutParams.MATCH_PARENT)
@@ -255,6 +260,7 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
     }
 
     private void showPanoramaPopupWindow() {
+        mPageIndexImg = 0;
         mPopWindow = new CommonPopupWindow.Builder(this) {
             @Override
             public void popBindView(BindViewHelper popupWindowBindView) {
@@ -284,11 +290,12 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
                         rvPanorama.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                if (pageIndex > sumPage) {
+                                if (mPageIndexImg * mPageSizeImg > mPageSizeNumImg) {
                                     showToast("已经是最后一页了");
                                     panoramaAdapter.loadMoreEnd();
                                 } else {
-                                    mPresenter.getSchemeAlarmList(mSchemeID + "", "", "", "", schemeAlarmListPageIndex + "", "10", UserInfoPref.getUserId() + "");
+                                    mPageIndexImg++;
+                                    mPresenter.getSchemeAlarmList(mSchemeID + "", "", "", "", mPageIndexImg + "", "10", UserInfoPref.getUserId() + "");
                                 }
 
                             }
@@ -322,11 +329,10 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
             showToast("数据加载成功！");
         }
         dataList.addAll(panoramaImgBean.getList());
-        sumPage = (panoramaImgBean.getTotalCount() + 10 - 1) / 10;
-        if (pageIndex <= sumPage) {
-            pageIndex++;
-        }
-        if (isLoad) {
+        mPageSizeNumImg = panoramaImgBean.getTotalCount();
+        if(panoramaAdapter!=null)
+            panoramaAdapter.notifyDataSetChanged();
+
 //            Glide.with(PlanLayoutOfPanoramaActivity.this).load(dataList.get(0).getPuzzleImg())//拿到头像本地存放路径
 //                    .error(R.mipmap.ic_launcher)//失败默认
 //                    .placeholder(R.mipmap.ic_launcher)
@@ -334,11 +340,8 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
 //                    .skipMemoryCache(true)
 //                    .into(ivPlanLayoutOfPanorama);
 
-            mIsPrepareImg = true;
-            loadPointImg();
-            isLoad = false;
-        }
-
+        mIsPrepareImg = true;
+        loadPointImg();
     }
 
     @Override
@@ -354,12 +357,9 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
         } else {
             showToast("数据加载成功！");
         }
+        mPageSizeNumAlarm = schemeAlarmListBean.getTotalCount();
         schemeAlarmList.addAll(schemeAlarmListBean.getList());
         getSchemeAlarmListAdapter.notifyDataSetChanged();
-        SchemeAlarmListSumPage = (schemeAlarmListBean.getTotalCount() + 10 - 1) / 10;
-        if (schemeAlarmListPageIndex <= SchemeAlarmListSumPage) {
-            schemeAlarmListPageIndex++;
-        }
         getSchemeAlarmListAdapter.loadMoreComplete();
 
     }
@@ -414,7 +414,7 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
     Disposable mDisposableSchemeMonitorLog;//轮循
 
     @Override
-    public void getSchemeMonitorLogSuccess(List<GetSchemeMonitorLogJson> getSchemeMonitorLogJson) {
+    public void getSchemeMonitorLogSuccess(GetSchemeMonitorLogJson getSchemeMonitorLogJson) {
         mIsRequestGetSchemeMonitorLog = true;
         if (mDisposableSchemeMonitorLog != null) {
             mDisposableSchemeMonitorLog.dispose();
@@ -426,12 +426,13 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
                 .subscribe(aLong -> {
                     if (mPointFrameLayout != null && mPointFrameLayout.isPreparePoint()) {
                         mPointFrameLayout.stopAllPointAnimationMonitor();//停止所有巡航点动画
-                        for (GetSchemeMonitorLogJson json : getSchemeMonitorLogJson) {
+                        for (GetSchemeMonitorLogJson.ListBean json : getSchemeMonitorLogJson.getList()) {
                             mPointFrameLayout.startPointAnimation(json.getMonitorID(), PointFrameLayout.AnimationType.MONITOR);
                         }
                         mDisposableSchemeMonitorLog.dispose();
                     }
                 });
+        loopQuery(getSchemeMonitorLogJson.getSchemeMonitorAndAlarm(), getSchemeMonitorLogJson.getSchemeMonitorAndAlarm());
     }
 
     @Override
@@ -463,6 +464,7 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
                         mDisposableAlarm.dispose();
                     }
                 });
+        loopQuery(getSchemeAlarmJsons.getSchemeMonitorAndAlarm(), getSchemeAlarmJsons.getSchemeMonitorAndAlarm());
     }
 
     @Override
@@ -498,6 +500,17 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
         hideLoading();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loopQuery(0, mTimeInterval);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mDisposableLoopQuery.dispose();
+    }
 
     @Override
     protected void onDestroy() {
@@ -520,7 +533,6 @@ public class PlanLayoutOfPanoramaActivity extends BaseMvpActivity<PlanLayoutOfPa
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.btnAlarmInformation:
-//                mPointFrameLayout.stopAllPointAnimationAlarm();//停止所有告警点动画
                 showPopupWindow();
                 break;
             case R.id.btnPanorama:

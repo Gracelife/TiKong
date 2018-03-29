@@ -40,7 +40,7 @@ public abstract class BaseLazyFragment extends RxFragment {
     }
 
     /**
-     * 数据为空
+     * 数据为空(不调用 initView()和lazyLoadDate())
      */
     public void setDataEmpty() {
         this.mIsDataEmpty = true;

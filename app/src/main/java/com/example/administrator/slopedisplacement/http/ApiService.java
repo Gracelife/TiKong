@@ -89,7 +89,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(UrlHelper.API + "GetSchemeMonitorLog")
-    Observable<HttpResponse<List<GetSchemeMonitorLogJson>>> getSchemeMonitorLog(@Field("schemeID") String schemeID, @Field("uid") String uid);
+    Observable<HttpResponse<GetSchemeMonitorLogJson>> getSchemeMonitorLog(@Field("schemeID") String schemeID, @Field("uid") String uid);
 
 
     @FormUrlEncoded

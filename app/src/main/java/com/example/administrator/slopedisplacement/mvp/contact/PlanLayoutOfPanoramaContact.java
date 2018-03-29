@@ -55,7 +55,7 @@ public class PlanLayoutOfPanoramaContact {
          *
          * @param getSchemeMonitorLogJson
          */
-        void getSchemeMonitorLogSuccess(List<GetSchemeMonitorLogJson> getSchemeMonitorLogJson);
+        void getSchemeMonitorLogSuccess(GetSchemeMonitorLogJson getSchemeMonitorLogJson);
         void getSchemeMonitorLogFail(String msg);
     }
 

@@ -168,9 +168,9 @@ public class PlanLayoutOfPanoramaPresenter extends BasePresenter<PlanLayoutOfPan
         new PlanLayoutOfPanoramaModel()
                 .getSchemeMonitorLog(schemeID, uid)
                 .compose(getIView().bindLifecycle())
-                .subscribe(new HttpObserver<HttpResponse<List<GetSchemeMonitorLogJson>>>() {
+                .subscribe(new HttpObserver<HttpResponse<GetSchemeMonitorLogJson>>() {
                     @Override
-                    public void onSuccess(HttpResponse<List<GetSchemeMonitorLogJson>> httpResponse) {
+                    public void onSuccess(HttpResponse<GetSchemeMonitorLogJson> httpResponse) {
 //                        getIView().hideLoading();
                         getIView().getSchemeMonitorLogSuccess(httpResponse.getData());
                     }

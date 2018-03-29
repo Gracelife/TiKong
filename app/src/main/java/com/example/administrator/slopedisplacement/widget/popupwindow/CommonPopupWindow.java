@@ -1,9 +1,9 @@
 package com.example.administrator.slopedisplacement.widget.popupwindow;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -19,33 +19,39 @@ import android.widget.PopupWindow;
 
 public class CommonPopupWindow {
     private PopupWindow mPopupWindow;
-    private View contentview;
+    private View contentView;
     private static Context mContext;
 
     public CommonPopupWindow(Builder builder) {
-        contentview = LayoutInflater.from(mContext).inflate(builder.mConvertViewId, null);
-        mPopupWindow = new PopupWindow(contentview, builder.width, builder.height, builder.fouse);
+        contentView = LayoutInflater.from(mContext).inflate(builder.mConvertViewId, null);
+        mPopupWindow = new PopupWindow(contentView, builder.width, builder.height, builder.fouse);
         setBackgroundAlpha(0.5f);
         //需要跟 setBackGroundDrawable 结合
         mPopupWindow.setOutsideTouchable(builder.outsidecancel);
 //        setBackgroundAlpha(0.5f);
         mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        builder.popBindView(new BindViewHelper(contentview, mContext));
+        mPopupWindow.setOnDismissListener(() -> setBackgroundAlpha(1.0f));
+        builder.popBindView(new BindViewHelper(contentView, mContext));
         if (builder.animstyle != -1)
             mPopupWindow.setAnimationStyle(builder.animstyle);
     }
-    public void setBackgroundAlpha(float bgAlpha) {
+
+    /**
+     * 设置背景透明度
+     * @param bgAlpha
+     */
+    private void setBackgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = ((Activity) mContext).getWindow()
                 .getAttributes();
         lp.alpha = bgAlpha;
         ((Activity) mContext).getWindow().setAttributes(lp);
     }
+
     /**
      * popup 消失
      */
     public void dismiss() {
         if (mPopupWindow != null && mPopupWindow.isShowing()) {
-            setBackgroundAlpha(1.0f);
             mPopupWindow.dismiss();
         }
     }
@@ -58,7 +64,7 @@ public class CommonPopupWindow {
      */
     public View getItemView(int viewid) {
         if (mPopupWindow != null) {
-            return this.contentview.findViewById(viewid);
+            return this.contentView.findViewById(viewid);
         }
         return null;
     }
@@ -89,6 +95,7 @@ public class CommonPopupWindow {
      * @param offy
      * @return
      */
+    @SuppressLint("NewApi")
     public CommonPopupWindow showAsLaction(int targetviewId, int gravity, int offx, int offy) {
         if (mPopupWindow != null) {
             View targetview = LayoutInflater.from(mContext).inflate(targetviewId, null);
@@ -106,6 +113,7 @@ public class CommonPopupWindow {
      * @param offy
      * @return
      */
+    @SuppressLint("NewApi")
     public CommonPopupWindow showAsLaction(View targetview, int gravity, int offx, int offy) {
         if (mPopupWindow != null) {
             mPopupWindow.showAsDropDown(targetview, gravity, offx, offy);
@@ -134,6 +142,7 @@ public class CommonPopupWindow {
         private boolean fouse = true;//获取焦点
         private boolean outsidecancel = true;//获取外部触摸事件
         private int animstyle = -1;//动画的资源id 默认-1为没有
+        private PopupWindow.OnDismissListener dismissListener;//消失的回调事件
 
         public Builder(Context context) {
             mContext = context;
@@ -170,6 +179,12 @@ public class CommonPopupWindow {
             this.animstyle = animstyle;
             return this;
         }
+
+        public Builder setOnDismissListener(PopupWindow.OnDismissListener dismissListener) {
+            this.dismissListener = dismissListener;
+            return this;
+        }
+
         public CommonPopupWindow builder() {
             return new CommonPopupWindow(this);
         }

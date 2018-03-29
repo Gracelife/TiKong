@@ -16,6 +16,7 @@ public class GetSchemeAlarmJson implements Serializable {
 
     private String TotalCount;
     private java.util.List<ListBean> List;
+    private int SchemeMonitorAndAlarm;
 
     public String getTotalCount() {
         return TotalCount;
@@ -307,5 +308,13 @@ public class GetSchemeAlarmJson implements Serializable {
         public void setPath4b(String path4b) {
             this.path4b = path4b;
         }
+    }
+
+    public int getSchemeMonitorAndAlarm() {
+        return SchemeMonitorAndAlarm;
+    }
+
+    public void setSchemeMonitorAndAlarm(int schemeMonitorAndAlarm) {
+        SchemeMonitorAndAlarm = schemeMonitorAndAlarm;
     }
 }
